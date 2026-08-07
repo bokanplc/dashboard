@@ -1017,6 +1017,28 @@
             document.getElementById('exp-date').value = today;
         };
     </script>
+    <style>
+  @media screen and (max-width: 768px) {
+    html, body {
+      width: 100% !important;
+      overflow-x: hidden !important;
+      padding: 5px !important;
+      margin: 0 !important;
+      font-size: 13px !important;
+    }
+    div, section, main, article, header, nav, iframe {
+      max-width: 100% !important;
+      box-sizing: border-box !important;
+    }
+    table {
+      display: block !important;
+      width: 100% !important;
+      overflow-x: auto !important;
+      white-space: nowrap !important;
+      -webkit-overflow-scrolling: touch;
+    }
+  }
+</style>
 </body>
 </html>
 <!-- =================================================================== -->
