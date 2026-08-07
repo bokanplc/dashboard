@@ -1091,9 +1091,49 @@
     display: none;
 }
 </style>
-    
+
+<!-- ================================================================= -->
+<!-- SECTION 5: JAVASCRIPT LOGIC & APPLICATION STATE                  -->
+<!-- ================================================================= -->
+<script>
+    function switchTab(tabId, btn) {
+        document.querySelectorAll('.tab-pane').forEach(el => el.classList.remove('active'));
+        document.querySelectorAll('.tab-btn').forEach(el => el.classList.remove('active'));
+        
+        document.getElementById(tabId).classList.add('active');
+        if (btn) btn.classList.add('active');
+    }
+
+    function performLogin() {
+        const modal = document.getElementById('login-modal');
+        if (modal) modal.style.display = 'none';
+    }
+
+    function handleSignOut() {
+        const modal = document.getElementById('login-modal');
+        if (modal) modal.style.display = 'flex';
+    }
+
+    function switchRole(role) {
+        console.log("Switching role to: " + role);
+    }
+
+    function resetData() {
+        if(confirm("Are you sure you want to reset all active data?")) {
+            location.reload();
+        }
+    }
+
+    function addTransaction(e) {
+        e.preventDefault();
+        alert("Transaction logged successfully.");
+    }
+
+    function addExpense(e) {
+        e.preventDefault();
+        alert("Expense entry recorded successfully.");
+    }
+</script>
+
 </body>
 </html>
-<!-- =================================================================== -->
-<!-- SECTION 5 END: JAVASCRIPT LOGIC & APPLICATION STATE                -->
-<!-- =================================================================== -->
