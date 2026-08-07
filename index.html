@@ -1017,8 +1017,11 @@
             document.getElementById('exp-date').value = today;
         };
     </script>
-    <style>
+
+
+<style>
   @media screen and (max-width: 768px) {
+    /* Screen fit & padding */
     html, body {
       width: 100% !important;
       overflow-x: hidden !important;
@@ -1026,10 +1029,13 @@
       margin: 0 !important;
       font-size: 13px !important;
     }
+
     div, section, main, article, header, nav, iframe {
       max-width: 100% !important;
       box-sizing: border-box !important;
     }
+
+    /* Table scrolling for financial & stock data */
     table {
       display: block !important;
       width: 100% !important;
@@ -1037,8 +1043,28 @@
       white-space: nowrap !important;
       -webkit-overflow-scrolling: touch;
     }
+
+    /* Vertical stacked mobile menu & navigation */
+    nav, header, .menu, .nav, .navbar, .tabs, .tab-container, ul {
+      display: flex !important;
+      flex-direction: column !important;
+      width: 100% !important;
+      align-items: stretch !important;
+      box-sizing: border-box !important;
+    }
+
+    nav a, header a, .menu a, .nav a, button, .tab, .nav-item {
+      display: block !important;
+      width: 100% !important;
+      margin: 4px 0 !important;
+      text-align: center !important;
+      box-sizing: border-box !important;
+    }
   }
 </style>
+
+
+    
 </body>
 </html>
 <!-- =================================================================== -->
