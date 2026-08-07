@@ -1008,39 +1008,89 @@
 
 
     <style>
-  @media screen and (max-width: 768px) {
-    /* Prevent overall page horizontal stretching */
-    html, body {
-      width: 100% !important;
-      overflow-x: hidden !important;
-      margin: 0 !important;
-      padding: 0 !important;
+/* =================================================================== */
+/* MOBILE RESPONSIVE STYLES (Screen widths <= 768px)                   */
+/* =================================================================== */
+@media (max-width: 768px) {
+    body {
+        flex-direction: column;
     }
 
-    /* Keep sidebars and main content aligned cleanly to the left */
-    body, main, section, container, .sidebar, .menu, nav {
-      text-align: left !important;
-      align-items: flex-start !important;
-      justify-content: flex-start !important;
+    /* Mobile Header & Toggle Button */
+    .mobile-menu-btn {
+        display: inline-block !important;
+        background: var(--accent-blue);
+        color: #fff;
+        border: none;
+        padding: 8px 12px;
+        border-radius: 4px;
+        font-weight: bold;
+        cursor: pointer;
+        margin-right: 10px;
     }
 
-    /* Make wide tables side-scrollable without expanding the screen width */
-    table {
-      display: block !important;
-      width: 100% !important;
-      overflow-x: auto !important;
-      white-space: nowrap !important;
-      -webkit-overflow-scrolling: touch;
+    /* Transform Sidebar into an Off-Canvas Mobile Drawer */
+    .sidebar {
+        width: 100%;
+        max-width: 280px;
+        transform: translateX(-100%);
+        transition: transform 0.3s ease-in-out;
+        box-shadow: 2px 0 10px rgba(0,0,0,0.3);
     }
 
-    /* Allow main content blocks to scale down naturally */
-    div, section, article {
-      max-width: 100% !important;
-      box-sizing: border-box !important;
+    /* Active state when mobile menu is opened */
+    .sidebar.mobile-open {
+        transform: translateX(0);
     }
-  }
-</style>
 
+    /* Main Content adjustments */
+    .main-wrapper {
+        margin-left: 0;
+        width: 100%;
+        padding: 12px;
+    }
+
+    .top-bar {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 10px;
+    }
+
+    /* Stack Metrics Cards & Form Grids Vertically */
+    .metrics-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .data-entry-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .form-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .form-group[style*="grid-column: span 2"] {
+        grid-column: span 1 !important;
+    }
+
+    /* Convert 2-column Tax cards into a single column */
+    div[style*="grid-template-columns: 1fr 1fr"] {
+        grid-template-columns: 1fr !important;
+    }
+
+    /* Ensure tables scroll smoothly on small screens */
+    .table-wrap {
+        width: 100%;
+        overflow-x: auto;
+        -webkit-overflow-scrolling: touch;
+    }
+}
+
+/* Hide mobile toggle button by default on desktop */
+.mobile-menu-btn {
+    display: none;
+}
+</style>)
     
 </body>
 </html>
