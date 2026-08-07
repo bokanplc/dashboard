@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>PRIME INVESTMENT GROUP PLC | Executive Financial &amp; Inventory Dashboard</title>
@@ -14,7 +15,21 @@
 <!-- =================================================================== -->
 <!-- SECTION 2 START: CSS STYLES                                         -->
 <!-- =================================================================== -->
-    <style>
+    <style> @media screen and (max-width: 768px) {
+  body {
+    padding: 8px;
+    font-size: 14px;
+  }
+  table {
+    display: block;
+    overflow-x: auto;
+    white-space: nowrap;
+  }
+  .dashboard-card, .container {
+    width: 100% !important;
+    margin: 0 auto 15px auto;
+  }
+}
         :root {
             /* Corporate Palette */
             --bg-main: #f8fafc;
