@@ -1,0 +1,1009 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PRIME INVESTMENT GROUP PLC | Executive Financial &amp; Inventory Dashboard</title>
+
+<!-- =================================================================== -->
+<!-- SECTION 1 END: HTML METADATA & TITLE                                 -->
+<!-- =================================================================== -->
+
+
+
+<!-- =================================================================== -->
+<!-- SECTION 2 START: CSS STYLES                                         -->
+<!-- =================================================================== -->
+    <style>
+        :root {
+            /* Corporate Palette */
+            --bg-main: #f8fafc;
+            --bg-card: #ffffff;
+            --bg-header: #0f172a;
+            --bg-sidebar: #0f172a;
+            --bg-subcard: #f1f5f9;
+            --accent-primary: #1e3a8a;   /* Corporate Navy */
+            --accent-blue: #2563eb;      /* Slate Blue Accent */
+            --accent-amber: #d97706;     /* Dark Amber Alert/Pending */
+            --accent-green: #15803d;     /* Deep Emerald Profit/Green */
+            --accent-red: #b91c1c;       /* Muted Crimson Loss/Red */
+            --accent-purple: #6b21a8;    /* Deep Purple Secondary Metric */
+            --text-main: #0f172a;
+            --text-muted: #64748b;
+            --border: #cbd5e1;
+            --table-header-bg: #0f172a;
+            --table-footer-bg: #e2e8f0;
+            --table-hover: #f1f5f9;
+            --sidebar-width: 250px;
+        }
+
+        * { box-sizing: border-box; margin: 0; padding: 0; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif; }
+        body { background: var(--bg-main); color: var(--text-main); font-size: 13px; display: flex; min-height: 100vh; }
+
+        /* LEFT SIDEBAR STYLES */
+        .sidebar {
+            width: var(--sidebar-width);
+            background: var(--bg-sidebar);
+            color: #fff;
+            display: flex;
+            flex-direction: column;
+            position: fixed;
+            top: 0;
+            bottom: 0;
+            left: 0;
+            z-index: 100;
+            border-right: 1px solid #1e293b;
+        }
+
+        .sidebar-brand {
+            padding: 20px 16px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-weight: 700;
+            font-size: 14px;
+            border-bottom: 1px solid #1e293b;
+            letter-spacing: 0.3px;
+        }
+        .logo-box { background: #3b82f6; color: #fff; padding: 4px 8px; border-radius: 4px; font-weight: 900; }
+
+        .sidebar-nav {
+            display: flex;
+            flex-direction: column;
+            gap: 4px;
+            padding: 16px 8px;
+            flex-grow: 1;
+        }
+
+        .tab-btn {
+            background: none;
+            border: none;
+            color: #94a3b8;
+            padding: 10px 14px;
+            font-weight: 600;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 12px;
+            text-align: left;
+            width: 100%;
+            transition: all 0.2s ease;
+        }
+        .tab-btn:hover { background: #1e293b; color: #f8fafc; }
+        .tab-btn.active { background: var(--accent-blue); color: #ffffff; }
+
+        .sidebar-user {
+            padding: 16px;
+            border-top: 1px solid #1e293b;
+            background: #090d16;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        /* MAIN CONTENT CONTAINER */
+        .main-wrapper {
+            margin-left: var(--sidebar-width);
+            flex-grow: 1;
+            padding: 24px;
+            width: calc(100% - var(--sidebar-width));
+        }
+
+        /* Top Header inside Content Area */
+        .top-bar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: var(--bg-card);
+            padding: 12px 20px;
+            border-radius: 6px;
+            margin-bottom: 20px;
+            border: 1px solid var(--border);
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+        }
+
+        .btn { background: #334155; color: #fff; border: 1px solid var(--border); padding: 6px 14px; border-radius: 4px; cursor: pointer; font-size: 12px; font-weight: 600; display: inline-flex; align-items: center; gap: 6px; }
+        .btn-amber { background: var(--accent-amber); color: #fff; border: none; }
+        .btn-blue { background: var(--accent-blue); color: #fff; border: none; }
+        .btn-red { background: var(--accent-red); color: #fff; border: none; padding: 4px 8px; font-size: 11px; }
+        .btn:hover { opacity: 0.9; }
+
+        /* Tab Content */
+        .tab-pane { display: none; }
+        .tab-pane.active { display: block; }
+
+        /* Section Containers */
+        .dashboard-section { margin-bottom: 24px; }
+        .section-header { font-size: 13px; font-weight: 800; color: var(--accent-primary); text-transform: uppercase; letter-spacing: 0.8px; margin-bottom: 12px; display: flex; align-items: center; gap: 8px; border-bottom: 2px solid var(--accent-primary); padding-bottom: 6px; }
+
+        /* Cards & Metrics */
+        .card { background: var(--bg-card); border-radius: 6px; border: 1px solid var(--border); padding: 16px; margin-bottom: 16px; box-shadow: 0 1px 3px rgba(0,0,0,0.05); }
+        .card h3 { font-size: 14px; font-weight: 700; color: var(--text-main); margin-bottom: 12px; }
+        .metrics-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 14px; }
+        .metric-card { background: var(--bg-subcard); border: 1px solid var(--border); border-left: 4px solid var(--accent-blue); padding: 14px; border-radius: 6px; }
+        .metric-title { font-size: 11px; font-weight: 700; color: var(--text-muted); text-transform: uppercase; margin-bottom: 4px; }
+        .metric-val { font-size: 20px; font-weight: 800; color: var(--accent-primary); }
+        .metric-sub { font-size: 11px; color: var(--text-muted); margin-top: 4px; }
+
+        /* Layout Grids */
+        .data-entry-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(400px, 1fr)); gap: 16px; }
+
+        /* Tables */
+        .table-wrap { overflow-x: auto; border: 1px solid var(--border); border-radius: 4px; }
+        table { width: 100%; border-collapse: collapse; font-size: 12px; background: var(--bg-card); }
+        th { background: var(--table-header-bg); color: #ffffff; padding: 9px 12px; text-align: left; font-weight: 600; text-transform: uppercase; border-bottom: 1px solid var(--border); font-size: 11px; letter-spacing: 0.3px; }
+        td { padding: 9px 12px; border-bottom: 1px solid var(--border); color: var(--text-main); }
+        tfoot td { background: var(--table-footer-bg); font-weight: 800; border-top: 2px solid var(--border); border-bottom: none; font-size: 12px; color: var(--text-main); }
+        tr:hover { background: var(--table-hover); }
+
+        /* Forms */
+        .form-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 12px; margin-bottom: 16px; }
+        .form-group label { display: block; font-size: 11px; font-weight: 600; color: var(--text-muted); margin-bottom: 4px; }
+        .form-group input, .form-group select { width: 100%; background: #ffffff; border: 1px solid var(--border); color: var(--text-main); padding: 7px; border-radius: 4px; font-size: 12px; }
+
+        /* Status Pills */
+        .pill { padding: 2px 8px; border-radius: 4px; font-size: 10px; font-weight: 700; display: inline-block; }
+        .pill-prime { background: #dbeafe; color: #1e40af; }
+        .pill-br { background: #f3e8ff; color: #6b21a8; }
+
+        /* Auth Modal Overlay */
+        #login-modal { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(15, 23, 42, 0.85); display: none; justify-content: center; align-items: center; z-index: 9999; }
+        .login-card { background: #ffffff; border: 1px solid var(--border); padding: 30px; border-radius: 8px; width: 340px; box-shadow: 0 10px 25px -5px rgba(0,0,0,0.1); }
+    </style>
+</head>
+<!-- =================================================================== -->
+<!-- SECTION 2 END: CSS STYLES                                           -->
+<!-- =================================================================== -->
+
+
+
+<!-- =================================================================== -->
+<!-- SECTION 3 START: NAVIGATION & LAYOUT STRUCTURE                      -->
+<!-- =================================================================== -->
+<body>
+
+    <!-- AUTHENTICATION MODAL OVERLAY -->
+    <div id="login-modal">
+        <div class="login-card">
+            <h2 style="font-size: 18px; margin-bottom: 8px; text-align: center; color: var(--accent-primary);">PRIME INVESTMENT PLC</h2>
+            <p style="font-size: 11px; color: var(--text-muted); margin-bottom: 20px; text-align: center;">System Authentication Gateway</p>
+            <div class="form-group" style="margin-bottom: 12px;">
+                <label>Select User Role</label>
+                <select id="login-role-select">
+                    <option value="admin">Administrator (Full Access)</option>
+                    <option value="clerk">Data Entry Clerk (Entry Only)</option>
+                    <option value="investor">Investor (Read-Only Access)</option>
+                </select>
+            </div>
+            <button class="btn btn-blue" style="width: 100%; justify-content: center; padding: 9px;" onclick="performLogin()">Sign In</button>
+        </div>
+    </div>
+
+    <!-- LEFT SIDEBAR NAVIGATION BAR -->
+    <aside class="sidebar">
+        <div class="sidebar-brand">
+            <span class="logo-box">P</span>
+            <span>PRIME GROUP PLC</span>
+        </div>
+        
+        <nav class="sidebar-nav" id="main-nav-tabs">
+            <button class="tab-btn nav-dash active" onclick="switchTab('dashboard', this)">Executive Dashboard</button>
+            <button class="tab-btn nav-report" onclick="switchTab('stockReport', this)">Stock Report &amp; Balances</button>
+            <button class="tab-btn nav-swap" onclick="switchTab('stockSwap', this)">BR Stock Swap</button>
+            <button class="tab-btn nav-entry" onclick="switchTab('dataEntry', this)">Data Entry Log</button>
+            <button class="tab-btn nav-tax" onclick="switchTab('taxObligations', this)">Tax Obligations</button>
+            <button class="tab-btn nav-exp" onclick="switchTab('expenseLedger', this)">Expense Ledger</button>
+        </nav>
+
+        <div class="sidebar-user">
+            <div>
+                <label style="font-size: 10px; color: #64748b; text-transform: uppercase; font-weight: 700; display: block; margin-bottom: 4px;">Active Profile</label>
+                <select id="role-selector" style="width: 100%; background: #1e293b; color: #fff; border: 1px solid #475569; padding: 6px; border-radius: 4px; font-size: 11px; font-weight: 700;" onchange="switchRole(this.value)">
+                    <option value="admin">ADMINISTRATOR</option>
+                    <option value="clerk">DATA ENTRY CLERK</option>
+                    <option value="investor">INVESTOR (READ-ONLY)</option>
+                </select>
+            </div>
+            <div style="display: flex; gap: 6px;">
+                <button class="btn btn-amber admin-only" style="flex: 1; justify-content: center; font-size: 10px;" onclick="resetData()">Reset</button>
+                <button class="btn btn-red" style="flex: 1; justify-content: center;" onclick="handleSignOut()">Sign Out</button>
+            </div>
+        </div>
+    </aside>
+
+    <!-- MAIN CONTENT AREA CONTAINER -->
+    <main class="main-wrapper">
+        <div class="top-bar">
+            <div>
+                <h1 style="font-size: 16px; font-weight: 700; color: var(--accent-primary);">Corporate Financial &amp; Inventory Portal</h1>
+                <p style="font-size: 11px; color: var(--text-muted);">Real-time multi-business ledger and stock audit system</p>
+            </div>
+        </div>
+<!-- =================================================================== -->
+<!-- SECTION 3 END: NAVIGATION & LAYOUT STRUCTURE                        -->
+<!-- =================================================================== -->
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!-- =================================================================== -->
+<!-- SECTION 4 START: DASHBOARDS & TAB PANELS CONTENT                    -->
+<!-- =================================================================== -->
+
+        <!-- TAB 1: EXECUTIVE DASHBOARD -->
+        <div id="dashboard" class="tab-pane active">
+            
+            <!-- SECTION 1: FINANCIAL PERFORMANCE & PROFITABILITY -->
+            <div class="dashboard-section">
+                <div class="section-header">💵 Financial Performance &amp; Profitability</div>
+                <div class="metrics-grid">
+                    <div class="metric-card" style="border-left-color: var(--accent-blue);">
+                        <div class="metric-title">Gross Revenue</div>
+                        <div class="metric-val" id="dash-gross-rev">ETB 3,326,600.00</div>
+                        <div class="metric-sub" id="dash-units-sold">Total Units Sold: 614 pcs</div>
+                    </div>
+                    <div class="metric-card" style="border-left-color: var(--accent-purple);">
+                        <div class="metric-title">Cost of Goods Sold (COGS)</div>
+                        <div class="metric-val" style="color: var(--accent-purple);" id="dash-cogs">ETB 2,640,200.00</div>
+                        <div class="metric-sub">Base Price @ ETB 4,300/unit</div>
+                    </div>
+                    <div class="metric-card" style="border-left-color: var(--accent-green);">
+                        <div class="metric-title">Gross Profit</div>
+                        <div class="metric-val" style="color: var(--accent-green);" id="dash-gross-profit">ETB 686,400.00</div>
+                        <div class="metric-sub" id="dash-gross-margin">Gross Margin: 20.6%</div>
+                    </div>
+                    <div class="metric-card" style="border-left-color: var(--accent-amber);">
+                        <div class="metric-title">Net Profit (Post-Tax &amp; Exp)</div>
+                        <div class="metric-val" style="color: var(--accent-amber);" id="dash-net-profit">ETB 302,401.00</div>
+                        <div class="metric-sub" id="dash-net-margin">Net Margin: 9.1%</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- SECTION 2: STOCK POSITION & WAREHOUSING -->
+            <div class="dashboard-section">
+                <div class="section-header">📦 Stock Position &amp; Warehouse Distribution</div>
+                <div class="metrics-grid">
+                    <div class="metric-card" style="border-left-color: var(--accent-blue);">
+                        <div class="metric-title">Total Available On-Hand</div>
+                        <div class="metric-val" id="dash-total-stock">586 pcs</div>
+                        <div class="metric-sub" id="dash-stock-loc">Kolfe: 140 | Mesalemya: 446</div>
+                    </div>
+                    <div class="metric-card" style="border-left-color: var(--accent-amber);">
+                        <div class="metric-title">In-Transit / Factory Stock</div>
+                        <div class="metric-val" style="color: var(--accent-amber);" id="dash-intransit">852 pcs</div>
+                        <div class="metric-sub">Pending Warehouse Arrival</div>
+                    </div>
+                    <div class="metric-card" style="border-left-color: var(--accent-green);">
+                        <div class="metric-title">BR / PRIME Stock Swap Balance</div>
+                        <div class="metric-val" id="dash-swap-bal" style="color: var(--accent-blue);">0 pcs</div>
+                        <div class="metric-sub" id="dash-swap-sub">Swap Account Settled</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- SECTION 3: EXPENSE & TAX AUDIT OBLIGATIONS -->
+            <div class="dashboard-section">
+                <div class="section-header">🏛️ Capital Expenses &amp; Tax Standing</div>
+                <div class="metrics-grid">
+                    <div class="metric-card" style="border-left-color: var(--accent-red);">
+                        <div class="metric-title">Total Expenses Paid</div>
+                        <div class="metric-val" style="color: var(--accent-red);" id="dash-total-exp">ETB 178,079.00</div>
+                        <div class="metric-sub" id="dash-renov-sub">Renovation: ETB 86,649.00</div>
+                    </div>
+                    <div class="metric-card" style="border-left-color: var(--accent-blue);">
+                        <div class="metric-title">Net VAT Status</div>
+                        <div class="metric-val" id="dash-net-vat" style="color: var(--accent-green);">ETB 824,550.00</div>
+                        <div class="metric-sub" id="dash-vat-sub">VAT Credit / Refund Due</div>
+                    </div>
+                    <div class="metric-card" style="border-left-color: var(--accent-purple);">
+                        <div class="metric-title">Withholding Tax (WHT 3%)</div>
+                        <div class="metric-val" style="color: var(--accent-purple);" id="dash-wht">ETB 99,798.00</div>
+                        <div class="metric-sub">Collected on B2B Sales</div>
+                    </div>
+                    <div class="metric-card" style="border-left-color: var(--accent-amber);">
+                        <div class="metric-title">Est. Corp Profit Tax (30%)</div>
+                        <div class="metric-val" style="color: var(--accent-amber);" id="dash-corp-tax">ETB 205,920.00</div>
+                        <div class="metric-sub">Provision for Income Tax</div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+        <!-- TAB 2: STOCK REPORT & BALANCES -->
+        <div id="stockReport" class="tab-pane">
+            <div class="card">
+                <h3>PRIME Plywood Stock Report Ledger</h3>
+                <div class="table-wrap">
+                    <table id="table-stock-report">
+                        <thead>
+                            <tr>
+                                <th>Date</th><th>Opening Stock</th><th>PRIME Factory Purch.</th><th>BR Factory Purch.</th><th>Shipped Kolfe</th><th>In-Transit / Factory</th><th>Kolfe -&gt; Mes.</th><th>Sales @ Kolfe</th><th>Sold By</th><th>Kolfe Bal.</th><th>Sales @ Mes.</th><th>Sold By</th>
+                            </tr>
+                        </thead>
+                        <tbody id="tbody-stock-report"></tbody>
+                        <tfoot>
+                            <tr id="tfoot-stock-report">
+                                <td>TOTALS</td><td>-</td><td>1500</td><td>552</td><td>1200</td><td>852</td><td>790</td><td>270</td><td>-</td><td>140</td><td>344</td><td>-</td>
+                            </tr>
+                        </tfoot>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+        <!-- TAB 3: BR STOCK SWAP -->
+        <div id="stockSwap" class="tab-pane">
+            <div class="card">
+                <h3>BR / PRIME Stock Swap Settlement Ledger</h3>
+                <div class="table-wrap">
+                    <table id="table-stock-swap">
+                        <thead>
+                            <tr>
+                                <th>Date / Event</th>
+                                <th>BR Factory Purch.</th>
+                                <th>In-Transit / Factory</th>
+                                <th>Borrowed PRIME Stock</th>
+                                <th>Replenished to PRIME</th>
+                                <th>Outstanding Stock Balance</th>
+                                <th>Settlement Notes</th>
+                            </tr>
+                        </thead>
+                        <tbody id="tbody-stock-swap"></tbody>
+                        <tfoot>
+                            <tr id="tfoot-stock-swap">
+                                <td>TOTALS</td><td>552</td><td>552</td><td style="color: var(--accent-red);">614</td><td style="color: var(--accent-green);">614</td><td style="color: var(--accent-amber);">0</td><td>Net Settlement Balance</td>
+                            </tr>
+                        </tfoot>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+        <!-- TAB 4: DATA ENTRY LOG -->
+        <div id="dataEntry" class="tab-pane">
+            <div class="data-entry-grid">
+                <div class="card form-container">
+                    <h3>1. Data Entry - Stock Movement &amp; Swap Form</h3>
+                    <form id="entry-form" onsubmit="addTransaction(event)">
+                        <div class="form-grid">
+                            <div class="form-group"><label>Transaction Date</label><input type="date" id="tx-date" required></div>
+                            <div class="form-group"><label>Purchased By / Funder</label><select id="tx-funder"><option value="PRIME">PRIME</option><option value="BR">BR</option></select></div>
+                            <div class="form-group"><label>Factory Purchase Qty</label><input type="number" id="tx-purch-qty" value="0"></div>
+                            <div class="form-group"><label>Unit Purchase Price (ETB)</label><input type="number" id="tx-purch-price" placeholder="4300" value="4300"></div>
+                            <div class="form-group"><label>Shipped to Kolfe Qty</label><input type="number" id="tx-ship-kolfe" value="0"></div>
+                            <div class="form-group"><label>Kolfe -&gt; Mesalemya Transfer Qty</label><input type="number" id="tx-transfer" value="0"></div>
+                            <div class="form-group"><label>Sales @ Kolfe Qty</label><input type="number" id="tx-sales-kolfe" value="0"></div>
+                            <div class="form-group"><label>Sales @ Mesalemya Shop Qty</label><input type="number" id="tx-sales-mes" value="0"></div>
+                            <div class="form-group"><label>Sold By (Company)</label><select id="tx-soldby"><option value="BR">BR</option><option value="PRIME">PRIME</option></select></div>
+                            <div class="form-group"><label>Unit Sales Price (ETB)</label><input type="number" id="tx-sales-price" placeholder="5400" value="5400"></div>
+                        </div>
+                        <button type="submit" class="btn btn-blue" style="width: 100%; justify-content: center; padding: 9px;">Submit Stock Entry</button>
+                    </form>
+                </div>
+
+                <div class="card form-container">
+                    <h3>2. Data Entry - Standard Expenses Form</h3>
+                    <form id="expense-form" onsubmit="addExpense(event)">
+                        <div class="form-grid">
+                            <div class="form-group"><label>Expense Date</label><input type="date" id="exp-date" required></div>
+                            <div class="form-group">
+                                <label>Expense Category</label>
+                                <select id="exp-category" required>
+                                    <optgroup label="CAPITAL EXPENDITURES &amp; RENOVATIONS">
+                                        <option value="Leasehold Improvements (Mesalemya Renovation)">Leasehold Improvements (Mesalemya Renovation)</option>
+                                        <option value="Fixtures &amp; Store Furniture">Fixtures &amp; Store Furniture</option>
+                                    </optgroup>
+                                    <optgroup label="FREIGHT, FULFILLMENT &amp; LOGISTICS">
+                                        <option value="Freight In (Factory to Kolfe Trucking)">Freight In (Factory to Kolfe Trucking)</option>
+                                        <option value="Freight Out (Customer Delivery Transport)">Freight Out (Customer Delivery Transport)</option>
+                                        <option value="Inter-Warehouse Transfer Transport (Kolfe to Mes.)">Inter-Warehouse Transfer Transport (Kolfe to Mes.)</option>
+                                        <option value="Loading &amp; Offloading Labor Fees">Loading &amp; Offloading Labor Fees</option>
+                                        <option value="Demurrage &amp; Storage Charges">Demurrage &amp; Storage Charges</option>
+                                    </optgroup>
+                                    <optgroup label="OPERATING &amp; OCCUPANCY EXPENSES">
+                                        <option value="Warehouse Rent (Kolfe Yard)">Warehouse Rent (Kolfe Yard)</option>
+                                        <option value="Retail Store Rent (Mesalemya Shop)">Retail Store Rent (Mesalemya Shop)</option>
+                                        <option value="Utilities (Power, Water, Refuse)">Utilities (Power, Water, Refuse)</option>
+                                        <option value="Store &amp; Warehouse Security">Store &amp; Warehouse Security</option>
+                                        <option value="Facility Repairs &amp; Maintenance">Facility Repairs &amp; Maintenance</option>
+                                    </optgroup>
+                                    <optgroup label="SELLING &amp; DIRECT PERSONNEL EXPENSES">
+                                        <option value="Sales Commissions &amp; Incentives">Sales Commissions &amp; Incentives</option>
+                                        <option value="Casual Day Labor &amp; Porter Wages">Casual Day Labor &amp; Porter Wages</option>
+                                        <option value="Marketing, Signage &amp; Promotions">Marketing, Signage &amp; Promotions</option>
+                                    </optgroup>
+                                    <optgroup label="GENERAL &amp; ADMINISTRATIVE (G&amp;A)">
+                                        <option value="Staff Payroll &amp; Salaries">Staff Payroll &amp; Salaries</option>
+                                        <option value="Legal, Accounting &amp; Audit Fees">Legal, Accounting &amp; Audit Fees</option>
+                                        <option value="Bank Service Fees &amp; Transfer Costs">Bank Service Fees &amp; Transfer Costs</option>
+                                        <option value="Printing, Stationery &amp; Office Supplies">Printing, Stationery &amp; Office Supplies</option>
+                                        <option value="Phone, Mobile Airtime &amp; Internet">Phone, Mobile Airtime &amp; Internet</option>
+                                        <option value="Business Travel &amp; Daily Meal Allowances">Business Travel &amp; Daily Meal Allowances</option>
+                                        <option value="Municipal Licenses, Permits &amp; Taxes">Municipal Licenses, Permits &amp; Taxes</option>
+                                        <option value="Other Miscellaneous G&amp;A Expenses">Other Miscellaneous G&amp;A Expenses</option>
+                                    </optgroup>
+                                </select>
+                            </div>
+                            <div class="form-group"><label>Amount (ETB)</label><input type="number" id="exp-amount" placeholder="e.g. 15000" step="0.01" required></div>
+                            <div class="form-group">
+                                <label>Paid By / Funder</label>
+                                <select id="exp-funder">
+                                    <option value="PRIME PLC">PRIME PLC</option>
+                                    <option value="BR PLC">BR PLC</option>
+                                </select>
+                            </div>
+                            <div class="form-group" style="grid-column: span 2;">
+                                <label>Description / Payee Details</label>
+                                <input type="text" id="exp-desc" placeholder="e.g. Paid to Driver Worku for truck freight" required>
+                            </div>
+                        </div>
+                        <button type="submit" class="btn btn-amber" style="width: 100%; justify-content: center; padding: 9px;">Submit Expense Entry</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+
+        <!-- TAB 5: TAX OBLIGATIONS -->
+        <div id="taxObligations" class="tab-pane">
+            <!-- SUMMARY CARDS GRID -->
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-bottom: 20px;">
+                
+                <!-- SUMMARY CARD 1: VAT & WHT OVERVIEW -->
+                <div class="card">
+                    <h3>Value Added Tax (VAT 15%) &amp; Withholding Tax (WHT 3%)</h3>
+                    <table style="width: 100%; font-size: 12px; border-collapse: collapse;">
+                        <tbody>
+                            <tr style="border-bottom: 1px solid var(--border);">
+                                <td style="padding: 8px 0;">Output VAT Collected from Customers (15%):</td>
+                                <td style="text-align: right; font-weight: 700; color: var(--accent-blue);">ETB 498,990.00</td>
+                            </tr>
+                            <tr style="border-bottom: 1px solid var(--border);">
+                                <td style="padding: 8px 0;">Input VAT Paid on Purchases (15%):</td>
+                                <td style="text-align: right; font-weight: 700; color: var(--accent-green);">ETB 1,323,540.00</td>
+                            </tr>
+                            <tr style="border-bottom: 1px solid var(--border); font-weight: 800;">
+                                <td style="padding: 8px 0; color: var(--accent-green);">Net VAT Status:</td>
+                                <td style="text-align: right; font-weight: 800; color: var(--accent-green);">ETB 824,550.00 (VAT Credit / Refund)</td>
+                            </tr>
+                            <tr style="border-bottom: 1px solid var(--border);">
+                                <td style="padding: 8px 0;">WHT Paid on Purchases (3%):</td>
+                                <td style="text-align: right; font-weight: 700; color: var(--accent-blue);">ETB 264,708.00</td>
+                            </tr>
+                            <tr>
+                                <td style="padding: 8px 0;">WHT Collected on Sales (3%):</td>
+                                <td style="text-align: right; font-weight: 700; color: var(--accent-amber);">ETB 99,798.00</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <!-- SUMMARY CARD 2: CORPORATE PROFIT TAX BREAKDOWN -->
+                <div class="card">
+                    <h3>Corporate Profit Tax Breakdown (30%)</h3>
+                    <table style="width: 100%; font-size: 12px; border-collapse: collapse;">
+                        <tbody>
+                            <tr style="border-bottom: 1px solid var(--border);">
+                                <td style="padding: 8px 0;">Gross Sales Revenue:</td>
+                                <td style="text-align: right; font-weight: 700;">ETB 3,326,600.00</td>
+                            </tr>
+                            <tr style="border-bottom: 1px solid var(--border);">
+                                <td style="padding: 8px 0;">Cost of Goods Sold (COGS @ ETB 4,300):</td>
+                                <td style="text-align: right; font-weight: 700; color: var(--accent-red);">ETB 2,640,200.00</td>
+                            </tr>
+                            <tr style="border-bottom: 1px solid var(--border); font-weight: 800;">
+                                <td style="padding: 8px 0; color: var(--accent-green);">Gross Profit:</td>
+                                <td style="text-align: right; font-weight: 800; color: var(--accent-green);">ETB 686,400.00</td>
+                            </tr>
+                            <tr>
+                                <td style="padding: 12px 0 8px 0; font-weight: 800;">30% Corporate Profit Tax Payable:</td>
+                                <td style="text-align: right; font-weight: 800; color: var(--accent-amber);">ETB 205,920.00</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+            </div>
+
+            <!-- AUDIT TABLE -->
+            <div class="card">
+                <h3>Detailed Purchase &amp; Sales Tax Audit Breakdown (VAT 15% &amp; WHT 3%)</h3>
+                <div class="table-wrap">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>DATE</th>
+                                <th>PURCH. QTY</th>
+                                <th>PURCH. PRICE</th>
+                                <th>PURCH. BASE (ETB)</th>
+                                <th>INPUT VAT (15%)</th>
+                                <th>PURCH. WHT (3%)</th>
+                                <th>SALES QTY</th>
+                                <th>SALES PRICE</th>
+                                <th>SALES BASE (ETB)</th>
+                                <th>OUTPUT VAT (15%)</th>
+                                <th>SALES WHT (3%)</th>
+                                <th>NET VAT (DAILY)</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>2026-06-25</td>
+                                <td>1500</td>
+                                <td>4300</td>
+                                <td>ETB 6,450,000</td>
+                                <td style="color: var(--accent-blue);">ETB 967,500</td>
+                                <td>ETB 193,500</td>
+                                <td>0</td>
+                                <td>-</td>
+                                <td>-</td>
+                                <td>-</td>
+                                <td>-</td>
+                                <td style="color: var(--accent-green); font-weight:700;">ETB -967,500</td>
+                            </tr>
+                            <tr>
+                                <td>2026-06-30</td>
+                                <td>0</td>
+                                <td>-</td>
+                                <td>-</td>
+                                <td>-</td>
+                                <td>-</td>
+                                <td>120</td>
+                                <td>5200</td>
+                                <td>ETB 624,000</td>
+                                <td style="color: var(--accent-blue);">ETB 93,600</td>
+                                <td>ETB 18,720</td>
+                                <td style="color: var(--accent-amber); font-weight:700;">ETB 93,600</td>
+                            </tr>
+                            <tr>
+                                <td>2026-07-15</td>
+                                <td>0</td>
+                                <td>-</td>
+                                <td>-</td>
+                                <td>-</td>
+                                <td>-</td>
+                                <td>0</td>
+                                <td>-</td>
+                                <td>-</td>
+                                <td>-</td>
+                                <td>-</td>
+                                <td>-</td>
+                            </tr>
+                            <tr>
+                                <td>2026-07-16</td>
+                                <td>0</td>
+                                <td>-</td>
+                                <td>-</td>
+                                <td>-</td>
+                                <td>-</td>
+                                <td>0</td>
+                                <td>-</td>
+                                <td>-</td>
+                                <td>-</td>
+                                <td>-</td>
+                                <td>-</td>
+                            </tr>
+                            <tr>
+                                <td>2026-07-18</td>
+                                <td>0</td>
+                                <td>-</td>
+                                <td>-</td>
+                                <td>-</td>
+                                <td>-</td>
+                                <td>0</td>
+                                <td>-</td>
+                                <td>-</td>
+                                <td>-</td>
+                                <td>-</td>
+                                <td>-</td>
+                            </tr>
+                            <tr>
+                                <td>2026-07-28</td>
+                                <td>0</td>
+                                <td>4300</td>
+                                <td>-</td>
+                                <td>-</td>
+                                <td>-</td>
+                                <td>17</td>
+                                <td>5400</td>
+                                <td>ETB 91,800</td>
+                                <td style="color: var(--accent-blue);">ETB 13,770</td>
+                                <td>ETB 2,754</td>
+                                <td style="color: var(--accent-amber); font-weight:700;">ETB 13,770</td>
+                            </tr>
+                            <tr>
+                                <td>2026-07-30</td>
+                                <td>300</td>
+                                <td>4300</td>
+                                <td>ETB 1,290,000</td>
+                                <td style="color: var(--accent-blue);">ETB 193,500</td>
+                                <td>ETB 38,700</td>
+                                <td>200</td>
+                                <td>5500</td>
+                                <td>ETB 1,100,000</td>
+                                <td style="color: var(--accent-blue);">ETB 165,000</td>
+                                <td>ETB 33,000</td>
+                                <td style="color: var(--accent-green); font-weight:700;">ETB -28,500</td>
+                            </tr>
+                            <tr>
+                                <td>2026-07-31</td>
+                                <td>125</td>
+                                <td>4300</td>
+                                <td>ETB 537,500</td>
+                                <td style="color: var(--accent-blue);">ETB 80,625</td>
+                                <td>ETB 16,125</td>
+                                <td>150</td>
+                                <td>5500</td>
+                                <td>ETB 825,000</td>
+                                <td style="color: var(--accent-blue);">ETB 123,750</td>
+                                <td>ETB 24,750</td>
+                                <td style="color: var(--accent-amber); font-weight:700;">ETB 43,125</td>
+                            </tr>
+                            <tr>
+                                <td>2026-08-04</td>
+                                <td>17</td>
+                                <td>4300</td>
+                                <td>ETB 73,100</td>
+                                <td style="color: var(--accent-blue);">ETB 10,965</td>
+                                <td>ETB 2,193</td>
+                                <td>17</td>
+                                <td>5400</td>
+                                <td>ETB 91,800</td>
+                                <td style="color: var(--accent-blue);">ETB 13,770</td>
+                                <td>ETB 2,754</td>
+                                <td style="color: var(--accent-amber); font-weight:700;">ETB 2,805</td>
+                            </tr>
+                            <tr>
+                                <td>2026-08-04</td>
+                                <td>110</td>
+                                <td>4300</td>
+                                <td>ETB 473,000</td>
+                                <td style="color: var(--accent-blue);">ETB 70,950</td>
+                                <td>ETB 14,190</td>
+                                <td>110</td>
+                                <td>5400</td>
+                                <td>ETB 594,000</td>
+                                <td style="color: var(--accent-blue);">ETB 89,100</td>
+                                <td>ETB 17,820</td>
+                                <td style="color: var(--accent-amber); font-weight:700;">ETB 18,150</td>
+                            </tr>
+                            <tr>
+                                <td>2026-08-05</td>
+                                <td>0</td>
+                                <td>-</td>
+                                <td>-</td>
+                                <td>-</td>
+                                <td>-</td>
+                                <td>0</td>
+                                <td>-</td>
+                                <td>-</td>
+                                <td>-</td>
+                                <td>-</td>
+                                <td>-</td>
+                            </tr>
+                        </tbody>
+                        <tfoot>
+                            <tr>
+                                <td>TOTALS</td>
+                                <td>2052</td>
+                                <td>-</td>
+                                <td>ETB 8,823,600</td>
+                                <td style="color: var(--accent-blue);">ETB 1,323,540</td>
+                                <td>ETB 264,708</td>
+                                <td>614</td>
+                                <td>-</td>
+                                <td>ETB 3,326,600</td>
+                                <td style="color: var(--accent-blue);">ETB 498,990</td>
+                                <td>ETB 99,798</td>
+                                <td style="color: var(--accent-green); font-weight:800;">ETB 824,550</td>
+                            </tr>
+                        </tfoot>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+        <!-- TAB 6: EXPENSE LEDGER -->
+        <div id="expenseLedger" class="tab-pane">
+            <div class="card">
+                <h3>Operating &amp; Capital Expenses Ledger</h3>
+                <div class="table-wrap">
+                    <table id="table-expenses">
+                        <thead>
+                            <tr>
+                                <th>Date</th><th>Category</th><th>Description / Payee</th><th>Paid By</th><th>Amount (ETB)</th>
+                            </tr>
+                        </thead>
+                        <tbody id="tbody-expenses"></tbody>
+                        <tfoot>
+                            <tr>
+                                <td colspan="4">TOTAL EXPENSES PAID</td>
+                                <td style="color: var(--accent-red);" id="tfoot-exp-total">ETB 178,079.00</td>
+                            </tr>
+                        </tfoot>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+    </main>
+<!-- =================================================================== -->
+<!-- SECTION 4 END: DASHBOARDS & TAB PANELS CONTENT                      -->
+<!-- =================================================================== -->
+
+
+
+
+
+
+
+
+
+
+
+
+<!-- =================================================================== -->
+<!-- SECTION 5 START: JAVASCRIPT LOGIC & APPLICATION STATE              -->
+<!-- =================================================================== -->
+    <script>
+        // Data Store State
+        let stockReportData = [
+            { date: "2026-06-25", open: 0, primePurch: 1500, brPurch: 0, shipKolfe: 1200, inTransit: 300, transfer: 0, salesKolfe: 0, soldBy1: "-", kolfeBal: 1200, salesMes: 0, soldBy2: "-" },
+            { date: "2026-06-30", open: 0, primePurch: 0, brPurch: 0, shipKolfe: 0, inTransit: 0, transfer: 0, salesKolfe: 120, soldBy1: "BR", kolfeBal: 1080, salesMes: 0, soldBy2: "BR" },
+            { date: "2026-07-15", open: 0, primePurch: 0, brPurch: 0, shipKolfe: 0, inTransit: 0, transfer: 150, salesKolfe: 0, soldBy1: "-", kolfeBal: 930, salesMes: 0, soldBy2: "-" },
+            { date: "2026-07-16", open: 0, primePurch: 0, brPurch: 0, shipKolfe: 0, inTransit: 0, transfer: 150, salesKolfe: 0, soldBy1: "-", kolfeBal: 780, salesMes: 0, soldBy2: "-" },
+            { date: "2026-07-18", open: 0, primePurch: 0, brPurch: 0, shipKolfe: 0, inTransit: 0, transfer: 150, salesKolfe: 0, soldBy1: "-", kolfeBal: 630, salesMes: 0, soldBy2: "-" },
+            { date: "2026-07-28", open: 0, primePurch: 0, brPurch: 0, shipKolfe: 0, inTransit: 0, transfer: 0, salesKolfe: 0, soldBy1: "BR", kolfeBal: 630, salesMes: 17, soldBy2: "BR" },
+            { date: "2026-07-30", open: 0, primePurch: 0, brPurch: 300, shipKolfe: 0, inTransit: 300, transfer: 0, salesKolfe: 0, soldBy1: "BR", kolfeBal: 630, salesMes: 200, soldBy2: "BR" },
+            { date: "2026-07-31", open: 0, primePurch: 0, brPurch: 125, shipKolfe: 0, inTransit: 125, transfer: 170, salesKolfe: 150, soldBy1: "BR", kolfeBal: 310, salesMes: 0, soldBy2: "BR" },
+            { date: "2026-08-04", open: 0, primePurch: 0, brPurch: 17, shipKolfe: 0, inTransit: 17, transfer: 0, salesKolfe: 0, soldBy1: "BR", kolfeBal: 310, salesMes: 17, soldBy2: "BR" },
+            { date: "2026-08-04", open: 0, primePurch: 0, brPurch: 110, shipKolfe: 0, inTransit: 110, transfer: 0, salesKolfe: 0, soldBy1: "BR", kolfeBal: 310, salesMes: 110, soldBy2: "BR" },
+            { date: "2026-08-05", open: 0, primePurch: 0, brPurch: 0, shipKolfe: 0, inTransit: 0, transfer: 170, salesKolfe: 0, soldBy1: "-", kolfeBal: 140, salesMes: 0, soldBy2: "-" }
+        ];
+
+        let stockSwapData = [
+            { date: "2026-06-25", brPurch: 0, inTransit: 0, borrowed: 0, replenished: 0, balance: 0, notes: "Replenishment / Factory Direct" },
+            { date: "2026-06-30", brPurch: 0, inTransit: 0, borrowed: 120, replenished: 62, balance: 58, notes: "Stock Borrowed for Sales" },
+            { date: "2026-07-15", brPurch: 0, inTransit: 0, borrowed: 0, replenished: 0, balance: 58, notes: "Replenishment / Factory Direct" },
+            { date: "2026-07-16", brPurch: 0, inTransit: 0, borrowed: 0, replenished: 0, balance: 58, notes: "Replenishment / Factory Direct" },
+            { date: "2026-07-18", brPurch: 0, inTransit: 0, borrowed: 0, replenished: 0, balance: 58, notes: "Replenishment / Factory Direct" },
+            { date: "2026-07-28", brPurch: 0, inTransit: 0, borrowed: 17, replenished: 0, balance: 75, notes: "Stock Borrowed for Sales" },
+            { date: "2026-07-30", brPurch: 300, inTransit: 300, borrowed: 200, replenished: 300, balance: -25, notes: "Stock Borrowed for Sales" },
+            { date: "2026-07-31", brPurch: 125, inTransit: 125, borrowed: 150, replenished: 125, balance: 0, notes: "Stock Borrowed for Sales" },
+            { date: "2026-08-04", brPurch: 17, inTransit: 17, borrowed: 17, replenished: 17, balance: 0, notes: "Stock Borrowed for Sales" },
+            { date: "2026-08-04", brPurch: 110, inTransit: 110, borrowed: 110, replenished: 110, balance: 0, notes: "Stock Borrowed for Sales" },
+            { date: "2026-08-05", brPurch: 0, inTransit: 0, borrowed: 0, replenished: 0, balance: 0, notes: "Replenishment / Factory Direct" }
+        ];
+
+        // Real Detailed Corporate Expense Ledger Entries
+        let expenseData = [
+            { date: "2026-07-12", category: "Leasehold Improvements (Mesalemia Renovation)", desc: "Storefront branding, metal shutter repair, and electrical work", funder: "PRIME", amount: 35000.00 },
+            { date: "2026-07-15", category: "Inter-Warehouse Transfer Transport", desc: "Trucking payment to transport 150 pcs from Kolfe to Mesalemya", funder: "PRIME", amount: 12000.00 },
+            { date: "2026-07-15", category: "Loading & Offloading Fees", desc: "Casual labor fee for loading/offloading plywood at Mesalemya shop", funder: "PRIME", amount: 4500.00 },
+            { date: "2026-07-30", category: "Leasehold Improvements (Mesalemia Renovation)", desc: "Front door opening advance", funder: "PRIME", amount: 6000.00 },
+            { date: "2026-08-01", category: "Leasehold Improvements (Mesalemia Renovation)", desc: "door opening", funder: "PRIME", amount: 4000.00 },
+            { date: "2026-08-01", category: "Leasehold Improvements (Mesalemia Renovation)", desc: "door opening", funder: "BR", amount: 2000.00 },
+            { date: "2026-08-03", category: "Leasehold Improvements (Mesalemia Renovation)", desc: "Morale for partition", funder: "BR", amount: 8500.00 },
+            { date: "2026-07-31", category: "Leasehold Improvements (Mesalemia Renovation)", desc: "morale for plywood placement", funder: "BR", amount: 1800.00 },
+            { date: "2026-08-05", category: "Leasehold Improvements (Mesalemia Renovation)", desc: "semaru advance labor partition", funder: "BR", amount: 800.00 },
+            { date: "2026-08-05", category: "Utilities (Electricity & Water)", desc: "electricity", funder: "BR", amount: 400.00 },
+            { date: "2026-08-05", category: "Leasehold Improvements (Mesalemia Renovation)", desc: "morale for partition", funder: "PRIME", amount: 1899.00 },
+            { date: "2026-08-05", category: "Leasehold Improvements (Mesalemia Renovation)", desc: "Compensato for partition cover", funder: "PRIME", amount: 15600.00 },
+            { date: "2026-06-30", category: "Loading & Offloading Fees", desc: "mesalemiya sales to Temsaer Realestate", funder: "BR", amount: 2400.00 },
+            { date: "2026-06-30", category: "Freight Out (Distribution Freight)", desc: "transportation to Temsaer Realestate Bole Altes", funder: "BR", amount: 12000.00 },
+            { date: "2026-07-11", category: "Loading & Offloading Fees", desc: "loading at kolfe", funder: "BR", amount: 3000.00 },
+            { date: "2026-07-11", category: "Freight Out (Distribution Freight)", desc: "Matusala Realestate", funder: "PRIME", amount: 12000.00 },
+            { date: "2026-07-28", category: "Freight Out (Distribution Freight)", desc: "Transportation", funder: "BR", amount: 5000.00 },
+            { date: "2026-07-28", category: "Loading & Offloading Fees", desc: "loading", funder: "BR", amount: 340.00 },
+            { date: "2026-07-30", category: "Loading & Offloading Fees", desc: "loading at mesalemya MEtal", funder: "BR", amount: 4000.00 },
+            { date: "2026-07-30", category: "Freight Out (Distribution Freight)", desc: "FST", funder: "BR", amount: 17000.00 },
+            { date: "2026-08-04", category: "Freight Out (Distribution Freight)", desc: "transporation", funder: "BR", amount: 5000.00 },
+            { date: "2026-08-04", category: "Loading & Offloading Fees", desc: "loading mesalmya", funder: "BR", amount: 340.00 },
+            { date: "2026-08-04", category: "Loading & Offloading Fees", desc: "loading Gonder", funder: "BR", amount: 2200.00 },
+            { date: "2026-08-04", category: "Freight Out (Distribution Freight)", desc: "transportation", funder: "BR", amount: 10000.00 },
+            { date: "2026-08-03", category: "Leasehold Improvements (Mesalemia Renovation)", desc: "advance semeru partition labor", funder: "BR", amount: 2000.00 },
+            { date: "2026-08-03", category: "Leasehold Improvements (Mesalemia Renovation)", desc: "sand", funder: "BR", amount: 2000.00 },
+            { date: "2026-08-04", category: "Repairs & Maintenance", desc: "Divider", funder: "BR", amount: 1250.00 },
+            { date: "2026-07-23", category: "Leasehold Improvements (Mesalemia Renovation)", desc: "sand", funder: "BR", amount: 2350.00 },
+            { date: "2026-07-25", category: "Leasehold Improvements (Mesalemia Renovation)", desc: "sand", funder: "BR", amount: 4700.00 }
+        ];
+
+        // Rendering Functions
+        function renderStockReport() {
+            const tbody = document.getElementById('tbody-stock-report');
+            tbody.innerHTML = '';
+            stockReportData.forEach(row => {
+                tbody.innerHTML += `
+                    <tr>
+                        <td>${row.date}</td>
+                        <td>${row.open}</td>
+                        <td>${row.primePurch}</td>
+                        <td>${row.brPurch}</td>
+                        <td>${row.shipKolfe}</td>
+                        <td>${row.inTransit}</td>
+                        <td>${row.transfer}</td>
+                        <td>${row.salesKolfe}</td>
+                        <td>${row.soldBy1}</td>
+                        <td style="color: var(--accent-blue); font-weight: 700;">${row.kolfeBal}</td>
+                        <td>${row.salesMes}</td>
+                        <td>${row.soldBy2}</td>
+                    </tr>`;
+            });
+        }
+
+        function renderStockSwap() {
+            const tbody = document.getElementById('tbody-stock-swap');
+            tbody.innerHTML = '';
+            stockSwapData.forEach(row => {
+                tbody.innerHTML += `
+                    <tr>
+                        <td>${row.date}</td>
+                        <td>${row.brPurch}</td>
+                        <td>${row.inTransit}</td>
+                        <td style="color: var(--accent-red); font-weight: 700;">${row.borrowed}</td>
+                        <td style="color: var(--accent-green); font-weight: 700;">${row.replenished}</td>
+                        <td style="color: ${row.balance < 0 ? 'var(--accent-green)' : 'var(--accent-amber)'}; font-weight: 700;">${row.balance}</td>
+                        <td>${row.notes}</td>
+                    </tr>`;
+            });
+        }
+
+        function renderExpenses() {
+            const tbody = document.getElementById('tbody-expenses');
+            tbody.innerHTML = '';
+            let total = 0;
+            expenseData.forEach((row, index) => {
+                total += row.amount;
+                tbody.innerHTML += `
+                    <tr>
+                        <td>${row.date}</td>
+                        <td>${row.category}</td>
+                        <td>${row.desc}</td>
+                        <td>${row.funder}</td>
+                        <td style="font-weight:600;">ETB ${row.amount.toLocaleString('en-US', {minimumFractionDigits: 2})}</td>
+                        <td class="admin-only"><button class="btn btn-red" onclick="deleteExpense(${index})">Delete</button></td>
+                    </tr>`;
+            });
+            document.getElementById('tfoot-exp-total').innerText = 'ETB ' + total.toLocaleString('en-US', {minimumFractionDigits: 2});
+            document.getElementById('dash-total-exp').innerText = 'ETB ' + total.toLocaleString('en-US', {minimumFractionDigits: 2});
+        }
+
+        function deleteExpense(index) {
+            if (confirm("Are you sure you want to delete this expense record?")) {
+                expenseData.splice(index, 1);
+                renderExpenses();
+            }
+        }
+
+        // Tab Navigation
+        function switchTab(tabId, btn) {
+            document.querySelectorAll('.tab-pane').forEach(el => el.classList.remove('active'));
+            document.querySelectorAll('.tab-btn').forEach(el => el.classList.remove('active'));
+            document.getElementById(tabId).classList.add('active');
+            btn.classList.add('active');
+        }
+
+        // Role-Based UI Control
+        function switchRole(role) {
+            document.querySelectorAll('.admin-only').forEach(el => {
+                el.style.display = (role === 'admin') ? 'inline-block' : 'none';
+            });
+            const navEntry = document.querySelector('.nav-entry');
+            if (role === 'investor') {
+                navEntry.style.display = 'none';
+                switchTab('dashboard', document.querySelector('.nav-dash'));
+            } else if (role === 'clerk') {
+                navEntry.style.display = 'inline-block';
+                switchTab('dataEntry', navEntry);
+            } else {
+                navEntry.style.display = 'inline-block';
+            }
+        }
+
+        function performLogin() {
+            const selectedRole = document.getElementById('login-role-select').value;
+            document.getElementById('role-selector').value = selectedRole;
+            switchRole(selectedRole);
+            document.getElementById('login-modal').style.display = 'none';
+        }
+
+        function handleSignOut() {
+            document.getElementById('login-modal').style.display = 'flex';
+        }
+
+        // Data Management Handlers
+        function addTransaction(e) {
+            e.preventDefault();
+            const date = document.getElementById('tx-date').value;
+            const funder = document.getElementById('tx-funder').value;
+            const purchQty = parseInt(document.getElementById('tx-purch-qty').value) || 0;
+            const shipKolfe = parseInt(document.getElementById('tx-ship-kolfe').value) || 0;
+            const transfer = parseInt(document.getElementById('tx-transfer').value) || 0;
+            const salesKolfe = parseInt(document.getElementById('tx-sales-kolfe').value) || 0;
+            const salesMes = parseInt(document.getElementById('tx-sales-mes').value) || 0;
+            const soldBy = document.getElementById('tx-soldby').value;
+
+            let prevBal = stockReportData.length > 0 ? stockReportData[stockReportData.length - 1].kolfeBal : 0;
+            let newKolfeBal = prevBal + shipKolfe - transfer - salesKolfe;
+
+            stockReportData.push({
+                date, open: 0,
+                primePurch: funder === 'PRIME' ? purchQty : 0,
+                brPurch: funder === 'BR' ? purchQty : 0,
+                shipKolfe, inTransit: purchQty - shipKolfe,
+                transfer, salesKolfe, soldBy1: salesKolfe > 0 ? soldBy : '-',
+                kolfeBal: newKolfeBal, salesMes, soldBy2: salesMes > 0 ? soldBy : '-'
+            });
+
+            renderStockReport();
+            alert('Stock Entry Added Successfully');
+            document.getElementById('entry-form').reset();
+        }
+
+        function addExpense(e) {
+            e.preventDefault();
+            const date = document.getElementById('exp-date').value;
+            const category = document.getElementById('exp-category').value;
+            const desc = document.getElementById('exp-desc').value;
+            const funder = document.getElementById('exp-funder').value;
+            const amount = parseFloat(document.getElementById('exp-amount').value) || 0;
+
+            expenseData.push({ date, category, desc, funder, amount });
+            renderExpenses();
+            alert('Expense Entry Logged Successfully');
+            document.getElementById('expense-form').reset();
+        }
+
+        function resetData() {
+            if (confirm('Are you sure you want to reset all data back to original defaults?')) {
+                location.reload();
+            }
+        }
+
+        // Initial Load
+        window.onload = function() {
+            renderStockReport();
+            renderStockSwap();
+            renderExpenses();
+            // Default active date for inputs
+            const today = new Date().toISOString().split('T')[0];
+            document.getElementById('tx-date').value = today;
+            document.getElementById('exp-date').value = today;
+        };
+    </script>
+</body>
+</html>
+<!-- =================================================================== -->
+<!-- SECTION 5 END: JAVASCRIPT LOGIC & APPLICATION STATE                -->
+<!-- =================================================================== -->
