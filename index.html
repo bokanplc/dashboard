@@ -15,21 +15,7 @@
 <!-- =================================================================== -->
 <!-- SECTION 2 START: CSS STYLES                                         -->
 <!-- =================================================================== -->
-    <style> @media screen and (max-width: 768px) {
-  body {
-    padding: 8px;
-    font-size: 14px;
-  }
-  table {
-    display: block;
-    overflow-x: auto;
-    white-space: nowrap;
-  }
-  .dashboard-card, .container {
-    width: 100% !important;
-    margin: 0 auto 15px auto;
-  }
-}
+    <style> 
         :root {
             /* Corporate Palette */
             --bg-main: #f8fafc;
@@ -1017,19 +1003,28 @@
             document.getElementById('exp-date').value = today;
         };
     </script>
+
+
+
+
     <style>
   @media screen and (max-width: 768px) {
+    /* Prevent overall page horizontal stretching */
     html, body {
       width: 100% !important;
       overflow-x: hidden !important;
-      padding: 5px !important;
       margin: 0 !important;
-      font-size: 13px !important;
+      padding: 0 !important;
     }
-    div, section, main, article, header, nav, iframe {
-      max-width: 100% !important;
-      box-sizing: border-box !important;
+
+    /* Keep sidebars and main content aligned cleanly to the left */
+    body, main, section, container, .sidebar, .menu, nav {
+      text-align: left !important;
+      align-items: flex-start !important;
+      justify-content: flex-start !important;
     }
+
+    /* Make wide tables side-scrollable without expanding the screen width */
     table {
       display: block !important;
       width: 100% !important;
@@ -1037,8 +1032,16 @@
       white-space: nowrap !important;
       -webkit-overflow-scrolling: touch;
     }
+
+    /* Allow main content blocks to scale down naturally */
+    div, section, article {
+      max-width: 100% !important;
+      box-sizing: border-box !important;
+    }
   }
 </style>
+
+    
 </body>
 </html>
 <!-- =================================================================== -->
