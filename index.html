@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>PRIME INVESTMENT GROUP PLC | Executive Financial &amp; Inventory Dashboard</title>
+    <title>PRIME INVESTMENT GROUP | Executive Financial &amp; Inventory Dashboard</title>
 
 <!-- =================================================================== -->
 <!-- SECTION 1 END: HTML METADATA & TITLE                                 -->
@@ -202,7 +202,7 @@
     <aside class="sidebar">
         <div class="sidebar-brand">
             <span class="logo-box">P</span>
-            <span>PRIME GROUP PLC</span>
+            <span>PRIME GROUP</span>
         </div>
         
         <nav class="sidebar-nav" id="main-nav-tabs">
@@ -211,6 +211,7 @@
             <button class="tab-btn nav-swap" onclick="switchTab('stockSwap', this)">BR Stock Swap</button>
             <button class="tab-btn nav-entry" onclick="switchTab('dataEntry', this)">Data Entry Log</button>
             <button class="tab-btn nav-tax" onclick="switchTab('taxObligations', this)">Tax Obligations</button>
+            <button class="tab-btn nav-staff" onclick="switchTab('staffing', this)">Staff Management</button>
             <button class="tab-btn nav-exp" onclick="switchTab('expenseLedger', this)">Expense Ledger</button>
         </nav>
 
@@ -733,7 +734,126 @@
                 </div>
             </div>
         </div>
+<!-- TAB 6: STAFF MANAGEMENT & TIMESHEET ENGINE -->
+        <div id="staffing" class="tab-pane">
+            <div class="dashboard-section">
+                <div class="section-header">Section 2: Staff Management &amp; Timesheet Engine</div>
+                <p style="font-size: 11px; color: var(--text-muted); margin-bottom: 16px;">Permanent Staff Registry, Casual Yard Labor Roster &amp; Payout Processing</p>
+            </div>
 
+            <div class="data-entry-grid" style="margin-bottom: 16px;">
+                <!-- 2A. Register Permanent Employee -->
+                <div class="card form-container">
+                    <h3>2A. Register Permanent Employee</h3>
+                    <form id="employee-form" onsubmit="addEmployee(event)">
+                        <div class="form-grid">
+                            <div class="form-group">
+                                <label>FULL NAME</label>
+                                <input type="text" id="emp-name" placeholder="Ato Yohannes" value="Ato Yohannes" required>
+                            </div>
+                            <div class="form-group">
+                                <label>ROLE / TITLE</label>
+                                <input type="text" id="emp-role" placeholder="Warehouse Supervisor" value="Warehouse Supervisor" required>
+                            </div>
+                            <div class="form-group">
+                                <label>MONTHLY SALARY (ETB)</label>
+                                <input type="number" id="emp-salary" placeholder="15000" value="15000" required>
+                            </div>
+                            <div class="form-group">
+                                <label>ENTITY ASSIGNMENT</label>
+                                <select id="emp-entity">
+                                    <option value="Prime Investment Group">Prime Investment Group</option>
+                                    <option value="BR Investment">BR Investment</option>
+                                </select>
+                            </div>
+                        </div>
+                        <button type="submit" class="btn btn-blue" style="width: 100%; justify-content: center; padding: 9px;">Save Employee Record</button>
+                    </form>
+                </div>
+
+                <!-- 2B. Daily Casual Yard Labor Timesheet -->
+                <div class="card form-container">
+                    <h3>2B. Daily Casual Yard Labor Timesheet</h3>
+                    <form id="labor-form" onsubmit="addLaborShift(event)">
+                        <div class="form-grid">
+                            <div class="form-group">
+                                <label>DATE</label>
+                                <input type="date" id="labor-date" required>
+                            </div>
+                            <div class="form-group">
+                                <label>LOCATION / YARD</label>
+                                <select id="labor-location">
+                                    <option value="Kolfe / Lebu Warehouse">Kolfe / Lebu Warehouse</option>
+                                    <option value="Mesalemya Shop">Mesalemya Shop</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label>WORKER HEADCOUNT</label>
+                                <input type="number" id="labor-headcount" value="10" required>
+                            </div>
+                            <div class="form-group">
+                                <label>DAILY RATE PER WORKER (ETB)</label>
+                                <input type="number" id="labor-rate" value="500" required>
+                            </div>
+                        </div>
+                        <button type="submit" class="btn btn-blue" style="width: 100%; justify-content: center; padding: 9px;">Record Daily Labor Shift</button>
+                    </form>
+                </div>
+            </div>
+
+            <!-- REGISTRIES & VOUCHERS TABLES -->
+            <div class="data-entry-grid">
+                <div class="card">
+                    <h3>Permanent Staff Registry</h3>
+                    <div class="table-wrap">
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>NAME</th>
+                                    <th>ROLE</th>
+                                    <th>SALARY (ETB)</th>
+                                    <th>ENTITY</th>
+                                </tr>
+                            </thead>
+                            <tbody id="tbody-permanent-staff">
+                                <tr>
+                                    <td><strong>Ato Yohannes</strong><br><span style="font-size: 10px; color: var(--text-muted);">Warehouse Supervisor</span></td>
+                                    <td>Warehouse Supervisor</td>
+                                    <td>18,000.00</td>
+                                    <td>Prime</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <h3>Casual Labor Payout Vouchers</h3>
+                    <div class="table-wrap">
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>DATE</th>
+                                    <th>LOCATION</th>
+                                    <th>HEADCOUNT</th>
+                                    <th>RATE</th>
+                                    <th>TOTAL (ETB)</th>
+                                </tr>
+                            </thead>
+                            <tbody id="tbody-labor-vouchers">
+                                <tr>
+                                    <td>2026-08-07</td>
+                                    <td>Kolfe / Lebu</td>
+                                    <td>12</td>
+                                    <td>500.00</td>
+                                    <td style="font-weight: 800;">6,000.00</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
         <!-- TAB 6: EXPENSE LEDGER -->
         <div id="expenseLedger" class="tab-pane">
             <div class="card">
