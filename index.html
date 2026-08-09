@@ -2,6 +2,7 @@
 <html lang="en">
 <head> 
 
+      
        
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -12,7 +13,13 @@
 <!-- =================================================================== -->
 <!-- SECTION 1 END: HTML METADATA & TITLE                                 -->
 <!-- =================================================================== -->
-
+ <script>
+    function switchTab(tabName) {
+        document.querySelectorAll('.tab-content').forEach(el => el.style.display = 'none');
+        const target = document.getElementById(tabName);
+        if (target) target.style.display = 'block';
+    }
+</script>
 
 
 <!-- =================================================================== -->
@@ -1178,15 +1185,7 @@ async function saveExpenseEntry(event) {
   
 </script>
 
-<script>
-    const _supabase = supabase.createClient('https://xyauecfuqropmqpchcny.supabase.co', 'sb_publishable_5K6WvT-11QWjsEVklanBpA_ABGRamqt');
 
-    function switchTab(tabName) {
-        document.querySelectorAll('.tab-content').forEach(el => el.style.display = 'none');
-        const target = document.getElementById(tabName);
-        if (target) target.style.display = 'block';
-    }
-</script>
 
 </body>
 </html>
