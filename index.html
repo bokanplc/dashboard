@@ -1172,12 +1172,6 @@ async function saveExpenseEntry(event) {
     if (error) alert("Error saving expense: " + error.message);
     else { alert("Expense saved live to cloud!"); location.reload(); }
 }
-
-        function switchTab(tabName) {
-    document.querySelectorAll('.tab-content').forEach(el => el.style.display = 'none');
-    const target = document.getElementById(tabName);
-    if (target) target.style.display = 'block';
-}
         
         window.onload = function() {
             renderStockReport();
