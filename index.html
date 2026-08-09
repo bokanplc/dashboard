@@ -1117,6 +1117,46 @@
         }
 
         // Initial Load
+
+
+        // --- SUPABASE LIVE DATA SAVERS ---
+
+// 1. Save Stock Movement Form Data
+async function saveStockEntry(event) {
+    event.preventDefault();
+    const { data, error } = await _supabase.from('stock_movements').insert([{
+        transaction_date: document.getElementById('tx-date').value,
+        purchased_by: document.getElementById('tx-funder').value,
+        factory_purchase_qty: Number(document.getElementById('tx-factory-qty').value),
+        unit_purchase_price: Number(document.getElementById('tx-purchase-price').value),
+        shipped_to_kolfe_qty: Number(document.getElementById('tx-shipped-kolfe').value),
+        transfer_qty: Number(document.getElementById('tx-transfer-qty').value),
+        sales_kolfe_qty: Number(document.getElementById('tx-sales-kolfe').value),
+        sales_mesalemya_qty: Number(document.getElementById('tx-sales-mesalemya').value),
+        sold_by: document.getElementById('tx-sold-by').value,
+        unit_sales_price: Number(document.getElementById('tx-sales-price').value)
+    }]);
+
+    if (error) alert("Error saving stock: " + error.message);
+    else { alert("Stock entry saved live to cloud!"); location.reload(); }
+}
+
+// 2. Save Standard Expenses Form Data
+async function saveExpenseEntry(event) {
+    event.preventDefault();
+    const { data, error } = await _supabase.from('expenses').insert([{
+        expense_date: document.getElementById('exp-date').value,
+        category: document.getElementById('exp-category').value,
+        amount: Number(document.getElementById('exp-amount').value),
+        funder: document.getElementById('exp-funder').value,
+        description: document.getElementById('exp-description').value
+    }]);
+
+    if (error) alert("Error saving expense: " + error.message);
+    else { alert("Expense saved live to cloud!"); location.reload(); }
+}
+
+        
         window.onload = function() {
             renderStockReport();
             renderStockSwap();
