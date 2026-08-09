@@ -14,11 +14,17 @@
 <!-- SECTION 1 END: HTML METADATA & TITLE                                 -->
 <!-- =================================================================== -->
  <script>
-    function switchTab(tabName) {
-        document.querySelectorAll('.tab-content').forEach(el => el.style.display = 'none');
-        const target = document.getElementById(tabName);
-        if (target) target.style.display = 'block';
-    }
+
+
+       function switchTab(tabName, btnElement) {
+            document.querySelectorAll('.tab-pane').forEach(el => el.classList.remove('active'));
+            const target = document.getElementById(tabName);
+            if (target) target.classList.add('active');
+            if (btnElement) {
+                document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active'));
+                btnElement.classList.add('active');
+            }
+        
 </script>
 
 
