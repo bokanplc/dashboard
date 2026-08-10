@@ -1283,20 +1283,20 @@ async function saveExpenseEntry(event) {
                 const { data: expenseRows, error: expError } = await _supabase.from('Expenses').select('*');
 
                 if (stockRows && stockRows.length > 0) {
-                    stockReportData = stockRows.map(row => ({
-                        date: row.transaction_date,
-                        open: 0,
-                        primePurch: row.purchasd_by === 'PRIME' ? row.factory_purchase_qty : 0,
-                        brPurch: row.purchasd_by === 'BR' ? row.factory_purchase_qty : 0,
-                        shipKolfe: row.shipped_to_kolfe_qty,
-                        inTransit: row.factory_purchase_qty - row.shipped_to_kolfe_qty,
-                        transfer: row.transfer_qty,
-                        salesKolfe: row.sales_kolfe_qty,
-                        soldBy1: row.sales_kolfe_qty > 0 ? row.sold_by : '-',
-                        kolfeBal: 0,
-                        salesMes: row.sales_mesalemya_qty,
-                        soldBy2: row.sales_mesalemya_qty > 0 ? row.sold_by : '-'
-                    }));
+                   stockReportData = stockRows.map(row => ({
+        date: row.transaction_date,
+        open: 0,
+        primePurch: row.purchasd_by === 'PRIME' ? row.factory_purchase_qty : 0,
+        brPurch: row.purchasd_by === 'BR' ? row.factory_purchase_qty : 0,
+        shipKolfe: row.shipped_to_kolfe_qty,
+        inTransit: row.factory_purchase_qty - row.shipped_to_kolfe_qty,
+        transfer: row.transfer_qty,
+        salesKolfe: row.sales_kolfe_qty,
+        soldBy1: row.sales_kolfe_qty > 0 ? row.sold_by : '-',
+        kolfeBal: 0,
+        salesMes: row.sales_mesalemya_qty,
+        soldBy2: row.sales_mesalemya_qty > 0 ? row.sold_by : '-'
+    }));
                 }
 
                 if (expenseRows && expenseRows.length > 0) {
