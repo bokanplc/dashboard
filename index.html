@@ -1172,8 +1172,8 @@ async function saveExpenseEntry(event) {
 
         // Fetch live data when page loads
         window.onload = async function() {
-            const { data: stockRows, error: stockError } = await _supabase.from('stock_movements').select('*');
-            const { data: expenseRows, error: expError } = await _supabase.from('expenses').select('*');
+            const { data: stockRows, error: stockError } = await _supabase.from('Stock Movement').select('*');
+            const { data: expenseRows, error: expError } = await _supabase.from('Expenses').select('*');
 
             if (stockRows && stockRows.length > 0) {
                 stockReportData = stockRows.map(row => ({
