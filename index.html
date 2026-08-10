@@ -1169,9 +1169,7 @@ async function saveExpenseEntry(event) {
     else { alert("Expense saved live to cloud!"); location.reload(); }
 }
      // Connect to your Supabase project
-        const _supabase = supabase.createClient('https://xyauecfuqropmqpchcny.supabase.co', 'sb_publishable_5K6WvT-11QWjsEVklanBpA_ABGRamqt');
-
-        // Fetch live data when page loads
+        
         window.onload = async function() {
             try {
                 const { data: stockRows, error: stockError } = await _supabase.from('Stock Movement').select('*');
