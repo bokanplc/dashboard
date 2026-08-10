@@ -1303,14 +1303,7 @@ function renderExpenses() {
 } catch (err) {
     console.error("Error loading from Supabase:", err);
 }
-}; // Closes window.onload
                         
-                        
-                    inTransit: row.factory_purchase_qty - row.shipped_to_kolfe_qty,
-                    transfer: row.transfer_qty,
-                    salesKolfe: row.sales_kolfe_qty,
-                    soldBy1: row.sales_kolfe_qty > 0 ? row.sold_by : '-',
-                    kolfeBal: 0, // Will calculate or use default if needed
                     salesMes: row.sales_mesalemya_qty,
                     soldBy2: row.sales_mesalemya_qty > 0 ? row.sold_by : '-'
                 }));
@@ -1329,7 +1322,7 @@ function renderExpenses() {
             renderStockReport();
             renderStockSwap();
             renderExpenses();
-
+        };
             // Default active date for inputs
             const today = new Date().toISOString().split('T')[0];
             document.getElementById('tx-date').value = today;
