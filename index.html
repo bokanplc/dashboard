@@ -396,7 +396,7 @@
                                 <th>Date</th><th>Opening Stock</th><th>PRIME Factory Purch.</th><th>BR Factory Purch.</th><th>Shipped Kolfe</th><th>In-Transit / Factory</th><th>Kolfe -&gt; Mes.</th><th>Sales @ Kolfe</th><th>Sold By</th><th>Kolfe Bal.</th><th>Sales @ Mes.</th><th>Sold By</th>
                             </tr>
                         </thead>
-                        <tbody id="tbody-stock-report"></tbody>
+                        <tbody id="stock-tbody"></tbody>
                         <tfoot>
                             <tr id="tfoot-stock-report">
                                 <td>TOTALS</td><td>-</td><td>1500</td><td>552</td><td>1200</td><td>852</td><td>790</td><td>270</td><td>-</td><td>140</td><td>344</td><td>-</td>
@@ -1328,7 +1328,35 @@ function renderExpenses() {
             document.getElementById('tx-date').value = today;
             document.getElementById('exp-date').value = today;
         };
-  
+  function renderStockReport() {
+    const tbody = document.getElementById('tbody-stock-report');
+    if (!tbody) {
+        console.warn("Table body element #tbody-stock-report not found in DOM");
+        return;
+    }
+    
+    if (!stockReportData || stockReportData.length === 0) {
+        tbody.innerHTML = '<tr><td colspan="12" style="text-align: center;">No stock records found</td></tr>';
+        return;
+    }
+
+    tbody.innerHTML = stockReportData.map(row => `
+        <tr>
+            <td>${row.date || ''}</td>
+            <td>${row.open || 0}</td>
+            <td>${row.primePurch || 0}</td>
+            <td>${row.brPurch || 0}</td>
+            <td>${row.shipKolfe || 0}</td>
+            <td>${row.inTransit || 0}</td>
+            <td>${row.transfer || 0}</td>
+            <td>${row.salesKolfe || 0}</td>
+            <td>${row.soldBy1 || '-'}</td>
+            <td>${row.kolfeBal || 0}</td>
+            <td>${row.salesMes || 0}</td>
+            <td>${row.soldBy2 || '-'}</td>
+        </tr>
+    `).join('');
+}
 </script>
 
 
