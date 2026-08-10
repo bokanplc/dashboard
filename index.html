@@ -1266,20 +1266,7 @@ function renderExpenses() {
                         e.preventDefault();
                         document.querySelectorAll('.app-section, .tab-content').forEach(sec => sec.style.display = 'none');
                         const activeSec = document.querySelector(targetId);
-                        if (activeSec) activeSec.style.display = 'block';
-                        
-                        navLinks.forEach(nav => nav.classList.remove('active'));
-                        this.classList.add('active');
-                    }
-                });
-            });
-        };
-                    soldBy1: row.sales_kolfe_qty > 0 ? row.sold_by : '-',
-                    kolfeBal: 0,
-                    salesMes: row.sales_mesalemya_qty,
-                    soldBy2: row.sales_mesalemya_qty > 0 ? row.sold_by : '-'
-                }));
-            }
+                       
 
             if (expenseRows && expenseRows.length > 0) {
                 expenseData = expenseRows.map(row => ({
@@ -1302,6 +1289,23 @@ function renderExpenses() {
                     primePurch: row.purchased_by === 'PRIME' ? row.factory_purchase_qty : 0,
                     brPurch: row.purchased_by === 'BR' ? row.factory_purchase_qty : 0,
                     shipKolfe: row.shipped_to_kolfe_qty,
+                   } // Closes the try block
+
+    // Run render functions once data is loaded
+    renderStockReport();
+    renderStockSwap();
+    renderExpenses();
+
+    const today = new Date().toISOString().split('T')[0];
+    if (document.getElementById('tx-date')) document.getElementById('tx-date').value = today;
+    if (document.getElementById('exp-date')) document.getElementById('exp-date').value = today;
+
+} catch (err) {
+    console.error("Error loading from Supabase:", err);
+}
+}; // Closes window.onload
+                        
+                        
                     inTransit: row.factory_purchase_qty - row.shipped_to_kolfe_qty,
                     transfer: row.transfer_qty,
                     salesKolfe: row.sales_kolfe_qty,
@@ -1311,8 +1315,7 @@ function renderExpenses() {
                     soldBy2: row.sales_mesalemya_qty > 0 ? row.sold_by : '-'
                 }));
             }
-
-            if (expenseRows && expenseRows.length > 0) {
+ {
                 expenseData = expenseRows.map(row => ({
                     date: row.expense_date,
                     category: row.category,
