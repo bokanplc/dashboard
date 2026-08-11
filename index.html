@@ -217,80 +217,38 @@ body {
     .btn-red { background: var(--accent-red); color: #fff; border: none; padding: 4px 8px; font-size: 11px; }
     .btn:hover { opacity: 0.9; }
 
-    /* Tab Content */
-    .tab-pane { display: none; }
-    .tab-pane.active { display: block; }
-
-    /* Section Containers */
-    .dashboard-section { margin-bottom: 24px; }
-    .section-header { font-size: 13px; font-weight: 800; color: var(--accent-primary); text-transform: uppercase; letter-spacing: 0.8px; margin-bottom: 12px; display: flex; align-items: center; gap: 8px; border-bottom: 2px solid var(--accent-primary); padding-bottom: 6px; }
-
-    /* Cards & Metrics */
-    .card { background: var(--bg-card); border-radius: 6px; border: 1px solid var(--border); padding: 16px; margin-bottom: 16px; box-shadow: 0 1px 3px rgba(0,0,0,0.05); }
-    .card h3 { font-size: 14px; font-weight: 700; color: var(--text-main); margin-bottom: 12px; }
-    .metrics-grid { 
-        display: grid; 
-        grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); 
-        gap: 10px; 
-        margin-bottom: 20px;
-    }
-    .metric-card { 
-        background: #ffffff; 
-        border: 1px solid #cbd5e1; 
-        border-top: 3px solid var(--accent-blue); 
-        padding: 10px 14px; 
-        border-radius: 4px; 
-        box-shadow: none;
-    }
-    .metric-title { 
-        font-size: 10px; 
-        font-weight: 700; 
-        color: #64748b; 
-        text-transform: uppercase; 
-        letter-spacing: 0.5px; 
-        margin-bottom: 6px; 
-    }
-    .metric-val { 
-        font-size: 15px; 
-        font-weight: 700; 
-        color: #0f172a; 
-        font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, monospace;
-    }
-    .metric-sub { 
-        font-size: 10px; 
-        color: #64748b; 
-        margin-top: 4px; 
-        border-top: 1px solid #f1f5f9;
-        padding-top: 4px;
-    }
-
- /* Mobile Responsiveness */
+    /* Tab Content mobile view*//* Mobile Responsiveness */
 @media (max-width: 768px) {
     body {
-        display: flex !important;
-        flex-direction: column !important;
+        display: block !important;
     }
     
     .sidebar, aside {
         width: 100% !important;
         position: relative !important;
         height: auto !important;
-        min-height: unset !important;
-        padding: 10px 15px !important;
+        background: #0f172a !important;
+        padding: 10px !important;
     }
 
-    .sidebar-brand, .sidebar-menu {
+    .sidebar-menu, aside ul {
         display: flex !important;
-        flex-direction: row !important;
         flex-wrap: wrap !important;
-        align-items: center !important;
-        justify-content: space-between !important;
+        gap: 6px !important;
+        padding: 5px 0 !important;
+    }
+
+    .sidebar a, aside a {
+        padding: 6px 10px !important;
+        font-size: 11px !important;
+        background: rgba(255, 255, 255, 0.05);
+        border-radius: 4px;
     }
 
     .main-wrapper, .main-content {
         margin-left: 0 !important;
         width: 100% !important;
-        padding: 12px !important;
+        padding: 10px !important;
     }
 
     .metrics-grid {
