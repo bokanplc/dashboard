@@ -1428,15 +1428,6 @@ function renderExpenses() {
         </tr>
     `).join('');
 }
-</script>
-
-
-
-</body>
-    <!-- =================================================================== -->
-    <!-- SECTION 5 START: SUPABASE INTEGRATION & APPLICATION SCRIPT           -->
-    <!-- =================================================================== -->
-    <script>
         // 1. Connect to your Supabase project using your exact credentials
         const _supabase = supabase.createClient('https://xyauecfuqropmqpchcny.supabase.co', 'sb_publishable_5K6WvT-11QWjsEVklanBpA_ABGRamqt');
 
@@ -1481,44 +1472,41 @@ function renderExpenses() {
                 console.error("Error loading live data from Supabase:", err);
             }
 
-            // Set default dates for your entry forms
-            const today = new Date().toISOString().split('T')[0];
-            if (document.getElementById('tx-date')) document.getElementById('tx-date').value = today;
-            if (document.getElementById('exp-date')) document.getElementById('exp-date').value = today;
-        };
+           // Set default dates for your entry forms
+  const today = new Date().toISOString().split('T')[0];
+  if (document.getElementById('tx-date')) document.getElementById('tx-date').value = today;
+  if (document.getElementById('exp-date')) document.getElementById('exp-date').value = today;
+};
 
-        // 4. Placeholder functions for your role switching & form submits if not defined elsewhere
-        function switchRole(role) {
-            console.log("Switched role to:", role);
-        }
+// 4. Placeholder functions for your role switching & form submits if not defined elsewhere
+function switchRole(role) {
+  console.log("Switched role to:", role);
+}
 
-        function resetData() {
-            if(confirm("Are you sure you want to reset data?")) {
-                console.log("Data reset triggered.");
-            }
+function resetData() {
+  if(confirm("Are you sure you want to reset data?")) {
+    console.log("Data reset triggered.");
+  }
+}
 
-        function handleSignOut() {
-            document.getElementById('login-modal').style.display = 'flex';
-        }
+function handleSignOut() {
+  document.getElementById('login-modal').style.display = 'flex';
+}
 
-        function performLogin() {
-            document.getElementById('login-modal').style.display = 'none';
-        }
+function performLogin() {
+  document.getElementById('login-modal').style.display = 'none';
+}
 
-        async function addTransaction(event) {
-            event.preventDefault();
-            alert("Transaction processing...");
-        }
+async function addTransaction(event) {
+  event.preventDefault();
+  alert("Transaction processing...");
+}
 
-        async function addExpense(event) {
-            event.preventDefault();
-            alert("Expense processing...");
-        }
-    </script>
-  
+async function addExpense(event) {
+  event.preventDefault();
+  alert("Expense processing...");
+}
+</script>
+
 </body>
 </html>
-
-<!-- =================================================================== -->
-<!-- SECTION 5 END: JAVASCRIPT LOGIC & APPLICATION STATE                -->
-<!-- =================================================================== -->
