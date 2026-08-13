@@ -1466,13 +1466,12 @@ function renderExpenses() {
                         desc: row.description,
                         funder: row.funder,
                         amount: row.amount
-                    }));
-                }
-            } catch (err) {
-                console.error("Error loading live data from Supabase:", err);
-            }
-
-           // Set default dates for your entry forms
+                  }));
+ }
+  } 
+            catch (err) {
+    console.error("Error loading live data from Supabase:", err);
+  }
   const today = new Date().toISOString().split('T')[0];
   if (document.getElementById('tx-date')) document.getElementById('tx-date').value = today;
   if (document.getElementById('exp-date')) document.getElementById('exp-date').value = today;
