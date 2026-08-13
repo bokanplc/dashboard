@@ -1425,80 +1425,154 @@ function renderExpenses() {
             <td>${row.kolfeBal || 0}</td>
             <td>${row.salesMes || 0}</td>
             <td>${row.soldBy2 || '-'}</td>
-       </tr>
+    </tr>
   `).join('');
 }
-        // 1. Connect to your Supabase project using your exact credentials
-        const _supabase = supabase.createClient('https://xyauecfuqropmqpchcny.supabase.co', 'sb_publishable_5K6WvT-11QWjsEVklanBpA_ABGRamqt');
 
-        // 2. Global application data arrays
-        let stockReportData = [];
-        let expenseData = [];
+// 1. Connect to Supabase
+const _supabase = supabase.createClient('https://xyauecfuqropmqpchcny.supabase.co', 'sb_publishable_5K6wvT-11QWjsEVklanBpA_ABGram');
 
-        // 3. Fetch live data from Supabase tables on window load
-        window.onload = async function() {
-            try {
-                // Fetching from your exact database table names ('Stock Movement' and 'Expenses')
-                const { data: stockRows, error: stockError } = await _supabase.from('Stock Movement').select('*');
-                const { data: expenseRows, error: expError } = await _supabase.from('Expenses').select('*');
+// 2. Global application data arrays
+let stockReportData = [];
+let expenseData = [];
 
-                if (stockRows && stockRows.length > 0) {
-                    stockReportData = stockRows.map(row => ({
-                        date: row.transaction_date,
-                        open: 0,
-                        primePurch: row.purchasd_by === 'PRIME' ? row.factory_purchase_qty : 0,
-                        brPurch: row.purchasd_by === 'BR' ? row.factory_purchase_qty : 0,
-                        shipKolfe: row.shipped_to_kolfe_qty,
-                        inTransit: row.factory_purchase_qty - row.shipped_to_kolfe_qty,
-                        transfer: row.transfer_qty,
-                        salesKolfe: row.sales_kolfe_qty,
-                        soldBy1: row.sales_kolfe_qty > 0 ? row.sold_by : '-',
-                        kolfeBal: 0,
-                        salesMes: row.sales_mesalemya_qty,
-                        soldBy2: row.sales_mesalemya_qty > 0 ? row.sold_by : '-'
-                    }));
-                }
+// 3. Render functions to display data on screen
+function renderStockTable() {
+  const tbody = document.querySelector("#stock-table tbody") || document.querySelector("tbody");
+  if (!tbody) return;
 
-                if (expenseRows && expenseRows.length > 0) {
-                    expenseData = expenseRows.map(row => ({
-                        date: row.expense_date,
-                        category: row.category,
-                        desc: row.description,
-                        funder: row.funder,
-                        amount: row.amount
-                  }));
- }
-  } 
-            catch (err) {
+  let runningKolfeBal = 0;
+
+  tbody.innerHTML = stockReportData.map(row => {
+    const shippedIn = Number(row.shipKolfe) || 0;
+    const soldOut = Number(row.salesKolfe) || 0;
+    runningKolfeBal = runningKolfeBal + shippedIn - soldOut;
+    row.kolfeBal = runningKolfeBal;
+
+    return `
+      <tr>
+        <td>${row.date || '-'}</td>
+        <td>${row.open || 0}</td>
+        <td>${row.primePurch || 0}</td>
+        <td>${row.brPurch || 0}</td>
+        <td>${shippedIn}</td>
+        <td>${row.inTransit || 0}</td>
+        <td>${row.transfer || 0}</td>
+        <td>${soldOut}</td>
+        <td>${row.soldBy1 || '-'}</td>
+        <td><strong>${runningKolfeBal}</strong></td>
+        <td>${row.salesMes || 0}</td>
+        <td>${row.soldBy2 || '-'}</td>
+      </tr>
+    `;
+  }).join('');
+}
+
+function renderExpenseTable() {
+  const tbody = document.querySelector("#expense-table tbody");
+  if (!tbody) return;
+
+  tbody.innerHTML = expenseData.map(row => `
+    <tr>
+      <td>${row.date || '-'}</td>
+      <td>${row.category || '-'}</td>
+      <td>${row.desc || '-'}</td>
+      <td>${row.funder || '-'}</td>
+      <td>${row.amount || 0}</td>
+    </tr>
+  `).join('');
+}
+
+// 4. Fetch live data on page load
+window.onload = async function() {
+  try {
+    const { data: stockRows, error: stockErr } = await _supabase.from('Stock Movement').select('*');
+    const { data: expenseRows, error: expErr } = await _supabase.from('Expenses').select('*');
+
+    if (stockRows && stockRows.length > 0) {
+      stockReportData = stockRows.map(row => ({
+        date: row.transaction_date,
+        open: 0,
+        primePurch: row.purchasd_by === 'PRIME' ? (Number(row.factory_purchase_qty) || 0) : 0,
+        brPurch: row.purchasd_by === 'BR' ? (Number(row.factory_purchase_qty) || 0) : 0,
+        shipKolfe: Number(row.shipped_to_kolfe_qty) || 0,
+        inTransit: (Number(row.factory_purchase_qty) || 0) - (Number(row.shipped_to_kolfe_qty) || 0),
+        transfer: Number(row.transfer_qty) || 0,
+        salesKolfe: Number(row.sales_kolfe_qty) || 0,
+        soldBy1: (Number(row.sales_kolfe_qty) || 0) > 0 ? (row.sold_by || '-') : '-',
+        kolfeBal: 0,
+        salesMes: Number(row.sales_mesalemya_qty) || 0,
+        soldBy2: (Number(row.sales_mesalemya_qty) || 0) > 0 ? (row.sold_by || '-') : '-'
+      }));
+
+      renderStockTable();
+    }
+
+    if (expenseRows && expenseRows.length > 0) {
+      expenseData = expenseRows.map(row => ({
+        date: row.expense_date,
+        category: row.category,
+        desc: row.description,
+        funder: row.funder,
+        amount: row.amount
+      }));
+
+      renderExpenseTable();
+    }
+  } catch (err) {
     console.error("Error loading live data from Supabase:", err);
   }
+
   const today = new Date().toISOString().split('T')[0];
   if (document.getElementById('tx-date')) document.getElementById('tx-date').value = today;
   if (document.getElementById('exp-date')) document.getElementById('exp-date').value = today;
 };
 
-// 4. Placeholder functions for your role switching & form submits if not defined elsewhere
-function switchRole(role) {
-  console.log("Switched role to:", role);
-}
+// 5. App action functions
+function switchRole(role) { console.log("Switched role to:", role); }
+function resetData() { if(confirm("Are you sure?")) console.log("Reset"); }
+function handleSignOut() { document.getElementById('login-modal').style.display = 'flex'; }
+function performLogin() { document.getElementById('login-modal').style.display = 'none'; }
 
-function resetData() {
-  if(confirm("Are you sure you want to reset data?")) {
-    console.log("Data reset triggered.");
-  }
-}
-
-function handleSignOut() {
-  document.getElementById('login-modal').style.display = 'flex';
-}
-
-function performLogin() {
-  document.getElementById('login-modal').style.display = 'none';
-}
-
+// 6. Handle New Transaction Form Submission
 async function addTransaction(event) {
   event.preventDefault();
-  alert("Transaction processing...");
+
+  const newRow = {
+    transaction_date: document.getElementById('tx-date')?.value || new Date().toISOString().split('T')[0],
+    purchasd_by: document.getElementById('tx-purchased-by')?.value || 'PRIME',
+    factory_purchase_qty: Number(document.getElementById('tx-factory-qty')?.value) || 0,
+    shipped_to_kolfe_qty: Number(document.getElementById('tx-ship-kolfe')?.value) || 0,
+    transfer_qty: Number(document.getElementById('tx-transfer')?.value) || 0,
+    sales_kolfe_qty: Number(document.getElementById('tx-sales-kolfe')?.value) || 0,
+    sales_mesalemya_qty: Number(document.getElementById('tx-sales-mes')?.value) || 0,
+    sold_by: document.getElementById('tx-sold-by')?.value || '-'
+  };
+
+  const { error } = await _supabase.from('Stock Movement').insert([newRow]);
+
+  if (error) {
+    alert("Error saving transaction: " + error.message);
+    return;
+  }
+
+  stockReportData.push({
+    date: newRow.transaction_date,
+    open: 0,
+    primePurch: newRow.purchasd_by === 'PRIME' ? newRow.factory_purchase_qty : 0,
+    brPurch: newRow.purchasd_by === 'BR' ? newRow.factory_purchase_qty : 0,
+    shipKolfe: newRow.shipped_to_kolfe_qty,
+    inTransit: newRow.factory_purchase_qty - newRow.shipped_to_kolfe_qty,
+    transfer: newRow.transfer_qty,
+    salesKolfe: newRow.sales_kolfe_qty,
+    soldBy1: newRow.sales_kolfe_qty > 0 ? newRow.sold_by : '-',
+    kolfeBal: 0,
+    salesMes: newRow.sales_mesalemya_qty,
+    soldBy2: newRow.sales_mesalemya_qty > 0 ? newRow.sold_by : '-'
+  });
+
+  renderStockTable();
+  alert("Transaction successfully recorded!");
 }
 
 async function addExpense(event) {
