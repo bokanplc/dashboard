@@ -1425,8 +1425,9 @@ function renderExpenses() {
             <td>${row.kolfeBal || 0}</td>
             <td>${row.salesMes || 0}</td>
             <td>${row.soldBy2 || '-'}</td>
-        </tr>
-    `).join('');
+       </tr>
+  `).join('');
+);
 }
         // 1. Connect to your Supabase project using your exact credentials
         const _supabase = supabase.createClient('https://xyauecfuqropmqpchcny.supabase.co', 'sb_publishable_5K6WvT-11QWjsEVklanBpA_ABGRamqt');
