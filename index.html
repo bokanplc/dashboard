@@ -1555,14 +1555,6 @@ async function addTransaction(event) {
     alert("Error saving transaction: " + error.message);
     return;
   }
-
-  stockReportData.push({
-    date: newRow.transaction_date,
-    open: 0,
-    primePurch: newRow.purchasd_by === 'PRIME' ? newRow.factory_purchase_qty : 0,
-    brPurch: newRow.purchasd_by === 'BR' ? newRow.factory_purchase_qty : 0,
-    shipKolfe: newRow.shipped_to_kolfe_qty,
-    inTransit: newRow.factory_purchase_qty - newRow.shipped_to_kolfe_qty,
     async function addTransaction(event) {
   event.preventDefault();
 
