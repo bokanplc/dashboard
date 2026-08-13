@@ -1563,16 +1563,35 @@ async function addTransaction(event) {
     brPurch: newRow.purchasd_by === 'BR' ? newRow.factory_purchase_qty : 0,
     shipKolfe: newRow.shipped_to_kolfe_qty,
     inTransit: newRow.factory_purchase_qty - newRow.shipped_to_kolfe_qty,
-    transfer: newRow.transfer_qty,
-    salesKolfe: newRow.sales_kolfe_qty,
-    soldBy1: newRow.sales_kolfe_qty > 0 ? newRow.sold_by : '-',
-    kolfeBal: 0,
-    salesMes: newRow.sales_mesalemya_qty,
-    soldBy2: newRow.sales_mesalemya_qty > 0 ? newRow.sold_by : '-'
-  });
+    async function addTransaction(event) {
+  event.preventDefault();
 
-  renderStockTable();
+  // 1. Send data to Supabase
+  const { data, error } = await _supabase.from('Stock Movement').insert([{
+    transaction_date: document.getElementById('tx-date').value,
+    purchasd_by: document.getElementById('tx-purchased-by').value,
+    factory_purchase_qty: Number(document.getElementById('tx-purchase-qty').value) || 0,
+    shipped_to_kolfe_qty: Number(document.getElementById('tx-ship-kolfe').value) || 0,
+    transfer_qty: Number(document.getElementById('tx-transfer').value) || 0,
+    sales_kolfe_qty: Number(document.getElementById('tx-sales-kolfe').value) || 0,
+    sales_mesalemya_qty: Number(document.getElementById('tx-sales-mes').value) || 0,
+    sold_by: document.getElementById('tx-sold-by').value
+  }]);
+
+  if (error) {
+    console.error("Error inserting transaction:", error);
+    alert("Error saving transaction: " + error.message);
+    return;
+  }
+
   alert("Transaction successfully recorded!");
+
+  // 2. Re-fetch fresh data from Supabase & re-render ledger automatically
+  if (typeof loadLiveData === 'function') {
+    await loadLiveData();
+  } else {
+    window.location.reload(); // Fallback to refresh and fetch updated Supabase rows
+  }
 }
 
 async function addExpense(event) {
