@@ -1477,8 +1477,7 @@ async function addTransaction(event) {
     if (typeof loadLiveData === 'function') {
       await loadLiveData();
     }
-
-  } catch (err) {
+} catch (err) {
     console.error("Execution Error:", err);
     alert("System Error: " + err.message);
   }
@@ -1487,8 +1486,45 @@ async function addTransaction(event) {
 // 6. Handle New Expense Form Submission
 async function addExpense(event) {
   event.preventDefault();
-  alert("Expense processing...");
-}
+
+  try {
+    const rawDate = document.getElementById('exp-date')?.value;
+    const cleanDate = rawDate && rawDate.trim() !== "" ? rawDate : new Date().toISOString().split('T')[0];
+
+    const payload = {
+      expense_date: cleanDate,
+      category: document.getElementById('exp-category')?.value || 'General',
+      description: document.getElementById('exp-desc')?.value || '',
+      funder: document.getElementById('exp-funder')?.value || 'PRIME',
+      amount: parseFloat(document.getElementById('exp-amount')?.value) || 0
+    };
+
+    console.log("Submitting Expense to Supabase:", payload);
+
+    const { data, error } = await _supabase
+      .from('expenses')
+      .insert([payload])
+      .select();
+
+    if (error) {
+      console.error("Supabase expense error:", error);
+      alert("DATABASE REJECTED EXPENSE: " + error.message);
+      return;
+    }
+
+    alert("Expense Entry Logged Successfully!");
+
+    const form = document.getElementById('expense-form');
+    if (form) form.reset();
+
+    if (typeof loadLiveData === 'function') {
+      await loadLiveData();
+    }
+
+ } catch (err) {
+    console.error("Expense Error:", err);
+    alert("Execution Error: " + err.message);
+} // <-- This closes addExpense(event)
 </script>
 </body>
 </html>
