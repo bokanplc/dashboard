@@ -1353,88 +1353,6 @@ function renderExpenses() {
                     amount: row.amount
                 }));
             }
-
-            renderStockReport();
-            renderStockSwap();
-            renderExpenses();
-
-            const today = new Date().toISOString().split('T')[0];
-            document.getElementById('tx-date').value = today;
-            document.getElementById('exp-date').value = today;
-        };
-                  if (stockRows && stockRows.length > 0) {
-        stockReportData = stockRows.map(row => ({
-            date: row.transaction_date,
-            open: 0,
-            primePurch: row.purchasd_by === 'PRIME' ? row.factory_purchase_qty : 0,
-            brPurch: row.purchasd_by === 'BR' ? row.factory_purchase_qty : 0,
-            shipKolfe: row.shipped_to_kolfe_qty,
-            inTransit: row.factory_purchase_qty - row.shipped_to_kolfe_qty,
-            transfer: row.transfer_qty,
-            salesKolfe: row.sales_kolfe_qty,
-            soldBy1: row.sales_kolfe_qty > 0 ? row.sold_by : '-',
-            kolfeBal: 0,
-            salesMes: row.sales_mesalemya_qty,
-            soldBy2: row.sales_mesalemya_qty > 0 ? row.sold_by : '-'
-        }));
-    }
- {
-                expenseData = expenseRows.map(row => ({
-                    date: row.expense_date,
-                    category: row.category,
-                    desc: row.description,
-                    funder: row.funder,
-                    amount: row.amount
-                }));
-            }
-
-            // 3. Render everything onto the screen
-            renderStockReport();
-            renderStockSwap();
-            renderExpenses();
-        
-            // Default active date for inputs
-            const today = new Date().toISOString().split('T')[0];
-            document.getElementById('tx-date').value = today;
-            document.getElementById('exp-date').value = today;
-        
-  function renderStockReport() {
-    const tbody = document.getElementById('tbody-stock-report');
-    if (!tbody) {
-        console.warn("Table body element #tbody-stock-report not found in DOM");
-        return;
-    }
-    
-    if (!stockReportData || stockReportData.length === 0) {
-        tbody.innerHTML = '<tr><td colspan="12" style="text-align: center;">No stock records found</td></tr>';
-        return;
-    }
-
-    tbody.innerHTML = stockReportData.map(row => `
-        <tr>
-            <td>${row.date || ''}</td>
-            <td>${row.open || 0}</td>
-            <td>${row.primePurch || 0}</td>
-            <td>${row.brPurch || 0}</td>
-            <td>${row.shipKolfe || 0}</td>
-            <td>${row.inTransit || 0}</td>
-            <td>${row.transfer || 0}</td>
-            <td>${row.salesKolfe || 0}</td>
-            <td>${row.soldBy1 || '-'}</td>
-            <td>${row.kolfeBal || 0}</td>
-            <td>${row.salesMes || 0}</td>
-            <td>${row.soldBy2 || '-'}</td>
-    </tr>
-  `).join('');
-}
-
-// 1. Connect to Supabase
-const _supabase = supabase.createClient('https://xyauecfuqropmqpchcny.supabase.co', 'sb_publishable_5K6wvT-11QWjsEVklanBpA_ABGram');
-
-// 2. Global application data arrays
-let stockReportData = [];
-let expenseData = [];
-
 // 3. Render functions to display data on screen
 function renderStockTable() {
   const tbody = document.querySelector("#stock-table tbody") || document.querySelector("tbody");
@@ -1481,6 +1399,7 @@ function renderExpenseTable() {
     </tr>
   `).join('');
 }
+
 // 4. Standalone function to load live data from Supabase
 async function loadLiveData() {
   try {
@@ -1505,9 +1424,7 @@ async function loadLiveData() {
         soldBy2: (Number(row.sales_mesalemya_qty) || 0) > 0 ? (row.sold_by || '-') : '-'
       }));
 
-      if (typeof renderStockTable === 'function') {
-        renderStockTable();
-      }
+      renderStockTable();
     }
 
     if (expenseRows && expenseRows.length > 0) {
@@ -1518,9 +1435,8 @@ async function loadLiveData() {
         funder: row.funder,
         amount: row.amount
       }));
-      if (typeof renderExpenseTable === 'function') {
-        renderExpenseTable();
-      }
+
+      renderExpenseTable();
     }
   } catch (err) {
     console.error("Error loading live data from Supabase:", err);
@@ -1565,7 +1481,7 @@ async function addTransaction(event) {
 
   alert("Transaction successfully recorded!");
   
-  // Instantly re-fetch from Supabase and refresh ledger on screen
+  // Reload data into the ledger automatically
   await loadLiveData();
 }
 
