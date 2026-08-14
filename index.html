@@ -1265,8 +1265,7 @@ async function loadLiveData() {
 
     if (stockErr) console.error("Error fetching stock:", stockErr);
 
-   if (stockRows && stockRows.length > 0) {
-      // 1. Populate Main Stock Report
+    if (stockRows && stockRows.length > 0) {
       stockReportData = stockRows.map(row => ({
         date: row.transaction_date,
         open: 0,
@@ -1277,15 +1276,12 @@ async function loadLiveData() {
         transfer: Number(row.transfer_qty) || 0,
         salesKolfe: Number(row.sales_kolfe_qty) || 0,
         soldBy1: (Number(row.sales_kolfe_qty) || 0) > 0 ? (row.sold_by || '-') : '-',
+        kolfeBal: 0,
         salesMes: Number(row.sales_mesalemya_qty) || 0,
         soldBy2: (Number(row.sales_mesalemya_qty) || 0) > 0 ? (row.sold_by || '-') : '-'
       }));
 
-      // 2. Render both tables
-    if (typeof renderStockSwapTable === 'function') renderStockSwapTable();
-if (typeof renderSwapTable === 'function') renderSwapTable();
-      if (typeof renderStockSwapTable === 'function') renderStockSwapTable();
-      if (typeof renderSwapTable === 'function') renderSwapTable();
+      renderStockTable();
     }
 
     if (expenseRows && expenseRows.length > 0) {
@@ -1307,7 +1303,7 @@ if (typeof renderSwapTable === 'function') renderSwapTable();
 // 2. Render functions to display data on screen
 function renderStockTable() {
   const tbody = document.querySelector("#stock-table tbody") || document.querySelector("tbody");
-  if (!tbody || !stockReportData) return;
+  if (!tbody) return;
 
   let runningKolfeBal = 0;
 
@@ -1331,37 +1327,6 @@ function renderStockTable() {
         <td><strong>${runningKolfeBal}</strong></td>
         <td>${row.salesMes || 0}</td>
         <td>${row.soldBy2 || '-'}</td>
-      </tr>
-    `;
-  }).join('');
-}
-
-function renderStockSwapTable() {
-  const swapTbody = document.querySelector("#swap-table tbody") || document.querySelectorAll("tbody")[1];
-  if (!swapTbody || !stockReportData) return;
-
-  let runningBalance = 0;
-
-  swapTbody.innerHTML = stockReportData.map(row => {
-    const brPurch = Number(row.brPurch) || 0;
-    const inTransit = Number(row.inTransit) || 0;
-    
-    const borrowed = Number(row.borrowed_prime_stock) || (brPurch > 0 ? brPurch : 0);
-    const replenished = Number(row.replenished_to_prime) || 0;
-    
-    runningBalance += (borrowed - replenished);
-
-    const notes = row.settlement_notes || (replenished > 0 ? "Replenishment / Factory Direct" : "Stock Borrowed for Sales");
-
-    return `
-      <tr>
-        <td class="px-4 py-2 border">${row.date || '-'}</td>
-        <td class="px-4 py-2 border">${brPurch}</td>
-        <td class="px-4 py-2 border">${inTransit}</td>
-        <td class="px-4 py-2 border text-red-600 font-semibold">${borrowed}</td>
-        <td class="px-4 py-2 border text-green-600 font-semibold">${replenished}</td>
-        <td class="px-4 py-2 border font-bold">${runningBalance}</td>
-        <td class="px-4 py-2 border text-sm text-gray-600">${notes}</td>
       </tr>
     `;
   }).join('');
