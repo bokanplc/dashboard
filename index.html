@@ -1222,7 +1222,7 @@ body {
 
     alert("Stock Entry Saved Successfully!");
 
-    // 4. Reset & Refresh
+   // 4. Reset & Refresh
     const form = document.getElementById('entry-form');
     if (form) form.reset();
 
@@ -1233,10 +1233,9 @@ body {
     alert("Execution Error: " + err.message);
   }
 }
-  // Reload live database rows onto your screen immediately
-  await loadLiveData();
-}
 
+function addExpense(e) {
+  e.preventDefault();
         function addExpense(e) {
             e.preventDefault();
             const date = document.getElementById('exp-date').value;
