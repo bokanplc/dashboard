@@ -1481,11 +1481,13 @@ function renderExpenseTable() {
     </tr>
   `).join('');
 }
-// 4. Fetch live data on page load
-window.onload = async function() {
+// 4. Standalone function to load live data from Supabase
+async function loadLiveData() {
   try {
     const { data: stockRows, error: stockErr } = await _supabase.from('Stock Movement').select('*');
     const { data: expenseRows, error: expErr } = await _supabase.from('Expenses').select('*');
+
+    if (stockErr) console.error("Error fetching stock:", stockErr);
 
     if (stockRows && stockRows.length > 0) {
       stockReportData = stockRows.map(row => ({
@@ -1502,7 +1504,10 @@ window.onload = async function() {
         salesMes: Number(row.sales_mesalemya_qty) || 0,
         soldBy2: (Number(row.sales_mesalemya_qty) || 0) > 0 ? (row.sold_by || '-') : '-'
       }));
-      renderStockTable();
+
+      if (typeof renderStockTable === 'function') {
+        renderStockTable();
+      }
     }
 
     if (expenseRows && expenseRows.length > 0) {
@@ -1513,11 +1518,18 @@ window.onload = async function() {
         funder: row.funder,
         amount: row.amount
       }));
-      renderExpenseTable();
+      if (typeof renderExpenseTable === 'function') {
+        renderExpenseTable();
+      }
     }
   } catch (err) {
     console.error("Error loading live data from Supabase:", err);
   }
+}
+
+// Run on initial page load
+window.onload = async function() {
+  await loadLiveData();
 
   const today = new Date().toISOString().split('T')[0];
   if (document.getElementById('tx-date')) document.getElementById('tx-date').value = today;
@@ -1546,18 +1558,15 @@ async function addTransaction(event) {
   }]);
 
   if (error) {
-    console.error("Error inserting transaction", error);
+    console.error("Error inserting transaction:", error);
     alert("Error saving transaction: " + error.message);
     return;
   }
 
   alert("Transaction successfully recorded!");
-
-  if (typeof loadLiveData === 'function') {
-    await loadLiveData();
-  } else {
-    window.location.reload();
-  }
+  
+  // Instantly re-fetch from Supabase and refresh ledger on screen
+  await loadLiveData();
 }
 
 // 7. Handle New Expense Form Submission
