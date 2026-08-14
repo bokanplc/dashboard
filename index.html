@@ -1317,43 +1317,7 @@ async function saveExpenseEntry(event) {
 
             const today = new Date().toISOString().split('T')[0];
             if (document.getElementById('tx-date')) document.getElementById('tx-date').value = today;
-            if (document.getElementById('exp-date')) document.getElementById('exp-date').value = today;
-
-            // Re-bind sidebar and left pane navigation triggers
-            const navLinks = document.querySelectorAll('.sidebar-nav-link, .nav-item, [data-target]');
-            navLinks.forEach(link => {
-                link.addEventListener('click', function(e) {
-                    function renderStockReport() {
-    console.log("Rendering stock report with rows:", stockReportData.length);
-}
-
-function renderStockSwap() {
-    console.log("Rendering stock swap data");
-}
-
-function renderExpenses() {
-    console.log("Rendering expenses with rows:", expenseData.length);
-}
-                  function renderStockReport() {
-    console.log("Rendering stock report with rows:", stockReportData.length);
-}
-                    const targetId = this.getAttribute('data-target') || this.getAttribute('href');
-                    if (targetId && targetId.startsWith('#')) {
-                        e.preventDefault();
-                        document.querySelectorAll('.app-section, .tab-content').forEach(sec => sec.style.display = 'none');
-                        const activeSec = document.querySelector(targetId);
-                       
-
-            if (expenseRows && expenseRows.length > 0) {
-                expenseData = expenseRows.map(row => ({
-                    date: row.expense_date,
-                    category: row.category,
-                    desc: row.description,
-                    funder: row.funder,
-                    amount: row.amount
-                }));
-            }
-// 3. Render functions to display data on screen
+        // 3. Render functions to display data on screen
 function renderStockTable() {
   const tbody = document.querySelector("#stock-table tbody") || document.querySelector("tbody");
   if (!tbody) return;
@@ -1481,7 +1445,7 @@ async function addTransaction(event) {
 
   alert("Transaction successfully recorded!");
   
-  // Reload data into the ledger automatically
+  // Reload live data directly into ledger
   await loadLiveData();
 }
 
