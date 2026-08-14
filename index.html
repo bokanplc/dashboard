@@ -1282,7 +1282,8 @@ async function loadLiveData() {
       }));
 
       renderStockTable();
-    }
+    renderStockSwapTable();
+  }
 
     if (expenseRows && expenseRows.length > 0) {
       expenseData = expenseRows.map(row => ({
