@@ -1186,33 +1186,53 @@ body {
             document.getElementById('login-modal').style.display = 'flex';
         }
 
-        // Data Management Handlers
        async function addTransaction(e) {
   e.preventDefault();
 
-  const payload = {
-    transaction_date: document.getElementById('tx-date')?.value,
-    purchasd_by: document.getElementById('tx-funder')?.value || 'PRIME',
-    factory_purchase_qty: Number(document.getElementById('tx-purch-qty')?.value) || 0,
-    shipped_to_kolfe_qty: Number(document.getElementById('tx-ship-kolfe')?.value) || 0,
-    transfer_qty: Number(document.getElementById('tx-transfer')?.value) || 0,
-    sales_kolfe_qty: Number(document.getElementById('tx-sales-kolfe')?.value) || 0,
-    sales_mesalemya_qty: Number(document.getElementById('tx-sales-mes')?.value) || 0,
-    sold_by: document.getElementById('tx-soldby')?.value || '-'
-  };
+  try {
+    // 1. Grab date safely (fallback to today if blank)
+    const rawDate = document.getElementById('tx-date')?.value;
+    const cleanDate = rawDate && rawDate.trim() !== "" ? rawDate : new Date().toISOString().split('T')[0];
 
-  // Write directly to Supabase
-  const { data, error } = await _supabase.from('Stock Movement').insert([payload]);
+    // 2. Build complete payload matching form fields
+    const payload = {
+      transaction_date: cleanDate,
+      purchasd_by: document.getElementById('tx-funder')?.value || 'PRIME',
+      factory_purchase_qty: Number(document.getElementById('tx-purch-qty')?.value) || 0,
+      shipped_to_kolfe_qty: Number(document.getElementById('tx-ship-kolfe')?.value) || 0,
+      transfer_qty: Number(document.getElementById('tx-transfer')?.value) || 0,
+      sales_kolfe_qty: Number(document.getElementById('tx-sales-kolfe')?.value) || 0,
+      sales_mesalemya_qty: Number(document.getElementById('tx-sales-mes')?.value) || 0,
+      sold_by: document.getElementById('tx-soldby')?.value || 'BR'
+    };
 
-  if (error) {
-    console.error("Supabase Error:", error);
-    alert("Database Error: " + error.message);
-    return;
+    console.log("Submitting to Supabase:", payload);
+
+    // 3. Perform Insert
+    const { data, error } = await _supabase
+      .from('Stock Movement')
+      .insert([payload])
+      .select();
+
+    if (error) {
+      console.error("Supabase error detail:", error);
+      alert("DATABASE REJECTED ENTRY: " + error.message + "\nDetails: " + (error.details || error.hint || 'None'));
+      return;
+    }
+
+    alert("Stock Entry Saved Successfully!");
+
+    // 4. Reset & Refresh
+    const form = document.getElementById('entry-form');
+    if (form) form.reset();
+
+    await loadLiveData();
+
+  } catch (err) {
+    console.error("JavaScript Execution Error:", err);
+    alert("Execution Error: " + err.message);
   }
-
-  alert('Stock Entry Saved to Database!');
-  if (document.getElementById('entry-form')) document.getElementById('entry-form').reset();
-  
+}
   // Reload live database rows onto your screen immediately
   await loadLiveData();
 }
