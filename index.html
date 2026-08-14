@@ -1347,7 +1347,7 @@ function renderStockSwapTable() {
     const inTransit = Number(row.inTransit) || 0;
     
     const borrowed = brPurch > 0 ? brPurch : 0;
-    const replenished = primePurch > 0 ? primePurch : 0;
+   const replenished = Number(row.replenished_to_prime) || 0;
     runningBalance += (borrowed - replenished);
 
     return `
@@ -1364,7 +1364,6 @@ function renderStockSwapTable() {
   }).join('');
 }
 
-function renderExpenseTable() {
 function renderExpenseTable() {
   const tbody = document.querySelector("#expense-table tbody");
   if (!tbody) return;
