@@ -1280,7 +1280,7 @@ async function loadLiveData() {
         salesMes: Number(row.sales_mesalemya_qty) || 0,
         soldBy2: (Number(row.sales_mesalemya_qty) || 0) > 0 ? (row.sold_by || '-') : '-',
         borrowed_prime_stock: Number(row.borrowed_prime_stock) || 0,
-        replenished_to_prime: Number(row.replenished_to_prime) || 0
+      replenished_to_prime: Number(row.replenished_to_prime_qty || row.replenished_to_prime || row.replenished) || 0
       }));
 
       renderStockTable();
@@ -1351,7 +1351,7 @@ function renderStockSwapTable() {
     const inTransit = Number(row.inTransit) || 0;
 
     const borrowed = Number(row.borrowed_prime_stock) || Number(row.borrowed) || (brPurch > 0 ? brPurch : 0);
-    const replenished = Number(row.replenished_to_prime) || Number(row.replenished) || 0;
+   const replenished = Number(row.replenished_to_prime) || Number(row.replenished_to_prime_qty) || Number(row.replenished) || 0;
 
     runningBalance += (borrowed - replenished);
 
