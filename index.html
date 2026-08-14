@@ -1335,7 +1335,34 @@ function renderStockTable() {
     `;
   }).join('');
 }
+function renderStockSwapTable() {
+  const swapTbody = document.querySelector("#swap-table tbody") || document.querySelectorAll("tbody")[1];
+  if (!swapTbody || !stockReportData) return;
 
+  let runningBalance = 0;
+
+  swapTbody.innerHTML = stockReportData.map(row => {
+    const brPurch = Number(row.brPurch) || 0;
+    const primePurch = Number(row.primePurch) || 0;
+    const inTransit = Number(row.inTransit) || 0;
+    
+    const borrowed = brPurch > 0 ? brPurch : 0;
+    const replenished = primePurch > 0 ? primePurch : 0;
+    runningBalance += (borrowed - replenished);
+
+    return `
+      <tr>
+        <td class="px-4 py-2 border">${row.date || '-'}</td>
+        <td class="px-4 py-2 border">${brPurch}</td>
+        <td class="px-4 py-2 border">${inTransit}</td>
+        <td class="px-4 py-2 border text-red-600 font-semibold">${borrowed}</td>
+        <td class="px-4 py-2 border text-green-600 font-semibold">${replenished}</td>
+        <td class="px-4 py-2 border font-bold">${runningBalance}</td>
+        <td class="px-4 py-2 border text-sm text-gray-600">Stock Borrowed / Replenished</td>
+      </tr>
+    `;
+  }).join('');
+}
 function renderExpenseTable() {
   const tbody = document.querySelector("#expense-table tbody");
   if (!tbody) return;
