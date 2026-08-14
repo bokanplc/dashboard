@@ -1330,7 +1330,8 @@ function renderStockTable() {
         <td>${row.soldBy2 || '-'}</td>
       </tr>
     `;
-  }).join('');
+ }).join('');
+}
 function renderStockSwapTable() {
   const swapTbody = document.querySelector("#swap-table tbody") || document.querySelectorAll("tbody")[1];
   if (!swapTbody || !stockReportData) return;
