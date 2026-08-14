@@ -1146,7 +1146,7 @@ body {
         function deleteExpense(index) {
             if (confirm("Are you sure you want to delete this expense record?")) {
                 expenseData.splice(index, 1);
-                renderExpenseTable();
+                renderExpenses();
             }
         }
 
@@ -1194,11 +1194,10 @@ body {
     const rawDate = document.getElementById('tx-date')?.value;
     const cleanDate = rawDate && rawDate.trim() !== "" ? rawDate : new Date().toISOString().split('T')[0];
 
-
-  // 2. Build complete payload matching form fields
+    // 2. Build complete payload matching form fields
     const payload = {
       transaction_date: cleanDate,
-      purchased_by: document.getElementById('tx-funder')?.value || 'PRIME',
+      purchasd_by: document.getElementById('tx-funder')?.value || 'PRIME',
       factory_purchase_qty: Number(document.getElementById('tx-purch-qty')?.value) || 0,
       shipped_to_kolfe_qty: Number(document.getElementById('tx-ship-kolfe')?.value) || 0,
       transfer_qty: Number(document.getElementById('tx-transfer')?.value) || 0,
@@ -1211,10 +1210,10 @@ body {
 
     // 3. Perform Insert
     const { data, error } = await _supabase
-      .from('stock_movement')
+      .from('Stock Movement')
       .insert([payload])
       .select();
-     
+
     if (error) {
       console.error("Supabase error detail:", error);
       alert("DATABASE REJECTED ENTRY: " + error.message + "\nDetails: " + (error.details || error.hint || 'None'));
@@ -1235,48 +1234,20 @@ body {
   }
 }
 
-      async function addExpense(e) {
-  e.preventDefault();
+        function addExpense(e) {
+            e.preventDefault();
+            const date = document.getElementById('exp-date').value;
+            const category = document.getElementById('exp-category').value;
+            const desc = document.getElementById('exp-desc').value;
+            const funder = document.getElementById('exp-funder').value;
+            const amount = parseFloat(document.getElementById('exp-amount').value) || 0;
 
-  try {
-    const rawDate = document.getElementById('exp-date')?.value;
-    const cleanDate = rawDate && rawDate.trim() !== "" ? rawDate : new Date().toISOString().split('T')[0];
+            expenseData.push({ date, category, desc, funder, amount });
+            renderExpenses();
+            alert('Expense Entry Logged Successfully');
+            document.getElementById('expense-form').reset();
+        }
 
-    const payload = {
-      expense_date: cleanDate,
-      category: document.getElementById('exp-category')?.value || 'General',
-      description: document.getElementById('exp-desc')?.value || '',
-      funder: document.getElementById('exp-funder')?.value || 'PRIME',
-      amount: parseFloat(document.getElementById('exp-amount')?.value) || 0
-    };
-
-    console.log("Submitting Expense to Supabase:", payload);
-
-    const { data, error } = await _supabase
-      .from('expenses')
-      .insert([payload])
-      .select();
-
-    if (error) {
-      console.error("Supabase expense error:", error);
-      alert("DATABASE REJECTED EXPENSE: " + error.message);
-      return;
-    }
-
-    alert("Expense Entry Logged Successfully");
-
-    const form = document.getElementById('expense-form');
-    if (form) form.reset();
-
-    if (typeof loadLiveData === 'function') {
-      await loadLiveData();
-    }
-
-  } catch (err) {
-    console.error("Expense Error:", err);
-    alert("Execution Error: " + err.message);
-  }
-     
         function resetData() {
             if (confirm('Are you sure you want to reset all data back to original defaults?')) {
                 location.reload();
@@ -1443,8 +1414,11 @@ window.onload = async function() {
 };
 
 // 4. App action functions
+function switchRole(role) { console.log("Switched role to:", role); }
 function resetData() { if (confirm("Are you sure?")) console.log("Reset"); }
 function handleSignOut() { document.getElementById('login-modal').style.display = 'flex'; }
+function performLogin() { document.getElementById('login-modal').style.display = 'none'; }
+
 async function addTransaction(event) {
   event.preventDefault();
 
@@ -1454,7 +1428,7 @@ async function addTransaction(event) {
 
     const payload = {
       transaction_date: cleanDate,
-     purchased_by: document.getElementById('tx-funder')?.value || 'PRIME',
+      purchasd_by: document.getElementById('tx-funder')?.value || 'PRIME',
       factory_purchase_qty: Number(document.getElementById('tx-purch-qty')?.value) || 0,
       shipped_to_kolfe_qty: Number(document.getElementById('tx-ship-kolfe')?.value) || 0,
       transfer_qty: Number(document.getElementById('tx-transfer')?.value) || 0,
@@ -1462,22 +1436,27 @@ async function addTransaction(event) {
       sales_mesalemya_qty: Number(document.getElementById('tx-sales-mes')?.value) || 0,
       sold_by: document.getElementById('tx-soldby')?.value || 'BR'
     };
+
     const { data, error } = await _supabase
-     .from('stock_movement')
+      .from('Stock Movement')
       .insert([payload]);
+
     if (error) {
       console.error("Error inserting transaction:", error);
       alert("Error saving transaction: " + error.message);
       return;
     }
+
     alert("Transaction successfully recorded!");
+
     const form = document.getElementById('entry-form');
     if (form) form.reset();
 
     if (typeof loadLiveData === 'function') {
       await loadLiveData();
     }
-} catch (err) {
+
+  } catch (err) {
     console.error("Execution Error:", err);
     alert("System Error: " + err.message);
   }
@@ -1486,45 +1465,8 @@ async function addTransaction(event) {
 // 6. Handle New Expense Form Submission
 async function addExpense(event) {
   event.preventDefault();
-
-  try {
-    const rawDate = document.getElementById('exp-date')?.value;
-    const cleanDate = rawDate && rawDate.trim() !== "" ? rawDate : new Date().toISOString().split('T')[0];
-
-    const payload = {
-      expense_date: cleanDate,
-      category: document.getElementById('exp-category')?.value || 'General',
-      description: document.getElementById('exp-desc')?.value || '',
-      funder: document.getElementById('exp-funder')?.value || 'PRIME',
-      amount: parseFloat(document.getElementById('exp-amount')?.value) || 0
-    };
-
-    console.log("Submitting Expense to Supabase:", payload);
-
-    const { data, error } = await _supabase
-      .from('expenses')
-      .insert([payload])
-      .select();
-
-    if (error) {
-      console.error("Supabase expense error:", error);
-      alert("DATABASE REJECTED EXPENSE: " + error.message);
-      return;
-    }
-
-    alert("Expense Entry Logged Successfully!");
-
-    const form = document.getElementById('expense-form');
-    if (form) form.reset();
-
-    if (typeof loadLiveData === 'function') {
-      await loadLiveData();
-    }
-
- } catch (err) {
-    console.error("Expense Error:", err);
-    alert("Execution Error: " + err.message);
-} // <-- This closes addExpense(event)
+  alert("Expense processing...");
+}
 </script>
 </body>
 </html>
