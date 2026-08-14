@@ -1482,7 +1482,6 @@ function renderExpenseTable() {
     </tr>
   `).join('');
 }
-
 // 4. Fetch live data on page load
 window.onload = async function() {
   try {
@@ -1504,7 +1503,6 @@ window.onload = async function() {
         salesMes: Number(row.sales_mesalemya_qty) || 0,
         soldBy2: (Number(row.sales_mesalemya_qty) || 0) > 0 ? (row.sold_by || '-') : '-'
       }));
-
       renderStockTable();
     }
 
@@ -1516,19 +1514,20 @@ window.onload = async function() {
         funder: row.funder,
         amount: row.amount
       }));
-
       renderExpenseTable();
     }
   } catch (err) {
     console.error("Error loading live data from Supabase:", err);
   }
+
   const today = new Date().toISOString().split('T')[0];
   if (document.getElementById('tx-date')) document.getElementById('tx-date').value = today;
   if (document.getElementById('exp-date')) document.getElementById('exp-date').value = today;
 };
+
 // 5. App action functions
 function switchRole(role) { console.log("Switched role to:", role); }
-function resetData() { if(confirm("Are you sure?")) console.log("Reset"); }
+function resetData() { if (confirm("Are you sure?")) console.log("Reset"); }
 function handleSignOut() { document.getElementById('login-modal').style.display = 'flex'; }
 function performLogin() { document.getElementById('login-modal').style.display = 'none'; }
 
@@ -1549,7 +1548,7 @@ async function addTransaction(event) {
 
   if (error) {
     console.error("Error inserting transaction", error);
-    alert("Error saving transaction " + error.message);
+    alert("Error saving transaction: " + error.message);
     return;
   }
 
