@@ -1548,7 +1548,7 @@ async function addTransaction(event) {
   }]);
 
   if (error) {
-    console.error("Error inserting transaction:", error);
+    console.error("Error inserting transaction", error);
     alert("Error saving transaction " + error.message);
     return;
   }
