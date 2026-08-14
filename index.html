@@ -1282,7 +1282,8 @@ async function loadLiveData() {
       }));
 
       // 2. Render both tables
-      if (typeof renderStockTable === 'function') renderStockTable();
+    if (typeof renderStockSwapTable === 'function') renderStockSwapTable();
+if (typeof renderSwapTable === 'function') renderSwapTable();
       if (typeof renderStockSwapTable === 'function') renderStockSwapTable();
       if (typeof renderSwapTable === 'function') renderSwapTable();
     }
