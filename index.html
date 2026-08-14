@@ -1247,77 +1247,50 @@ async function saveStockEntry(event) {
         transaction_date: document.getElementById('tx-date').value,
         purchased_by: document.getElementById('tx-funder').value,
         factory_purchase_qty: Number(document.getElementById('tx-factory-qty').value),
-        unit_purchase_price: Number(document.getElementById('tx-purchase-price').value),
-        shipped_to_kolfe_qty: Number(document.getElementById('tx-shipped-kolfe').value),
-        transfer_qty: Number(document.getElementById('tx-transfer-qty').value),
-        sales_kolfe_qty: Number(document.getElementById('tx-sales-kolfe').value),
-        sales_mesalemya_qty: Number(document.getElementById('tx-sales-mesalemya').value),
-        sold_by: document.getElementById('tx-sold-by').value,
-        unit_sales_price: Number(document.getElementById('tx-sales-price').value)
-    }]);
+      // 4. Standalone function to load live data from Supabase
+async function loadLiveData() {
+  try {
+    const { data: stockRows, error: stockErr } = await _supabase.from('Stock Movement').select('*');
+    const { data: expenseRows, error: expErr } = await _supabase.from('Expenses').select('*');
 
-    if (error) alert("Error saving stock: " + error.message);
-    else { alert("Stock entry saved live to cloud!"); location.reload(); }
-}
+    if (stockErr) console.error("Error fetching stock:", stockErr);
 
-// 2. Save Standard Expenses Form Data
-async function saveExpenseEntry(event) {
-    event.preventDefault();
-    const { data, error } = await _supabase.from('expenses').insert([{
-        expense_date: document.getElementById('exp-date').value,
-        category: document.getElementById('exp-category').value,
-        amount: Number(document.getElementById('exp-amount').value),
-        funder: document.getElementById('exp-funder').value,
-        description: document.getElementById('exp-description').value
-    }]);
-
-    if (error) alert("Error saving expense: " + error.message);
-    else { alert("Expense saved live to cloud!"); location.reload(); }
-}
-     // Connect to your Supabase project
-        
-        window.onload = async function() {
-            try {
-                const { data: stockRows, error: stockError } = await _supabase.from('Stock Movement').select('*');
-                const { data: expenseRows, error: expError } = await _supabase.from('Expenses').select('*');
-
-                if (stockRows && stockRows.length > 0) {
-                   stockReportData = stockRows.map(row => ({
+    if (stockRows && stockRows.length > 0) {
+      stockReportData = stockRows.map(row => ({
         date: row.transaction_date,
         open: 0,
-        primePurch: row.purchasd_by === 'PRIME' ? row.factory_purchase_qty : 0,
-        brPurch: row.purchasd_by === 'BR' ? row.factory_purchase_qty : 0,
-        shipKolfe: row.shipped_to_kolfe_qty,
-        inTransit: row.factory_purchase_qty - row.shipped_to_kolfe_qty,
-        transfer: row.transfer_qty,
-        salesKolfe: row.sales_kolfe_qty,
-        soldBy1: row.sales_kolfe_qty > 0 ? row.sold_by : '-',
+        primePurch: row.purchasd_by === 'PRIME' ? (Number(row.factory_purchase_qty) || 0) : 0,
+        brPurch: row.purchasd_by === 'BR' ? (Number(row.factory_purchase_qty) || 0) : 0,
+        shipKolfe: Number(row.shipped_to_kolfe_qty) || 0,
+        inTransit: (Number(row.factory_purchase_qty) || 0) - (Number(row.shipped_to_kolfe_qty) || 0),
+        transfer: Number(row.transfer_qty) || 0,
+        salesKolfe: Number(row.sales_kolfe_qty) || 0,
+        soldBy1: (Number(row.sales_kolfe_qty) || 0) > 0 ? (row.sold_by || '-') : '-',
         kolfeBal: 0,
-        salesMes: row.sales_mesalemya_qty,
-        soldBy2: row.sales_mesalemya_qty > 0 ? row.sold_by : '-'
-    }));
-                }
+        salesMes: Number(row.sales_mesalemya_qty) || 0,
+        soldBy2: (Number(row.sales_mesalemya_qty) || 0) > 0 ? (row.sold_by || '-') : '-'
+      }));
 
-                if (expenseRows && expenseRows.length > 0) {
-                    expenseData = expenseRows.map(row => ({
-                        date: row.expense_date,
-                        category: row.category,
-                        desc: row.description,
-                        funder: row.funder,
-                        amount: row.amount
-                    }));
-                }
-            } catch (err) {
-                console.error("Error loading from Supabase:", err);
-            }
+      renderStockTable();
+    }
 
-            if (typeof renderStockReport === 'function') renderStockReport();
-            if (typeof renderStockSwap === 'function') renderStockSwap();
-            if (typeof renderExpenses === 'function') renderExpenses();
+    if (expenseRows && expenseRows.length > 0) {
+      expenseData = expenseRows.map(row => ({
+        date: row.expense_date,
+        category: row.category,
+        desc: row.description,
+        funder: row.funder,
+        amount: row.amount
+      }));
 
-            const today = new Date().toISOString().split('T')[0];
-            if (document.getElementById('tx-date')) document.getElementById('tx-date').value = today;
-        // 3. Render functions to display data on screen
+      renderExpenseTable();
+    }
+  } catch (err) {
+    console.error("Error loading live data from Supabase:", err);
+  }
+}
+
+// 5. Render functions to display data on screen
 function renderStockTable() {
   const tbody = document.querySelector("#stock-table tbody") || document.querySelector("tbody");
   if (!tbody) return;
@@ -1364,50 +1337,7 @@ function renderExpenseTable() {
   `).join('');
 }
 
-// 4. Standalone function to load live data from Supabase
-async function loadLiveData() {
-  try {
-    const { data: stockRows, error: stockErr } = await _supabase.from('Stock Movement').select('*');
-    const { data: expenseRows, error: expErr } = await _supabase.from('Expenses').select('*');
-
-    if (stockErr) console.error("Error fetching stock:", stockErr);
-
-    if (stockRows && stockRows.length > 0) {
-      stockReportData = stockRows.map(row => ({
-        date: row.transaction_date,
-        open: 0,
-        primePurch: row.purchasd_by === 'PRIME' ? (Number(row.factory_purchase_qty) || 0) : 0,
-        brPurch: row.purchasd_by === 'BR' ? (Number(row.factory_purchase_qty) || 0) : 0,
-        shipKolfe: Number(row.shipped_to_kolfe_qty) || 0,
-        inTransit: (Number(row.factory_purchase_qty) || 0) - (Number(row.shipped_to_kolfe_qty) || 0),
-        transfer: Number(row.transfer_qty) || 0,
-        salesKolfe: Number(row.sales_kolfe_qty) || 0,
-        soldBy1: (Number(row.sales_kolfe_qty) || 0) > 0 ? (row.sold_by || '-') : '-',
-        kolfeBal: 0,
-        salesMes: Number(row.sales_mesalemya_qty) || 0,
-        soldBy2: (Number(row.sales_mesalemya_qty) || 0) > 0 ? (row.sold_by || '-') : '-'
-      }));
-
-      renderStockTable();
-    }
-
-    if (expenseRows && expenseRows.length > 0) {
-      expenseData = expenseRows.map(row => ({
-        date: row.expense_date,
-        category: row.category,
-        desc: row.description,
-        funder: row.funder,
-        amount: row.amount
-      }));
-
-      renderExpenseTable();
-    }
-  } catch (err) {
-    console.error("Error loading live data from Supabase:", err);
-  }
-}
-
-// Run on initial page load
+// 6. Run on initial page load
 window.onload = async function() {
   await loadLiveData();
 
@@ -1416,13 +1346,13 @@ window.onload = async function() {
   if (document.getElementById('exp-date')) document.getElementById('exp-date').value = today;
 };
 
-// 5. App action functions
+// 7. App action functions
 function switchRole(role) { console.log("Switched role to:", role); }
 function resetData() { if (confirm("Are you sure?")) console.log("Reset"); }
 function handleSignOut() { document.getElementById('login-modal').style.display = 'flex'; }
 function performLogin() { document.getElementById('login-modal').style.display = 'none'; }
 
-// 6. Handle New Transaction Form Submission
+// 8. Handle New Transaction Form Submission
 async function addTransaction(event) {
   event.preventDefault();
 
@@ -1449,7 +1379,7 @@ async function addTransaction(event) {
   await loadLiveData();
 }
 
-// 7. Handle New Expense Form Submission
+// 9. Handle New Expense Form Submission
 async function addExpense(event) {
   event.preventDefault();
   alert("Expense processing...");
