@@ -1362,31 +1362,47 @@ function resetData() { if (confirm("Are you sure?")) console.log("Reset"); }
 function handleSignOut() { document.getElementById('login-modal').style.display = 'flex'; }
 function performLogin() { document.getElementById('login-modal').style.display = 'none'; }
 
-// 5. Handle New Transaction Form Submission
 async function addTransaction(event) {
   event.preventDefault();
 
-  const { data, error } = await _supabase.from('Stock Movement').insert([{
-    transaction_date: document.getElementById('tx-date').value,
-    purchasd_by: document.getElementById('tx-purchased-by').value,
-    factory_purchase_qty: Number(document.getElementById('tx-purchase-qty').value) || 0,
-    shipped_to_kolfe_qty: Number(document.getElementById('tx-ship-kolfe').value) || 0,
-    transfer_qty: Number(document.getElementById('tx-transfer').value) || 0,
-    sales_kolfe_qty: Number(document.getElementById('tx-sales-kolfe').value) || 0,
-    sales_mesalemya_qty: Number(document.getElementById('tx-sales-mes').value) || 0,
-    sold_by: document.getElementById('tx-sold-by').value
-  }]);
+  try {
+    const rawDate = document.getElementById('tx-date')?.value;
+    const cleanDate = rawDate && rawDate.trim() !== "" ? rawDate : new Date().toISOString().split('T')[0];
 
-  if (error) {
-    console.error("Error inserting transaction:", error);
-    alert("Error saving transaction: " + error.message);
-    return;
+    const payload = {
+      transaction_date: cleanDate,
+      purchasd_by: document.getElementById('tx-funder')?.value || 'PRIME',
+      factory_purchase_qty: Number(document.getElementById('tx-purch-qty')?.value) || 0,
+      shipped_to_kolfe_qty: Number(document.getElementById('tx-ship-kolfe')?.value) || 0,
+      transfer_qty: Number(document.getElementById('tx-transfer')?.value) || 0,
+      sales_kolfe_qty: Number(document.getElementById('tx-sales-kolfe')?.value) || 0,
+      sales_mesalemya_qty: Number(document.getElementById('tx-sales-mes')?.value) || 0,
+      sold_by: document.getElementById('tx-soldby')?.value || 'BR'
+    };
+
+    const { data, error } = await _supabase
+      .from('Stock Movement')
+      .insert([payload]);
+
+    if (error) {
+      console.error("Error inserting transaction:", error);
+      alert("Error saving transaction: " + error.message);
+      return;
+    }
+
+    alert("Transaction successfully recorded!");
+
+    const form = document.getElementById('entry-form');
+    if (form) form.reset();
+
+    if (typeof loadLiveData === 'function') {
+      await loadLiveData();
+    }
+
+  } catch (err) {
+    console.error("Execution Error:", err);
+    alert("System Error: " + err.message);
   }
-
-  alert("Transaction successfully recorded!");
-  
-  // Reload live data directly into ledger
-  await loadLiveData();
 }
 
 // 6. Handle New Expense Form Submission
