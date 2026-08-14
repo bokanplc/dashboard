@@ -1331,7 +1331,6 @@ function renderStockTable() {
       </tr>
     `;
   }).join('');
-}
 function renderStockSwapTable() {
   const swapTbody = document.querySelector("#swap-table tbody") || document.querySelectorAll("tbody")[1];
   if (!swapTbody || !stockReportData) return;
@@ -1341,10 +1340,10 @@ function renderStockSwapTable() {
   swapTbody.innerHTML = stockReportData.map(row => {
     const brPurch = Number(row.brPurch) || 0;
     const inTransit = Number(row.inTransit) || 0;
-    
+
     const borrowed = Number(row.borrowed_prime_stock) || Number(row.borrowed) || (brPurch > 0 ? brPurch : 0);
     const replenished = Number(row.replenished_to_prime) || Number(row.replenished) || 0;
-    
+
     runningBalance += (borrowed - replenished);
 
     const notes = row.settlement_notes || (replenished > 0 ? "Replenishment / Factory Direct" : "Stock Borrowed for Sales");
