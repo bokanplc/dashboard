@@ -1187,33 +1187,35 @@ body {
         }
 
         // Data Management Handlers
-        function addTransaction(e) {
-            e.preventDefault();
-            const date = document.getElementById('tx-date').value;
-            const funder = document.getElementById('tx-funder').value;
-            const purchQty = parseInt(document.getElementById('tx-purch-qty').value) || 0;
-            const shipKolfe = parseInt(document.getElementById('tx-ship-kolfe').value) || 0;
-            const transfer = parseInt(document.getElementById('tx-transfer').value) || 0;
-            const salesKolfe = parseInt(document.getElementById('tx-sales-kolfe').value) || 0;
-            const salesMes = parseInt(document.getElementById('tx-sales-mes').value) || 0;
-            const soldBy = document.getElementById('tx-soldby').value;
+       async function addTransaction(e) {
+  e.preventDefault();
 
-            let prevBal = stockReportData.length > 0 ? stockReportData[stockReportData.length - 1].kolfeBal : 0;
-            let newKolfeBal = prevBal + shipKolfe - transfer - salesKolfe;
+  const payload = {
+    transaction_date: document.getElementById('tx-date')?.value,
+    purchasd_by: document.getElementById('tx-funder')?.value || 'PRIME',
+    factory_purchase_qty: Number(document.getElementById('tx-purch-qty')?.value) || 0,
+    shipped_to_kolfe_qty: Number(document.getElementById('tx-ship-kolfe')?.value) || 0,
+    transfer_qty: Number(document.getElementById('tx-transfer')?.value) || 0,
+    sales_kolfe_qty: Number(document.getElementById('tx-sales-kolfe')?.value) || 0,
+    sales_mesalemya_qty: Number(document.getElementById('tx-sales-mes')?.value) || 0,
+    sold_by: document.getElementById('tx-soldby')?.value || '-'
+  };
 
-            stockReportData.push({
-                date, open: 0,
-                primePurch: funder === 'PRIME' ? purchQty : 0,
-                brPurch: funder === 'BR' ? purchQty : 0,
-                shipKolfe, inTransit: purchQty - shipKolfe,
-                transfer, salesKolfe, soldBy1: salesKolfe > 0 ? soldBy : '-',
-                kolfeBal: newKolfeBal, salesMes, soldBy2: salesMes > 0 ? soldBy : '-'
-            });
+  // Write directly to Supabase
+  const { data, error } = await _supabase.from('Stock Movement').insert([payload]);
 
-            renderStockReport();
-            alert('Stock Entry Added Successfully');
-            document.getElementById('entry-form').reset();
-        }
+  if (error) {
+    console.error("Supabase Error:", error);
+    alert("Database Error: " + error.message);
+    return;
+  }
+
+  alert('Stock Entry Saved to Database!');
+  if (document.getElementById('entry-form')) document.getElementById('entry-form').reset();
+  
+  // Reload live database rows onto your screen immediately
+  await loadLiveData();
+}
 
         function addExpense(e) {
             e.preventDefault();
