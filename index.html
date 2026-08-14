@@ -1235,19 +1235,10 @@ body {
             }
         }
 
-        // Initial Load
+       // Initial Load & Supabase Connection
+const _supabase = supabase.createClient('https://xyauecfuqropmqpchcny.supabase.co', 'sb_publishable_5K6wvT-11QWjsEVklanBpA_ABGram');
 
-const _supabase = supabase.createClient('YOUR_SUPABASE_URL', 'YOUR_SUPABASE_ANON_KEY');
-        // --- SUPABASE LIVE DATA SAVERS ---
-
-// 1. Save Stock Movement Form Data
-async function saveStockEntry(event) {
-    event.preventDefault();
-    const { data, error } = await _supabase.from('stock_movements').insert([{
-        transaction_date: document.getElementById('tx-date').value,
-        purchased_by: document.getElementById('tx-funder').value,
-        factory_purchase_qty: Number(document.getElementById('tx-factory-qty').value),
-      // 4. Standalone function to load live data from Supabase
+// 1. Standalone function to load live data from Supabase
 async function loadLiveData() {
   try {
     const { data: stockRows, error: stockErr } = await _supabase.from('Stock Movement').select('*');
@@ -1290,7 +1281,7 @@ async function loadLiveData() {
   }
 }
 
-// 5. Render functions to display data on screen
+// 2. Render functions to display data on screen
 function renderStockTable() {
   const tbody = document.querySelector("#stock-table tbody") || document.querySelector("tbody");
   if (!tbody) return;
@@ -1337,7 +1328,7 @@ function renderExpenseTable() {
   `).join('');
 }
 
-// 6. Run on initial page load
+// 3. Run on initial page load
 window.onload = async function() {
   await loadLiveData();
 
@@ -1346,13 +1337,13 @@ window.onload = async function() {
   if (document.getElementById('exp-date')) document.getElementById('exp-date').value = today;
 };
 
-// 7. App action functions
+// 4. App action functions
 function switchRole(role) { console.log("Switched role to:", role); }
 function resetData() { if (confirm("Are you sure?")) console.log("Reset"); }
 function handleSignOut() { document.getElementById('login-modal').style.display = 'flex'; }
 function performLogin() { document.getElementById('login-modal').style.display = 'none'; }
 
-// 8. Handle New Transaction Form Submission
+// 5. Handle New Transaction Form Submission
 async function addTransaction(event) {
   event.preventDefault();
 
@@ -1379,7 +1370,7 @@ async function addTransaction(event) {
   await loadLiveData();
 }
 
-// 9. Handle New Expense Form Submission
+// 6. Handle New Expense Form Submission
 async function addExpense(event) {
   event.preventDefault();
   alert("Expense processing...");
