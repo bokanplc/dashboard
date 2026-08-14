@@ -1307,7 +1307,7 @@ if (typeof renderSwapTable === 'function') renderSwapTable();
 // 2. Render functions to display data on screen
 function renderStockTable() {
   const tbody = document.querySelector("#stock-table tbody") || document.querySelector("tbody");
-  if (!tbody) return;
+  if (!tbody || !stockReportData) return;
 
   let runningKolfeBal = 0;
 
@@ -1331,9 +1331,10 @@ function renderStockTable() {
         <td><strong>${runningKolfeBal}</strong></td>
         <td>${row.salesMes || 0}</td>
         <td>${row.soldBy2 || '-'}</td>
-   </tr>
-`.join('');
- }
+      </tr>
+    `;
+  }).join('');
+}
 
 function renderStockSwapTable() {
   const swapTbody = document.querySelector("#swap-table tbody") || document.querySelectorAll("tbody")[1];
@@ -1343,12 +1344,14 @@ function renderStockSwapTable() {
 
   swapTbody.innerHTML = stockReportData.map(row => {
     const brPurch = Number(row.brPurch) || 0;
-    const primePurch = Number(row.primePurch) || 0;
     const inTransit = Number(row.inTransit) || 0;
     
-    const borrowed = brPurch > 0 ? brPurch : 0;
-   const replenished = Number(row.replenished_to_prime) || 0;
+    const borrowed = Number(row.borrowed_prime_stock) || (brPurch > 0 ? brPurch : 0);
+    const replenished = Number(row.replenished_to_prime) || 0;
+    
     runningBalance += (borrowed - replenished);
+
+    const notes = row.settlement_notes || (replenished > 0 ? "Replenishment / Factory Direct" : "Stock Borrowed for Sales");
 
     return `
       <tr>
@@ -1358,7 +1361,7 @@ function renderStockSwapTable() {
         <td class="px-4 py-2 border text-red-600 font-semibold">${borrowed}</td>
         <td class="px-4 py-2 border text-green-600 font-semibold">${replenished}</td>
         <td class="px-4 py-2 border font-bold">${runningBalance}</td>
-        <td class="px-4 py-2 border text-sm text-gray-600">Stock Borrowed / Replenished</td>
+        <td class="px-4 py-2 border text-sm text-gray-600">${notes}</td>
       </tr>
     `;
   }).join('');
