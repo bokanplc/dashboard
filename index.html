@@ -1522,7 +1522,6 @@ window.onload = async function() {
   } catch (err) {
     console.error("Error loading live data from Supabase:", err);
   }
-
   const today = new Date().toISOString().split('T')[0];
   if (document.getElementById('tx-date')) document.getElementById('tx-date').value = today;
   if (document.getElementById('exp-date')) document.getElementById('exp-date').value = today;
@@ -1538,26 +1537,6 @@ function performLogin() { document.getElementById('login-modal').style.display =
 async function addTransaction(event) {
   event.preventDefault();
 
-  const newRow = {
-    transaction_date: document.getElementById('tx-date')?.value || new Date().toISOString().split('T')[0],
-    purchasd_by: document.getElementById('tx-purchased-by')?.value || 'PRIME',
-    factory_purchase_qty: Number(document.getElementById('tx-factory-qty')?.value) || 0,
-    shipped_to_kolfe_qty: Number(document.getElementById('tx-ship-kolfe')?.value) || 0,
-    transfer_qty: Number(document.getElementById('tx-transfer')?.value) || 0,
-    sales_kolfe_qty: Number(document.getElementById('tx-sales-kolfe')?.value) || 0,
-    sales_mesalemya_qty: Number(document.getElementById('tx-sales-mes')?.value) || 0,
-    sold_by: document.getElementById('tx-sold-by')?.value || '-'
-  };
-
-  const { error } = await _supabase.from('Stock Movement').insert([newRow]);
-
-  if (error) {
-    alert("Error saving transaction: " + error.message);
-    return;
-  }
-    async function addTransaction(event) {
-  event.preventDefault();
-
   // 1. Send data to Supabase
   const { data, error } = await _supabase.from('Stock Movement').insert([{
     transaction_date: document.getElementById('tx-date').value,
@@ -1569,13 +1548,19 @@ async function addTransaction(event) {
     sales_mesalemya_qty: Number(document.getElementById('tx-sales-mes').value) || 0,
     sold_by: document.getElementById('tx-sold-by').value
   }]);
-
+    purchasd_by: document.getElementById('tx-purchased-by').value,
+    factory_purchase_qty: Number(document.getElementById('tx-purchase-qty').value) || 0,
+    shipped_to_kolfe_qty: Number(document.getElementById('tx-ship-kolfe').value) || 0,
+    transfer_qty: Number(document.getElementById('tx-transfer').value) || 0,
+    sales_kolfe_qty: Number(document.getElementById('tx-sales-kolfe').value) || 0,
+    sales_mesalemya_qty: Number(document.getElementById('tx-sales-mes').value) || 0,
+    sold_by: document.getElementById('tx-sold-by').value
+  }]);
   if (error) {
     console.error("Error inserting transaction:", error);
     alert("Error saving transaction: " + error.message);
     return;
   }
-
   alert("Transaction successfully recorded!");
 
   // 2. Re-fetch fresh data from Supabase & re-render ledger automatically
@@ -1585,7 +1570,6 @@ async function addTransaction(event) {
     window.location.reload(); // Fallback to refresh and fetch updated Supabase rows
   }
 }
-
 async function addExpense(event) {
   event.preventDefault();
   alert("Expense processing...");
