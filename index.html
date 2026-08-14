@@ -1331,9 +1331,9 @@ function renderStockTable() {
         <td><strong>${runningKolfeBal}</strong></td>
         <td>${row.salesMes || 0}</td>
         <td>${row.soldBy2 || '-'}</td>
-      </tr>
-   }).join('');
-}
+   </tr>
+`.join('');
+ }
 
 function renderStockSwapTable() {
   const swapTbody = document.querySelector("#swap-table tbody") || document.querySelectorAll("tbody")[1];
