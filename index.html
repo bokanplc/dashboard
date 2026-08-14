@@ -1265,7 +1265,8 @@ async function loadLiveData() {
 
     if (stockErr) console.error("Error fetching stock:", stockErr);
 
-    if (stockRows && stockRows.length > 0) {
+   if (stockRows && stockRows.length > 0) {
+      // 1. Populate Main Stock Report
       stockReportData = stockRows.map(row => ({
         date: row.transaction_date,
         open: 0,
@@ -1276,14 +1277,15 @@ async function loadLiveData() {
         transfer: Number(row.transfer_qty) || 0,
         salesKolfe: Number(row.sales_kolfe_qty) || 0,
         soldBy1: (Number(row.sales_kolfe_qty) || 0) > 0 ? (row.sold_by || '-') : '-',
-        kolfeBal: 0,
         salesMes: Number(row.sales_mesalemya_qty) || 0,
         soldBy2: (Number(row.sales_mesalemya_qty) || 0) > 0 ? (row.sold_by || '-') : '-'
       }));
 
-      renderStockTable();
-    renderStockSwapTable();
-  }
+      // 2. Render both tables
+      if (typeof renderStockTable === 'function') renderStockTable();
+      if (typeof renderStockSwapTable === 'function') renderStockSwapTable();
+      if (typeof renderSwapTable === 'function') renderSwapTable();
+    }
 
     if (expenseRows && expenseRows.length > 0) {
       expenseData = expenseRows.map(row => ({
