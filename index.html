@@ -1332,9 +1332,9 @@ function renderStockTable() {
         <td>${row.salesMes || 0}</td>
         <td>${row.soldBy2 || '-'}</td>
       </tr>
-    `;
-  }).join('');
+   }).join('');
 }
+
 function renderStockSwapTable() {
   const swapTbody = document.querySelector("#swap-table tbody") || document.querySelectorAll("tbody")[1];
   if (!swapTbody || !stockReportData) return;
@@ -1363,6 +1363,8 @@ function renderStockSwapTable() {
     `;
   }).join('');
 }
+
+function renderExpenseTable() {
 function renderExpenseTable() {
   const tbody = document.querySelector("#expense-table tbody");
   if (!tbody) return;
