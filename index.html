@@ -1331,7 +1331,36 @@ function renderStockTable() {
     `;
   }).join('');
 }
+function renderStockSwapTable() {
+  const swapTbody = document.querySelector("#swap-table tbody") || document.querySelectorAll("tbody")[1];
+  if (!swapTbody || !stockReportData) return;
 
+  let runningBalance = 0;
+
+  swapTbody.innerHTML = stockReportData.map(row => {
+    const brPurch = Number(row.brPurch) || 0;
+    const inTransit = Number(row.inTransit) || 0;
+    
+    const borrowed = Number(row.borrowed_prime_stock) || Number(row.borrowed) || (brPurch > 0 ? brPurch : 0);
+    const replenished = Number(row.replenished_to_prime) || Number(row.replenished) || 0;
+    
+    runningBalance += (borrowed - replenished);
+
+    const notes = row.settlement_notes || (replenished > 0 ? "Replenishment / Factory Direct" : "Stock Borrowed for Sales");
+
+    return `
+      <tr>
+        <td class="px-4 py-2 border">${row.date || '-'}</td>
+        <td class="px-4 py-2 border">${brPurch}</td>
+        <td class="px-4 py-2 border">${inTransit}</td>
+        <td class="px-4 py-2 border text-red-600 font-semibold">${borrowed}</td>
+        <td class="px-4 py-2 border text-green-600 font-semibold">${replenished}</td>
+        <td class="px-4 py-2 border font-bold">${runningBalance}</td>
+        <td class="px-4 py-2 border text-sm text-gray-600">${notes}</td>
+      </tr>
+    `;
+  }).join('');
+}
 function renderExpenseTable() {
   const tbody = document.querySelector("#expense-table tbody");
   if (!tbody) return;
