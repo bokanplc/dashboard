@@ -1434,7 +1434,7 @@ async function addTransaction(event) {
       sold_by: document.getElementById('tx-soldby')?.value || 'BR'
     };
     const { data, error } = await _supabase
-      .from('Stock Movement')
+     .from('stock_movement')
       .insert([payload]);
     if (error) {
       console.error("Error inserting transaction:", error);
