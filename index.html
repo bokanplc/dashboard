@@ -1285,17 +1285,16 @@ async function loadLiveData() {
     renderStockSwapTable();
   }
 
-    if (expenseRows && expenseRows.length > 0) {
-      expenseData = expenseRows.map(row => ({
-        date: row.expense_date,
-        category: row.category,
-        desc: row.description,
-        funder: row.funder,
-        amount: row.amount
-      }));
-
-      renderExpenseTable();
-    }
+   if (expenseRows && expenseRows.length > 0) {
+            expenseData = expenseRows.map(row => ({
+                date: row.expense_date || row.date || '-',
+                category: row.category || '-',
+                description: row.description || row.desc || '-',
+                funder: row.funder || '-',
+                amount: Number(row.amount || 0)
+            }));
+            renderExpenseTable();
+        }
   } catch (err) {
     console.error("Error loading live data from Supabase:", err);
   }
@@ -1333,19 +1332,44 @@ function renderStockTable() {
   }).join('');
 }
 
-function renderExpenseTable() {
-  const tbody = document.querySelector("#expense-table tbody");
-  if (!tbody) return;
+// Render Stock Swap Table
+function renderStockSwapTable() {
+    const tbody = document.getElementById("tbody-stock-swap") || document.querySelector("#table-stock-swap tbody");
+    if (!tbody || !stockSwapData) return;
 
-  tbody.innerHTML = expenseData.map(row => `
-    <tr>
-      <td>${row.date || '-'}</td>
-      <td>${row.category || '-'}</td>
-      <td>${row.desc || '-'}</td>
-      <td>${row.funder || '-'}</td>
-      <td>${row.amount || 0}</td>
-    </tr>
-  `).join('');
+    let runningBal = 0;
+    tbody.innerHTML = stockSwapData.map(row => {
+        const borrowed = Number(row.borrowed || row.borrowed_qty || 0);
+        const replenished = Number(row.replenished || row.replenished_qty || 0);
+        runningBal += (borrowed - replenished);
+
+        return `
+            <tr>
+                <td>${row.date || row.transaction_date || '-'}</td>
+                <td>${row.brPurch || row.purch_qty || 0}</td>
+                <td>${row.inTransit || row.in_transit || 0}</td>
+                <td style="color: var(--accent-red);">${borrowed}</td>
+                <td style="color: var(--accent-green);">${replenished}</td>
+                <td style="color: var(--accent-amber);">${runningBal}</td>
+                <td>${row.notes || row.settlement_notes || '-'}</td>
+            </tr>`;
+    }).join('');
+}
+
+// Render Expense Ledger Table
+function renderExpenseTable() {
+    const tbody = document.getElementById("tbody-expense-ledger") || document.querySelector("#expense-table tbody");
+    if (!tbody || !expenseData) return;
+
+    tbody.innerHTML = expenseData.map(row => `
+        <tr>
+            <td>${row.date || '-'}</td>
+            <td>${row.category || '-'}</td>
+            <td>${row.desc || row.description || '-'}</td>
+            <td>${row.funder || '-'}</td>
+            <td>ETB ${Number(row.amount || 0).toLocaleString(undefined, {minimumFractionDigits: 2})}</td>
+        </tr>
+    `).join('');
 }
 
 // 3. Run on initial page load
