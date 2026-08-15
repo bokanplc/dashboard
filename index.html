@@ -1302,36 +1302,35 @@ async function loadLiveData() {
 
 // 2. Render functions to display data on screen
 function renderStockTable() {
-  const tbody = document.querySelector("#stock-table tbody") || document.querySelector("tbody");
-  if (!tbody) return;
+    const tbody = document.getElementById("tbody-stock") || document.querySelector("#stock-table tbody") || document.querySelector("tbody");
+    if (!tbody || !stockReportData) return;
 
-  let runningKolfeBal = 0;
+    let runningKolfeBal = 0;
 
-  tbody.innerHTML = stockReportData.map(row => {
-    const shippedIn = Number(row.shipKolfe) || 0;
-    const soldOut = Number(row.salesKolfe) || 0;
-    runningKolfeBal = runningKolfeBal + shippedIn - soldOut;
-    row.kolfeBal = runningKolfeBal;
+    tbody.innerHTML = stockReportData.map(row => {
+        const shippedIn = Number(row.shipKolfe) || 0;
+        const soldOut = Number(row.salesKolfe) || 0;
+        runningKolfeBal = runningKolfeBal + shippedIn - soldOut;
+        row.kolfeBal = runningKolfeBal;
 
-    return `
-      <tr>
-        <td>${row.date || '-'}</td>
-        <td>${row.open || 0}</td>
-        <td>${row.primePurch || 0}</td>
-        <td>${row.brPurch || 0}</td>
-        <td>${shippedIn}</td>
-        <td>${row.inTransit || 0}</td>
-        <td>${row.transfer || 0}</td>
-        <td>${soldOut}</td>
-        <td>${row.soldBy1 || '-'}</td>
-        <td><strong>${runningKolfeBal}</strong></td>
-        <td>${row.salesMes || 0}</td>
-        <td>${row.soldBy2 || '-'}</td>
-      </tr>
-    `;
-  }).join('');
+        return `
+            <tr>
+                <td>${row.date || '-'}</td>
+                <td>${row.open || 0}</td>
+                <td>${row.primePurch || 0}</td>
+                <td>${row.brPurch || 0}</td>
+                <td>${shippedIn}</td>
+                <td>${row.inTransit || 0}</td>
+                <td>${row.transfer || 0}</td>
+                <td>${soldOut}</td>
+                <td>${row.soldBy1 || '-'}</td>
+                <td><strong>${runningKolfeBal}</strong></td>
+                <td>${row.salesMes || 0}</td>
+                <td>${row.soldBy2 || '-'}</td>
+            </tr>
+        `;
+    }).join('');
 }
-
 // Render Stock Swap Table
 function renderStockSwapTable() {
     const tbody = document.getElementById("tbody-stock-swap") || document.querySelector("#table-stock-swap tbody");
