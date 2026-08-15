@@ -1275,17 +1275,17 @@ async function loadLiveData() {
         inTransit: (Number(row.factory_purchase_qty) || 0) - (Number(row.shipped_to_kolfe_qty) || 0),
         transfer: Number(row.transfer_qty) || 0,
         salesKolfe: Number(row.sales_kolfe_qty) || 0,
-       soldBy1: (Number(row.sales_kolfe_qty) || 0) > 0 ? (row.sold_by || '-') : '-',
+        soldBy1: (Number(row.sales_kolfe_qty) || 0) > 0 ? (row.sold_by || '-') : '-',
         kolfeBal: 0,
         salesMes: Number(row.sales_mesalemya_qty) || 0,
-        soldBy2: (Number(row.sales_mesalemya_qty) || 0) > 0 ? (row.sold_by || '-') : '-',
-        borrowed_prime_stock: Number(row.borrowed_prime_stock) || 0,
-        replenished_to_prime: Number(row.replenished_to_prime) || 0
+        soldBy2: (Number(row.sales_mesalemya_qty) || 0) > 0 ? (row.sold_by || '-') : '-'
       }));
 
       renderStockTable();
-      renderStockSwapTable();
-    }
+    renderStockSwapTable();
+  }
+
+    if (expenseRows && expenseRows.length > 0) {
       expenseData = expenseRows.map(row => ({
         date: row.expense_date,
         category: row.category,
@@ -1332,66 +1332,7 @@ function renderStockTable() {
     `;
   }).join('');
 }
-function renderStockSwapTable() {
-  const swapTbody = document.querySelector("#swap-table tbody") || document.querySelectorAll("tbody")[1];
-  if (!swapTbody || !stockReportData) return;
 
-  let runningBalance = 0;
-
-  swapTbody.innerHTML = stockReportData.map(row => {
-    const brPurch = Number(row.brPurch) || 0;
-    const inTransit = Number(row.inTransit) || 0;
-    
-    const borrowed = Number(row.borrowed_prime_stock) || Number(row.borrowed) || (brPurch > 0 ? brPurch : 0);
-    const replenished = Number(row.replenished_to_prime) || Number(row.replenished) || 0;
-    
-    runningBalance += (borrowed - replenished);
-
-    const notes = row.settlement_notes || (replenished > 0 ? "Replenishment / Factory Direct" : "Stock Borrowed for Sales");
-
-    return `
-      <tr>
-        <td class="px-4 py-2 border">${row.date || '-'}</td>
-        <td class="px-4 py-2 border">${brPurch}</td>
-        <td class="px-4 py-2 border">${inTransit}</td>
-        <td class="px-4 py-2 border text-red-600 font-semibold">${borrowed}</td>
-        <td class="px-4 py-2 border text-green-600 font-semibold">${replenished}</td>
-        <td class="px-4 py-2 border font-bold">${runningBalance}</td>
-        <td class="px-4 py-2 border text-sm text-gray-600">${notes}</td>
-      </tr>
-    `;
-  }).join('');
-}
-        function renderStockSwapTable() {
-  const swapTbody = document.querySelector("#swap-table tbody") || document.querySelectorAll("tbody")[1];
-  if (!swapTbody || !stockReportData) return;
-
-  let runningBalance = 0;
-
-  swapTbody.innerHTML = stockReportData.map(row => {
-    const brPurch = Number(row.brPurch) || 0;
-    const inTransit = Number(row.inTransit) || 0;
-    
-    const borrowed = Number(row.borrowed_prime_stock) || Number(row.borrowed) || (brPurch > 0 ? brPurch : 0);
-    const replenished = Number(row.replenished_to_prime) || Number(row.replenished) || 0;
-    
-    runningBalance += (borrowed - replenished);
-
-    const notes = row.settlement_notes || (replenished > 0 ? "Replenishment / Factory Direct" : "Stock Borrowed for Sales");
-
-    return `
-      <tr>
-        <td class="px-4 py-2 border">${row.date || '-'}</td>
-        <td class="px-4 py-2 border">${brPurch}</td>
-        <td class="px-4 py-2 border">${inTransit}</td>
-        <td class="px-4 py-2 border text-red-600 font-semibold">${borrowed}</td>
-        <td class="px-4 py-2 border text-green-600 font-semibold">${replenished}</td>
-        <td class="px-4 py-2 border font-bold">${runningBalance}</td>
-        <td class="px-4 py-2 border text-sm text-gray-600">${notes}</td>
-      </tr>
-    `;
-  }).join('');
-}
 function renderExpenseTable() {
   const tbody = document.querySelector("#expense-table tbody");
   if (!tbody) return;
