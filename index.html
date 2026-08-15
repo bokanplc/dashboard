@@ -1124,9 +1124,8 @@ body {
         }
 
       function renderExpenses() {
-    const tbody = document.getElementById('tbody-expenses') || document.getElementById('tbody-expense-ledger');
-    if (!tbody) return;
-
+const tbody = document.getElementById('tbody-expenses') || document.getElementById('tbody-expense-ledger') || document.getElementById('tbody-expense') || document.querySelector('#expenseLedger tbody') || document.querySelector('#expenses tbody');
+   if (!tbody) { console.error('Expense table tbody not found in HTML!'); return; }
     tbody.innerHTML = '';
     let total = 0;
 
