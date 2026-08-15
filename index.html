@@ -1366,9 +1366,9 @@ function renderStockSwapTable() {
 
 // Render Expense Ledger Table
 function renderExpenseTable() {
-    const tbody = document.getElementById("tbody-expense-ledger") || document.querySelector("#expense-table tbody");
-    if (!tbody || !expenseData) return;
-
+  const tbody = document.getElementById("tbody-expenses") || document.getElementById("tbody-expense-ledger") || document.querySelector("#expense-table tbody");
+   if (!tbody) { console.error("Expense table tbody not found in HTML!"); return; }
+if (!expenseData) return;
     tbody.innerHTML = expenseData.map(row => `
         <tr>
             <td>${row.date || '-'}</td>
