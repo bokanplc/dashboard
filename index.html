@@ -1124,23 +1124,26 @@ body {
         }
 
         function renderExpenses() {
-            const tbody = document.getElementById('tbody-expenses');
+          const tbody = document.getElementById('tbody-expenses') || document.getElementById('tbody-expense-ledger');
+if (!tbody) return;
             tbody.innerHTML = '';
-            let total = 0;
+      (expenseData || []).forEach((row, index) => {
             expenseData.forEach((row, index) => {
                 total += row.amount;
                 tbody.innerHTML += `
                     <tr>
                         <td>${row.date}</td>
-                        <td>${row.category}</td>
+                        <td>${row.category}</td><td>${row.desc || row.description || '-'}</td>
                         <td>${row.desc}</td>
                         <td>${row.funder}</td>
                         <td style="font-weight:600;">ETB ${row.amount.toLocaleString('en-US', {minimumFractionDigits: 2})}</td>
                         <td class="admin-only"><button class="btn btn-red" onclick="deleteExpense(${index})">Delete</button></td>
                     </tr>`;
-            });
+        const tfootExp = document.getElementById('tfoot-exp-total');
+if (tfootExp) tfootExp.innerText = 'ETB ' + total.toLocaleString('en-US', {minimumFractionDigits: 2});
             document.getElementById('tfoot-exp-total').innerText = 'ETB ' + total.toLocaleString('en-US', {minimumFractionDigits: 2});
-            document.getElementById('dash-total-exp').innerText = 'ETB ' + total.toLocaleString('en-US', {minimumFractionDigits: 2});
+         const dashExp = document.getElementById('dash-total-exp');
+if (dashExp) dashExp.innerText = 'ETB ' + total.toLocaleString('en-US', {minimumFractionDigits: 2});
         }
 
         function deleteExpense(index) {
