@@ -1166,29 +1166,20 @@ const renderExpenseTable = renderExpenses;
             btn.classList.add('active');
         }
 
-        // Role-Based UI Control
-        function switchRole(role) {
-            document.querySelectorAll('.admin-only').forEach(el => {
-                el.style.display = (role === 'admin') ? 'inline-block' : 'none';
-            });
-            const navEntry = document.querySelector('.nav-entry');
-            if (role === 'investor') {
-                navEntry.style.display = 'none';
-                switchTab('dashboard', document.querySelector('.nav-dash'));
-            } else if (role === 'clerk') {
-                navEntry.style.display = 'inline-block';
-                switchTab('dataEntry', navEntry);
-            } else {
-                navEntry.style.display = 'inline-block';
-            }
-        }
+      function renderExpenses() {
+    const tbody = document.getElementById("tbody-expenses") || document.getElementById("tbody-expense-ledger") || document.querySelector("#expense-table tbody");
+    if (!tbody || !expenseData) return;
 
-        function performLogin() {
-            const selectedRole = document.getElementById('login-role-select').value;
-            document.getElementById('role-selector').value = selectedRole;
-            switchRole(selectedRole);
-            document.getElementById('login-modal').style.display = 'none';
-        }
+    tbody.innerHTML = expenseData.map(row => `
+        <tr>
+            <td>${row.date || '-'}</td>
+            <td>${row.category || '-'}</td>
+            <td>${row.desc || row.description || '-'}</td>
+            <td>${row.funder || '-'}</td>
+            <td>ETB ${Number(row.amount || 0).toLocaleString(undefined, {minimumFractionDigits: 2})}</td>
+        </tr>
+    `).join('');
+}
 
         function handleSignOut() {
             document.getElementById('login-modal').style.display = 'flex';
