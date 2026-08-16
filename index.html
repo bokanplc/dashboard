@@ -1358,7 +1358,7 @@ function renderStockSwapTable() {
 
 // Render Expense Ledger Table
 function renderExpenseTable() {
-    const tbody = document.getElementById("tbody-expense-ledger") || document.querySelector("#expense-table tbody");
+   const tbody = document.getElementById("tbody-expenses") || document.getElementById("tbody-expense-ledger") || document.querySelector("#expense-table tbody");
     if (!tbody || !expenseData) return;
 
     tbody.innerHTML = expenseData.map(row => `
