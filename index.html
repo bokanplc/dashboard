@@ -1447,12 +1447,14 @@ async function addExpenseSafe(event) {
         if (amount <= 0) {
             alert("Please enter a valid expense amount greater than 0.");
             return;
-        }
+       }
 
-        const payload = { category, description: desc, funder, amount };
+const rawDate = document.getElementById('exp-date')?.value;
+const cleanDate = rawDate && rawDate.trim() !== "" ? rawDate : new Date().toISOString().split('T')[0];
 
-        const { error } = await _supabase.from('expenses').insert([payload]);
+const payload = { expense_date: cleanDate, category, description: desc, funder, amount };
 
+const { error } = await _supabase.from('expenses').insert([payload]);
         if (error) {
             alert("Error saving expense: " + error.message);
             return;
