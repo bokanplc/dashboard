@@ -535,7 +535,7 @@ body {
 
                 <div class="card form-container">
                     <h3>2. Data Entry - Standard Expenses Form</h3>
-                    <form id="expense-form" onsubmit="addExpense(event)">
+                    <form id="expense-form" onsubmit="addExpenseSafe(event)"
                         <div class="form-grid">
                             <div class="form-group"><label>Expense Date</label><input type="date" id="exp-date" required></div>
                             <div class="form-group">
@@ -1203,17 +1203,17 @@ body {
       transfer_qty: Number(document.getElementById('tx-transfer')?.value) || 0,
       sales_kolfe_qty: Number(document.getElementById('tx-sales-kolfe')?.value) || 0,
       sales_mesalemya_qty: Number(document.getElementById('tx-sales-mes')?.value) || 0,
-      sold_by: document.getElementById('tx-soldby')?.value || 'BR'
+      sold_by: document.getElementById('tx-soldby')?.value || 'BR',
+unit_sales_price: Number(document.getElementById('tx-sales-price')?.value) || 0
     };
 
     console.log("Submitting to Supabase:", payload);
 
-    // 3. Perform Insert
-    const { data, error } = await _supabase
-      .from('Stock Movement')
-      .insert([payload])
-      .select();
-
+// 3. Perform Insert
+const { data, error } = await _supabase
+    .from('Stock Movement')
+    .insert([payload])
+    .select();
     if (error) {
       console.error("Supabase error detail:", error);
       alert("DATABASE REJECTED ENTRY: " + error.message + "\nDetails: " + (error.details || error.hint || 'None'));
@@ -1433,7 +1433,45 @@ async function addTransaction(event) {
 // 6. Handle New Expense Form Submission
 async function addExpense(event) {
   event.preventDefault();
-  alert("Expense processing...");
+}
+// NEW ISOLATED EXPENSE SUBMISSION FUNCTION
+async function addExpenseSafe(event) {
+    if (event) event.preventDefault();
+
+    try {
+        const category = document.getElementById('exp-category')?.value || 'General';
+        const desc = document.getElementById('exp-desc')?.value || '';
+        const funder = document.getElementById('exp-funder')?.value || 'PRIME';
+        const amount = parseFloat(document.getElementById('exp-amount')?.value) || 0;
+
+        if (amount <= 0) {
+            alert("Please enter a valid expense amount greater than 0.");
+            return;
+        }
+
+        const payload = { category, description: desc, funder, amount };
+
+        const { error } = await _supabase.from('expenses').insert([payload]);
+
+        if (error) {
+            alert("Error saving expense: " + error.message);
+            return;
+        }
+
+        alert("Expense Entry Logged Successfully!");
+        
+        // Reset expense form fields safely
+        const form = document.getElementById('expense-form');
+        if (form) form.reset();
+
+        // Refresh tables without touching other forms
+        if (typeof loadLiveData === 'function') await loadLiveData();
+        if (typeof renderExpenseTable === 'function') renderExpenseTable();
+
+    } catch (err) {
+        console.error("Expense Save Error:", err);
+        alert("System Error: " + err.message);
+    }
 }
 </script>
 </body>
