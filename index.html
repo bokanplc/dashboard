@@ -1233,20 +1233,6 @@ const { data, error } = await _supabase
   }
 }
 
-        function addExpense(e) {
-            e.preventDefault();
-            const date = document.getElementById('exp-date').value;
-            const category = document.getElementById('exp-category').value;
-            const desc = document.getElementById('exp-desc').value;
-            const funder = document.getElementById('exp-funder').value;
-            const amount = parseFloat(document.getElementById('exp-amount').value) || 0;
-
-            expenseData.push({ date, category, desc, funder, amount });
-            renderExpenses();
-            alert('Expense Entry Logged Successfully');
-            document.getElementById('expense-form').reset();
-        }
-
         function resetData() {
             if (confirm('Are you sure you want to reset all data back to original defaults?')) {
                 location.reload();
@@ -1260,7 +1246,7 @@ const _supabase = supabase.createClient('https://xyauecfuqropmqpchcny.supabase.c
 async function loadLiveData() {
   try {
     const { data: stockRows, error: stockErr } = await _supabase.from('Stock Movement').select('*');
-    const { data: expenseRows, error: expErr } = await _supabase.from('Expenses').select('*');
+   const { data: expenseRows, error: expErr } = await _supabase.from('expenses').select('*').order('expense_date', { ascending: false });
 
     if (stockErr) console.error("Error fetching stock:", stockErr);
 
