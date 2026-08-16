@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Sales Lead & Customer Portal</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+</head>
+<body class="bg-gray-100 p-6">
+
+  <!-- Header -->
+  <div class="max-w-4xl mx-auto mb-6 flex justify-between items-center bg-white p-4 rounded-lg shadow-sm">
+    <h1 class="text-2xl font-bold text-gray-800">Sales Lead & Customer History Portal</h1>
+    <span class="text-sm font-semibold bg-blue-100 text-blue-800 px-3 py-1 rounded-full">Sales Dept Only</span>
+  </div>
+
+  <!-- Form Component -->
+  <div class="p-6 bg-white rounded-lg shadow-md max-w-4xl mx-auto mb-6">
+    <h2 class="text-xl font-bold mb-4 text-gray-800">Log Interaction or Add New Customer</h2>
+    
+    <form id="sales-lead-form" onsubmit="handleSalesSubmission(event)" class="space-y-4">
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+        <div>
+          <label class="block font-semibold mb-1">Customer / Company Name</label>
+          <input type="text" id="cust-name" list="customer-list" placeholder="e.g., Company XYZ" class="w-full border p-2 rounded" required onchange="loadCustomerHistory(this.value)">
+          <datalist id="customer-list"></datalist>
+        </div>
+
+        <div>
+          <label class="block font-semibold mb-1">Lead Source</label>
+          <select id="cust-source" class="w-full border p-2 rounded">
+            <option value="Cold Call">Cold Call</option>
+            <option value="Social Media">Social Media</option>
+            <option value="Direct Visit">Direct Visit</option>
+            <option value="Referral">Referral</option>
+            <option value="Previous Contact">Previous Contact</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+        <div>
+          <label class="block font-semibold mb-1">Phone Number</label>
+          <input type="text" id="cust-phone" placeholder="+251..." class="w-full border p-2 rounded">
+        </div>
+        <div>
+          <label class="block font-semibold mb-1">Email Address</label>
+          <input type="email" id="cust-email" placeholder="contact@company.com" class="w-full border p-2 rounded">
+        </div>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+        <div>
+          <label class="block font-semibold mb-1">Current Deal / Lead Status</label>
+          <select id="cust-status" class="w-full border p-2 rounded" required>
+            <option value="New Lead">New Lead</option>
+            <option value="Proforma Sent">Proforma Sent</option>
+            <option value="Meeting Scheduled">Meeting Scheduled</option>
+            <option value="Account Info Sent">Account Info Sent</option>
+            <option value="Payment Pending">Payment Pending</option>
+            <option value="Closed / Won">Closed / Won</option>
+            <option value="Closed / Lost">Closed / Lost</option>
+          </select>
+        </div>
+        <div>
+          <label class="block font-semibold mb-1">Sales Representative</label>
+          <input type="text" id="cust-rep" placeholder="Your Name" class="w-full border p-2 rounded" required>
+        </div>
+      </div>
+
+      <div>
+        <label class="block font-semibold mb-1">Interaction Activity / Update Notes</label>
+        <textarea id="cust-notes" rows="3" placeholder="Detail discussion, sent account numbers, sample requests, meeting details..." class="w-full border p-2 rounded" required></textarea>
+      </div>
+
+      <button type="submit" class="w-full bg-blue-600 hover:bg-blue-700 text-white font-bold py-3 rounded">
+        Save Interaction / Update Customer History
+      </button>
+    </form>
+  </div>
+
+  <!-- History Timeline -->
+  <div id="timeline-container" class="p-6 bg-white rounded-lg shadow-md max-w-4xl mx-auto hidden">
+    <h3 class="text-lg font-bold text-gray-800 mb-3" id="timeline-title">Customer History Timeline</h3>
+    <div id="timeline-logs" class="space-y-3"></div>
+  </div>
+
+  <!-- JavaScript Logic -->
+  <script>
+    const _supabase = supabase.createClient('https://xyauecfuqropmqpchcny.supabase.co', 'sb_publishable_5K6wvT-11QWjsEVklanBpA_ABGramqt');
+
+    async function initSalesPortal() {
+      const { data: customers } = await _supabase.from('customers').select('customer_name');
+      if (customers) {
+        const listEl = document.getElementById('customer-list');
+        listEl.innerHTML = customers.map(c => `<option value="${c.customer_name}">`).join('');
+      }
+    }
+
+    async function handleSalesSubmission(e) {
+      e.preventDefault();
+      
+      const customerName = document.getElementById('cust-name').value.trim();
+      const phone = document.getElementById('cust-phone').value;
+      const email = document.getElementById('cust-email').value;
+      const leadSource = document.getElementById('cust-source').value;
+      const status = document.getElementById('cust-status').value;
+      const salesRep = document.getElementById('cust-rep').value;
+      const notes = document.getElementById('cust-notes').value;
+
+      try {
+        let { data: existing } = await _supabase.from('customers').select('id').eq('customer_name', customerName).single();
+
+        let customerId = existing?.id;
+
+        if (!customerId) {
+          const { data: newCust, error: custErr } = await _supabase
+            .from('customers')
+            .insert([{ customer_name: customerName, phone, email, lead_source: leadSource, current_status: status }])
+            .select();
+          if (custErr) throw custErr;
+          customerId = newCust[0].id;
+        } else {
+          await _supabase.from('customers').update({ current_status: status, phone, email }).eq('id', customerId);
+        }
+
+        const { error: logErr } = await _supabase
+          .from('customer_logs')
+          .insert([{ customer_id: customerId, sales_rep: salesRep, status: status, notes: notes }]);
+
+        if (logErr) throw logErr;
+
+        alert("Customer interaction logged successfully!");
+        document.getElementById('cust-notes').value = "";
+        loadCustomerHistory(customerName);
+        initSalesPortal();
+
+      } catch (err) {
+        console.error("Sales Portal Error:", err);
+        alert("Error logging update: " + err.message);
+      }
+    }
+
+    async function loadCustomerHistory(customerName) {
+      if (!customerName) return;
+
+      const { data: cust } = await _supabase.from('customers').select('id').eq('customer_name', customerName).single();
+
+      if (!cust) {
+        document.getElementById('timeline-container').classList.add('hidden');
+        return;
+      }
+
+      const { data: logs } = await _supabase
+        .from('customer_logs')
+        .select('*')
+        .eq('customer_id', cust.id)
+        .order('created_at', { ascending: false });
+
+      const container = document.getElementById('timeline-container');
+      const logsEl = document.getElementById('timeline-logs');
+      document.getElementById('timeline-title').innerText = `History Timeline for: ${customerName}`;
+
+      if (logs && logs.length > 0) {
+        logsEl.innerHTML = logs.map(log => `
+          <div class="bg-gray-50 p-4 border-l-4 border-blue-500 rounded shadow-sm">
+            <div class="flex justify-between text-xs text-gray-500 mb-1">
+              <span><strong>Logged By:</strong> ${log.sales_rep}</span>
+              <span>${new Date(log.created_at).toLocaleString()}</span>
+            </div>
+            <div class="font-semibold text-sm text-blue-700 mb-1">Status: ${log.status}</div>
+            <p class="text-sm text-gray-700 whitespace-pre-wrap">${log.notes}</p>
+          </div>
+        `).join('');
+        container.classList.remove('hidden');
+      }
+    }
+
+    document.addEventListener('DOMContentLoaded', initSalesPortal);
+  </script>
+</body>
+</html>
