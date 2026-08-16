@@ -1374,8 +1374,8 @@ function renderExpenseTable() {
 
 // 3. Run on initial page load
 window.onload = async function() {
-  await loadLiveData();
-
+    await loadLiveData();
+    if (typeof renderExpenseTable === 'function') renderExpenseTable();
   const today = new Date().toISOString().split('T')[0];
   if (document.getElementById('tx-date')) document.getElementById('tx-date').value = today;
   if (document.getElementById('exp-date')) document.getElementById('exp-date').value = today;
