@@ -1123,33 +1123,25 @@ body {
             });
         }
 
-      function renderExpenses() {
-const tbody = document.getElementById('tbody-expenses') || document.getElementById('tbody-expense-ledger') || document.getElementById('tbody-expense') || document.querySelector('#expenseLedger tbody') || document.querySelector('#expenses tbody');
-   if (!tbody) { console.error('Expense table tbody not found in HTML!'); return; }
-    tbody.innerHTML = '';
-    let total = 0;
-
-    (expenseData || []).forEach((row, index) => {
-        total += Number(row.amount || 0);
-        tbody.innerHTML += `
-            <tr>
-                <td>${row.date || '-'}</td>
-                <td>${row.category || '-'}</td>
-                <td>${row.desc || row.description || '-'}</td>
-                <td>${row.funder || '-'}</td>
-                <td style="font-weight:600;">ETB ${Number(row.amount || 0).toLocaleString('en-US', {minimumFractionDigits: 2})}</td>
-                <td class="admin-only"><button class="btn btn-red" onclick="deleteExpense(${index})">Delete</button></td>
-            </tr>`;
-    });
-
-    const tfootExp = document.getElementById('tfoot-exp-total');
-    if (tfootExp) tfootExp.innerText = 'ETB ' + total.toLocaleString('en-US', {minimumFractionDigits: 2});
-
-    const dashExp = document.getElementById('dash-total-exp');
-    if (dashExp) dashExp.innerText = 'ETB ' + total.toLocaleString('en-US', {minimumFractionDigits: 2});
-}
-
-const renderExpenseTable = renderExpenses;
+        function renderExpenses() {
+            const tbody = document.getElementById('tbody-expenses');
+            tbody.innerHTML = '';
+            let total = 0;
+            expenseData.forEach((row, index) => {
+                total += row.amount;
+                tbody.innerHTML += `
+                    <tr>
+                        <td>${row.date}</td>
+                        <td>${row.category}</td>
+                        <td>${row.desc}</td>
+                        <td>${row.funder}</td>
+                        <td style="font-weight:600;">ETB ${row.amount.toLocaleString('en-US', {minimumFractionDigits: 2})}</td>
+                        <td class="admin-only"><button class="btn btn-red" onclick="deleteExpense(${index})">Delete</button></td>
+                    </tr>`;
+            });
+            document.getElementById('tfoot-exp-total').innerText = 'ETB ' + total.toLocaleString('en-US', {minimumFractionDigits: 2});
+            document.getElementById('dash-total-exp').innerText = 'ETB ' + total.toLocaleString('en-US', {minimumFractionDigits: 2});
+        }
 
         function deleteExpense(index) {
             if (confirm("Are you sure you want to delete this expense record?")) {
@@ -1166,20 +1158,29 @@ const renderExpenseTable = renderExpenses;
             btn.classList.add('active');
         }
 
-      function renderExpenses() {
-    const tbody = document.getElementById("tbody-expenses") || document.getElementById("tbody-expense-ledger") || document.querySelector("#expense-table tbody");
-    if (!tbody || !expenseData) return;
+        // Role-Based UI Control
+        function switchRole(role) {
+            document.querySelectorAll('.admin-only').forEach(el => {
+                el.style.display = (role === 'admin') ? 'inline-block' : 'none';
+            });
+            const navEntry = document.querySelector('.nav-entry');
+            if (role === 'investor') {
+                navEntry.style.display = 'none';
+                switchTab('dashboard', document.querySelector('.nav-dash'));
+            } else if (role === 'clerk') {
+                navEntry.style.display = 'inline-block';
+                switchTab('dataEntry', navEntry);
+            } else {
+                navEntry.style.display = 'inline-block';
+            }
+        }
 
-    tbody.innerHTML = expenseData.map(row => `
-        <tr>
-            <td>${row.date || '-'}</td>
-            <td>${row.category || '-'}</td>
-            <td>${row.desc || row.description || '-'}</td>
-            <td>${row.funder || '-'}</td>
-            <td>ETB ${Number(row.amount || 0).toLocaleString(undefined, {minimumFractionDigits: 2})}</td>
-        </tr>
-    `).join('');
-}
+        function performLogin() {
+            const selectedRole = document.getElementById('login-role-select').value;
+            document.getElementById('role-selector').value = selectedRole;
+            switchRole(selectedRole);
+            document.getElementById('login-modal').style.display = 'none';
+        }
 
         function handleSignOut() {
             document.getElementById('login-modal').style.display = 'flex';
@@ -1357,9 +1358,9 @@ function renderStockSwapTable() {
 
 // Render Expense Ledger Table
 function renderExpenseTable() {
-  const tbody = document.getElementById("tbody-expenses") || document.getElementById("tbody-expense-ledger") || document.querySelector("#expense-table tbody");
-   if (!tbody) { console.error("Expense table tbody not found in HTML!"); return; }
-if (!expenseData) return;
+    const tbody = document.getElementById("tbody-expense-ledger") || document.querySelector("#expense-table tbody");
+    if (!tbody || !expenseData) return;
+
     tbody.innerHTML = expenseData.map(row => `
         <tr>
             <td>${row.date || '-'}</td>
