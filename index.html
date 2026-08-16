@@ -1242,7 +1242,8 @@ body {
             const funder = document.getElementById('exp-funder').value;
             const amount = parseFloat(document.getElementById('exp-amount').value) || 0;
 
-            expenseData.push({ date, category, desc, funder, amount });
+            await _supabase.from('expenses').insert([{ category, desc, funder, amount }]);
+await loadLiveData();
             renderExpenses();
             alert('Expense Entry Logged Successfully');
             document.getElementById('expense-form').reset();
