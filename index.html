@@ -1432,8 +1432,38 @@ async function addTransaction(event) {
 
 // 6. Handle New Expense Form Submission
 async function addExpense(event) {
-  event.preventDefault();
-  alert("Expense processing...");
+    if (event) event.preventDefault();
+
+    try {
+        const payload = {
+            date: document.getElementById('exp-date')?.value || new Date().toISOString().split('T')[0],
+            category: document.getElementById('exp-category')?.value || 'General',
+            amount: parseFloat(document.getElementById('exp-amount')?.value) || 0,
+            funder: document.getElementById('exp-funder')?.value || 'PRIME',
+            desc: document.getElementById('exp-desc')?.value || ''
+        };
+
+        const { data, error } = await _supabase.from('expenses').insert([payload]);
+
+        if (error) {
+            alert("Error saving expense: " + error.message);
+            return;
+        }
+
+        alert("Expense recorded successfully!");
+
+        // Reset form
+        const form = document.getElementById('expense-form') || document.getElementById('exp-form');
+        if (form) form.reset();
+
+        // Refresh live data & update ledger table
+        await loadLiveData();
+        if (typeof renderExpenseTable === 'function') renderExpenseTable();
+
+    } catch (err) {
+        console.error("Expense Save Error:", err);
+        alert("System Error saving expense: " + err.message);
+    }
 }
 </script>
 </body>
