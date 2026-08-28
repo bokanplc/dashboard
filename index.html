@@ -1572,7 +1572,8 @@ if (loginForm) {
             }
         } else {
             // Successfully logged in, reload or transition views
-            window.location.reload();
+          document.getElementById('login-view').classList.add('hidden');
+        document.getElementById('app-view').classList.remove('hidden');
         }
     });
 }
