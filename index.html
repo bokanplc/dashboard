@@ -1,1465 +1,249 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>      
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>PRIME INVESTMENT GROUP | Financial &amp; Inventory Dashboard</title>
+<html lang="en"><head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>PRIME Investment Group PLC — Operations Portal</title>
+<script src="https://cdn.tailwindcss.com"></script>
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-
-<!-- =================================================================== -->
-<!-- SECTION 1 END: HTML METADATA & TITLE                                 -->
-<!-- =================================================================== -->
- <script>
-       function switchTab(tabName, btnElement) {
-            document.querySelectorAll('.tab-pane').forEach(el => el.classList.remove('active'));
-            const target = document.getElementById(tabName);
-            if (target) target.classList.add('active');
-            if (btnElement) {
-                document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active'));
-                btnElement.classList.add('active');
-            }
-       }
-        
-</script>
-
-
-    <!-- =================================================================== -->
-<!-- SECTION 2 START: CSS STYLES                                       -->
-<!-- =================================================================== -->
 <style>
-    :root {
-        /* Corporate Palette */
-        --bg-main: #f8fafc;
-        --bg-card: #ffffff;
-        --bg-header: #0f172a;
-        --bg-sidebar: #0f172a;
-        --bg-subcard: #f1f5f9;
-        --accent-primary: #1e3a8a;   /* Corporate Navy */
-        --accent-blue: #2563eb;      /* Slate Blue Accent */
-        --accent-amber: #d97706;     /* Dark Amber Alert/Pending */
-        --accent-green: #15803d;     /* Deep Emerald Profit/Green */
-        --accent-red: #b91c1c;       /* Muted Crimson Loss/Red */
-        --accent-purple: #6b21a8;    /* Deep Purple Secondary Metric */
-        --text-main: #0f172a;
-        --text-muted: #64748b;
-        --border: #cbd5e1;
-        --table-header-bg: #0f172a;
-        --table-footer-bg: #e2e8f0;
-        --table-hover: #f1f5f9;
-        --sidebar-width: 250px;
-    }
-:root {
-    --bg-main: #f4f6f9;
-    --surface: #ffffff;
-    --primary: #0f172a;
-    --sidebar-bg: #0f172a;
-    --sidebar-hover: #1e293b;
-    --text-main: #334155;
-    --text-muted: #64748b;
-    --border: #e2e8f0;
-    --accent-blue: #2563eb;
-    --accent-green: #16a34a;
-    --accent-amber: #d97706;
-    --accent-purple: #9333ea;
-}
+  @media print {
+    body * { visibility: hidden; }
+    .printable-doc, .printable-doc * { visibility: visible; }
+    .printable-doc { position: absolute; top: 0; left: 0; width: 100%; }
+    .no-print { display: none !important; }
+  }
+  body { font-family: 'Avenir', 'Helvetica Neue', Helvetica, Arial, sans-serif; background:#f4f5f7; color: #393939; }
+  .tab-btn.active { background: #2ca01c; color: #fff; }
+  .locked-badge { font-size: 10px; }
+  .kpi-card { border-left: 4px solid #2ca01c; }
+  .section-card h3 { letter-spacing: .02em; text-transform: uppercase; font-size: 12px; color: #6b6c6e; }
+  .bar-track { background: #e0e0e0; border-radius: 4px; overflow: hidden; height: 10px; }
+  .bar-fill { height: 100%; border-radius: 4px; }
+  .dash-section { border-top: 3px solid #2ca01c; }
+  .dash-section-label { font-size: 11px; letter-spacing: .08em; text-transform: uppercase; color: #fff; background:#2ca01c; display:inline-block; padding:4px 12px; border-radius:0 0 6px 6px; }
+  .alert-card { border-left: 4px solid #b45309; background:#fffbeb; }
+  .alert-card.danger { border-left-color:#be123c; background:#fff1f2; }
+  .alert-card.ok { border-left-color:#15803d; background:#f0fdf4; }
+  .subtab-btn.active { background:#2ca01c; color:#fff; }
+  .corp-card-title { font-size:11px; text-transform:uppercase; letter-spacing:.04em; color:#2ca01c; font-weight:700; margin-bottom:10px; padding-bottom:6px; border-bottom:2px solid #e0e0e0; }
+  .stat-line { display:flex; justify-content:space-between; align-items:baseline; padding:6px 0; border-bottom:1px solid #f4f5f7; }
+  .stat-line:last-child { border-bottom:none; }
+  .stat-line .label { color:#6b6c6e; font-size:12px; }
+  .stat-line .value { font-weight:700; color:#2ca01c; font-size:13px; white-space:nowrap; margin-left:12px; }
 
-body {
-    background-color: var(--bg-main);
-    color: var(--text-main);
-    font-family: 'Inter', sans-serif;
-    margin: 0;
-    padding: 0;
-}
-
-/* Executive Card & Grid Styling */
-.metrics-grid {
-    display: grid;
-    grid-template-columns: repeat(4, 1fr);
-    gap: 16px;
-    margin-bottom: 24px;
-}
-
-.metric-card {
-    background-color: var(--surface);
-    border: 1px solid var(--border);
-    border-left: 4px solid var(--accent-blue);
-    border-radius: 8px;
-    padding: 18px 20px;
-    box-shadow: 0 1px 3px rgba(0,0,0,0.02);
-}
-
-.metric-title {
-    font-size: 11px;
-    font-weight: 700;
-    color: var(--text-muted);
-    text-transform: uppercase;
-    letter-spacing: 0.5px;
-    margin-bottom: 8px;
-}
-
-.metric-val {
-    font-size: 20px;
-    font-weight: 700;
-    color: var(--primary);
-    margin-bottom: 6px;
-}
-
-.metric-sub {
-    font-size: 11px;
-    color: var(--text-muted);
-}
-
-.dashboard-section {
-    background: var(--surface);
-    border: 1px solid var(--border);
-    border-radius: 8px;
-    padding: 20px;
-    margin-bottom: 20px;
-    box-shadow: 0 1px 3px rgba(0,0,0,0.02);
-}
-
-.section-header {
-    font-size: 13px;
-    font-weight: 700;
-    color: var(--primary);
-    text-transform: uppercase;
-    letter-spacing: 0.5px;
-    margin-bottom: 16px;
-}
-    * { box-sizing: border-box; margin: 0; padding: 0; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif; }
-    body { background: var(--bg-main); color: var(--text-main); font-size: 13px; display: flex; min-height: 100vh; }
-
-    /* LEFT SIDEBAR STYLES */
-    .sidebar {
-        width: var(--sidebar-width);
-        background: var(--bg-sidebar);
-        color: #fff;
-        display: flex;
-        flex-direction: column;
-        position: fixed;
-        top: 0;
-        bottom: 0;
-        left: 0;
-        z-index: 100;
-        border-right: 1px solid #1e293b;
-    }
-
-    .sidebar-brand {
-        padding: 20px 16px;
-        display: flex;
-        align-items: center;
-        gap: 10px;
-        font-weight: 700;
-        font-size: 14px;
-        border-bottom: 1px solid #1e293b;
-        letter-spacing: 0.3px;
-    }
-    .logo-box { background: #3b82f6; color: #fff; padding: 4px 8px; border-radius: 4px; font-weight: 900; }
-
-    .sidebar-nav {
-        display: flex;
-        flex-direction: column;
-        gap: 4px;
-        padding: 16px 8px;
-        flex-grow: 1;
-    }
-
-    .tab-btn {
-        background: none;
-        border: none;
-        color: #94a3b8;
-        padding: 10px 14px;
-        font-weight: 600;
-        border-radius: 6px;
-        cursor: pointer;
-        font-size: 12px;
-        text-align: left;
-        width: 100%;
-        transition: all 0.2s ease;
-    }
-    .tab-btn:hover { background: #1e293b; color: #f8fafc; }
-    .tab-btn.active { background: var(--accent-blue); color: #ffffff; }
-
-    .sidebar-user {
-        padding: 16px;
-        border-top: 1px solid #1e293b;
-        background: #090d16;
-        display: flex;
-        flex-direction: column;
-        gap: 10px;
-    }
-
-    /* MAIN CONTENT CONTAINER */
-    .main-wrapper {
-       margin-left: 250px; 
-        padding: 15px;      /* Reduces inner breathing room */
-        width: calc(100% - 250px);
-    }
-
-    /* Top Header inside Content Area */
-    .top-bar {
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        background: var(--bg-card);
-        padding: 12px 20px;
-        border-radius: 6px;
-        margin-bottom: 20px;
-        border: 1px solid var(--border);
-        box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
-    }
-
-    .btn { background: #334155; color: #fff; border: 1px solid var(--border); padding: 6px 14px; border-radius: 4px; cursor: pointer; font-size: 12px; font-weight: 600; display: inline-flex; align-items: center; gap: 6px; }
-    .btn-amber { background: var(--accent-amber); color: #fff; border: none; }
-    .btn-blue { background: var(--accent-blue); color: #fff; border: none; }
-    .btn-red { background: var(--accent-red); color: #fff; border: none; padding: 4px 8px; font-size: 11px; }
-    .btn:hover { opacity: 0.9; }
-
-    /* Tab Content */
-    .tab-pane { display: none; }
-    .tab-pane.active { display: block; }
-
-    /* Section Containers */
-    .dashboard-section { margin-bottom: 24px; }
-    .section-header { font-size: 13px; font-weight: 800; color: var(--accent-primary); text-transform: uppercase; letter-spacing: 0.8px; margin-bottom: 12px; display: flex; align-items: center; gap: 8px; border-bottom: 2px solid var(--accent-primary); padding-bottom: 6px; }
-
-    /* Cards & Metrics */
-    .card { background: var(--bg-card); border-radius: 6px; border: 1px solid var(--border); padding: 16px; margin-bottom: 16px; box-shadow: 0 1px 3px rgba(0,0,0,0.05); }
-    .card h3 { font-size: 14px; font-weight: 700; color: var(--text-main); margin-bottom: 12px; }
-    .metrics-grid { 
-        display: grid; 
-        grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); 
-        gap: 10px; 
-        margin-bottom: 20px;
-    }
-    .metric-card { 
-        background: #ffffff; 
-        border: 1px solid #cbd5e1; 
-        border-top: 3px solid var(--accent-blue); 
-        padding: 10px 14px; 
-        border-radius: 4px; 
-        box-shadow: none;
-    }
-    .metric-title { 
-        font-size: 10px; 
-        font-weight: 700; 
-        color: #64748b; 
-        text-transform: uppercase; 
-        letter-spacing: 0.5px; 
-        margin-bottom: 6px; 
-    }
-    .metric-val { 
-        font-size: 15px; 
-        font-weight: 700; 
-        color: #0f172a; 
-        font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, monospace;
-    }
-    .metric-sub { 
-        font-size: 10px; 
-        color: #64748b; 
-        margin-top: 4px; 
-        border-top: 1px solid #f1f5f9;
-        padding-top: 4px;
-    }
-
-    /* Layout Grids */
-    .data-entry-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(400px, 1fr)); gap: 16px; }
-
-    /* Tables */
-    .table-wrap { overflow-x: auto; border: 1px solid var(--border); border-radius: 4px; }
-    table { width: 100%; border-collapse: collapse; font-size: 12px; background: var(--bg-card); }
-    th { background: var(--table-header-bg); color: #ffffff; padding: 9px 12px; text-align: left; font-weight: 600; text-transform: uppercase; border-bottom: 1px solid var(--border); font-size: 11px; letter-spacing: 0.3px; }
-    td { padding: 9px 12px; border-bottom: 1px solid var(--border); color: var(--text-main); }
-    tfoot td { background: var(--table-footer-bg); font-weight: 800; border-top: 2px solid var(--border); border-bottom: none; font-size: 12px; color: var(--text-main); }
-    tr:hover { background: var(--table-hover); }
-
-    /* Forms */
-    .form-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 12px; margin-bottom: 16px; }
-    .form-group label { display: block; font-size: 11px; font-weight: 600; color: var(--text-muted); margin-bottom: 4px; }
-    .form-group input, .form-group select { width: 100%; background: #ffffff; border: 1px solid var(--border); color: var(--text-main); padding: 7px; border-radius: 4px; font-size: 12px; }
-
-    /* Status Pills */
-    .pill { padding: 2px 8px; border-radius: 4px; font-size: 10px; font-weight: 700; display: inline-block; }
-    .pill-prime { background: #dbeafe; color: #1e40af; }
-    .pill-br { background: #f3e8ff; color: #6b21a8; }
-
-    /* Auth Modal Overlay */
-    #login-modal { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(15, 23, 42, 0.85); display: none; justify-content: center; align-items: center; z-index: 9999; }
-    .login-card { background: #ffffff; border: 1px solid var(--border); padding: 30px; border-radius: 8px; width: 340px; box-shadow: 0 10px 25px -5px rgba(0,0,0,0.1); }
+  /* ---------- Sidebar navigation ---------- */
+  #sidebar { width: 250px; background:#1b1b1b !important; }
+  .nav-link { display:block; width:100%; text-align:left; padding:8px 14px; border-radius:6px; color:#b8b8b8; font-size:12px; font-weight:500; }
+  .nav-link:hover { background:rgba(255,255,255,.06); color:#fff; }
+  .nav-link.active { background:#2ca01c; color:#fff; font-weight:600; }
+  .nav-link-indent { padding-left:26px; }
+  .nav-group-toggle { display:flex; justify-content:space-between; align-items:center; width:100%; text-align:left; padding:8px 14px; border-radius:6px; color:#e0e0e0; font-size:11px; font-weight:700; letter-spacing:.04em; text-transform:uppercase; margin-top:6px; }
+  .nav-group-toggle:hover { background:rgba(255,255,255,.06); color:#fff; }
+  .nav-group-toggle .chev { font-size:9px; color:#888; }
+  .nav-group-children { display:block; }
+  .nav-group-children.hidden { display:none; }
+  .nav-section-gap { height:6px; }
+  .role-pill { display:inline-block; font-size:10px; font-weight:700; letter-spacing:.04em; text-transform:uppercase; background:rgba(255,255,255,.1); color:#7ef29d; padding:2px 8px; border-radius:999px; }
+  .page-eyebrow { font-size:10px; letter-spacing:.08em; text-transform:uppercase; color:#2ca01c; font-weight:700; }
+  .summary-callout { background:linear-gradient(135deg,#1b1b1b,#2b2b2b); color:#fff; border-radius:12px; }
+  .summary-callout .metric-label { color:#7ef29d; font-size:11px; text-transform:uppercase; letter-spacing:.04em; }
+  @media (max-width: 767px) {
+    #sidebar { transform: translateX(-100%); position: fixed; top:0; bottom:0; left:0; z-index:40; }
+    #sidebar.open { transform: translateX(0); }
+  }
 </style>
+<style>*, ::before, ::after{--tw-border-spacing-x:0;--tw-border-spacing-y:0;--tw-translate-x:0;--tw-translate-y:0;--tw-rotate:0;--tw-skew-x:0;--tw-skew-y:0;--tw-scale-x:1;--tw-scale-y:1;--tw-pan-x: ;--tw-pan-y: ;--tw-pinch-zoom: ;--tw-scroll-snap-strictness:proximity;--tw-gradient-from-position: ;--tw-gradient-via-position: ;--tw-gradient-to-position: ;--tw-ordinal: ;--tw-slashed-zero: ;--tw-numeric-figure: ;--tw-numeric-spacing: ;--tw-numeric-fraction: ;--tw-ring-inset: ;--tw-ring-offset-width:0px;--tw-ring-offset-color:#fff;--tw-ring-color:rgb(44 160 28 / 0.5);--tw-ring-offset-shadow:0 0 #0000;--tw-ring-shadow:0 0 #0000;--tw-shadow:0 0 #0000;--tw-shadow-colored:0 0 #0000;--tw-blur: ;--tw-brightness: ;--tw-contrast: ;--tw-grayscale: ;--tw-hue-rotate: ;--tw-invert: ;--tw-saturate: ;--tw-sepia: ;--tw-drop-shadow: ;--tw-backdrop-blur: ;--tw-backdrop-brightness: ;--tw-backdrop-contrast: ;--tw-backdrop-grayscale: ;--tw-backdrop-hue-rotate: ;--tw-backdrop-invert: ;--tw-backdrop-opacity: ;--tw-backdrop-saturate: ;--tw-backdrop-sepia: ;--tw-contain-size: ;--tw-contain-layout: ;--tw-contain-paint: ;--tw-contain-style: }::backdrop{--tw-border-spacing-x:0;--tw-border-spacing-y:0;--tw-translate-x:0;--tw-translate-y:0;--tw-rotate:0;--tw-skew-x:0;--tw-skew-y:0;--tw-scale-x:1;--tw-scale-y:1;--tw-pan-x: ;--tw-pan-y: ;--tw-pinch-zoom: ;--tw-scroll-snap-strictness:proximity;--tw-gradient-from-position: ;--tw-gradient-via-position: ;--tw-gradient-to-position: ;--tw-ordinal: ;--tw-slashed-zero: ;--tw-numeric-figure: ;--tw-numeric-spacing: ;--tw-numeric-fraction: ;--tw-ring-inset: ;--tw-ring-offset-width:0px;--tw-ring-offset-color:#fff;--tw-ring-color:rgb(44 160 28 / 0.5);--tw-ring-offset-shadow:0 0 #0000;--tw-ring-shadow:0 0 #0000;--tw-shadow:0 0 #0000;--tw-shadow-colored:0 0 #0000;--tw-blur: ;--tw-brightness: ;--tw-contrast: ;--tw-grayscale: ;--tw-hue-rotate: ;--tw-invert: ;--tw-saturate: ;--tw-sepia: ;--tw-drop-shadow: ;--tw-backdrop-blur: ;--tw-backdrop-brightness: ;--tw-backdrop-contrast: ;--tw-backdrop-grayscale: ;--tw-backdrop-hue-rotate: ;--tw-backdrop-invert: ;--tw-backdrop-opacity: ;--tw-backdrop-saturate: ;--tw-backdrop-sepia: ;--tw-contain-size: ;--tw-contain-layout: ;--tw-contain-paint: ;--tw-contain-style: }/* ! tailwindcss v3.4.17 | MIT License | https://tailwindcss.com */*,::after,::before{box-sizing:border-box;border-width:0;border-style:solid;border-color:#e0e0e0}::after,::before{--tw-content:''}:host,html{line-height:1.5;-webkit-text-size-adjust:100%;-moz-tab-size:4;tab-size:4;font-family:'Avenir', 'Helvetica Neue', Helvetica, Arial, sans-serif;font-feature-settings:normal;font-variation-settings:normal;-webkit-tap-highlight-color:transparent}body{margin:0;line-height:inherit}hr{height:0;color:inherit;border-top-width:1px}abbr:where([title]){-webkit-text-decoration:underline dotted;text-decoration:underline dotted}h1,h2,h3,h4,h5,h6{font-size:inherit;font-weight:inherit}a{color:inherit;text-decoration:inherit}b,strong{font-weight:bolder}code,kbd,pre,samp{font-family:ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;font-feature-settings:normal;font-variation-settings:normal;font-size:1em}small{font-size:80%}sub,sup{font-size:75%;line-height:0;position:relative;vertical-align:baseline}sub{bottom:-.25em}sup{top:-.5em}table{text-indent:0;border-color:inherit;border-collapse:collapse}button,input,optgroup,select,textarea{font-family:inherit;font-feature-settings:inherit;font-variation-settings:inherit;font-size:100%;font-weight:inherit;line-height:inherit;letter-spacing:inherit;color:inherit;margin:0;padding:0}button,select{text-transform:none}button,input:where([type=button]),input:where([type=reset]),input:where([type=submit]){-webkit-appearance:button;background-color:transparent;background-image:none}:-moz-focusring{outline:auto}:-moz-ui-invalid{box-shadow:none}progress{vertical-align:baseline}::-webkit-inner-spin-button,::-webkit-outer-spin-button{height:auto}[type=search]{-webkit-appearance:textfield;outline-offset:-2px}::-webkit-search-decoration{-webkit-appearance:none}::-webkit-file-upload-button{-webkit-appearance:button;font:inherit}summary{display:list-item}blockquote,dd,dl,figure,h1,h2,h3,h4,h5,h6,hr,p,pre{margin:0}fieldset{margin:0;padding:0}legend{padding:0}menu,ol,ul{list-style:none;margin:0;padding:0}dialog{padding:0}textarea{resize:vertical}input::placeholder,textarea::placeholder{opacity:1;color:#9ca3af}[role=button],button{cursor:pointer}:disabled{cursor:default}audio,canvas,embed,iframe,img,object,svg,video{display:block;vertical-align:middle}img,video{max-width:100%;height:auto}[hidden]:where(:not([hidden=until-found])){display:none}.fixed{position:fixed}.inset-0{inset:0px}.inset-x-0{left:0px;right:0px}.top-0{top:0px}.z-30{z-index:30}.z-40{z-index:40}.col-span-1{grid-column:span 1 / span 1}.col-span-2{grid-column:span 2 / span 2}.col-span-3{grid-column:span 3 / span 3}.col-span-4{grid-column:span 4 / span 4}.col-span-5{grid-column:span 5 / span 5}.col-span-6{grid-column:span 6 / span 6}.mx-auto{margin-left:auto;margin-right:auto}.mb-0{margin-bottom:0px}.mb-1{margin-bottom:0.25rem}.mb-10{margin-bottom:2.5rem}.mb-2{margin-bottom:0.5rem}.mb-3{margin-bottom:0.75rem}.mb-4{margin-bottom:1rem}.mb-6{margin-bottom:1.5rem}.mb-8{margin-bottom:2rem}.mt-1{margin-top:0.25rem}.mt-10{margin-top:2.5rem}.mt-2{margin-top:0.5rem}.mt-3{margin-top:0.75rem}.mt-4{margin-top:1rem}.mt-6{margin-top:1.5rem}.flex{display:flex}.grid{display:grid}.hidden{display:none}.h-10{height:2.5rem}.h-8{height:2rem}.max-h-72{max-height:18rem}.min-h-screen{min-height:100vh}.w-10{width:2.5rem}.w-20{width:5rem}.w-56{width:14rem}.w-64{width:16rem}.w-8{width:2rem}.w-full{width:100%}.min-w-0{min-width:0px}.max-w-4xl{max-width:56rem}.max-w-6xl{max-width:72rem}.max-w-sm{max-width:24rem}.flex-1{flex:1 1 0%}.flex-shrink-0{flex-shrink:0}.border-collapse{border-collapse:collapse}.grid-cols-1{grid-template-columns:repeat(1, minmax(0, 1fr))}.grid-cols-2{grid-template-columns:repeat(2, minmax(0, 1fr))}.grid-cols-12{grid-template-columns:repeat(12, minmax(0, 1fr))}.flex-col{flex-direction:column}.flex-wrap{flex-wrap:wrap}.items-start{align-items:flex-start}.items-center{align-items:center}.justify-end{justify-content:flex-end}.justify-center{justify-content:center}.justify-between{justify-content:space-between}.gap-1{gap:0.25rem}.gap-2{gap:0.5rem}.gap-3{gap:0.75rem}.gap-4{gap:1rem}.gap-6{gap:1.5rem}.space-y-1 > :not([hidden]) ~ :not([hidden]){--tw-space-y-reverse:0;margin-top:calc(0.25rem * calc(1 - var(--tw-space-y-reverse)));margin-bottom:calc(0.25rem * var(--tw-space-y-reverse))}.space-y-2 > :not([hidden]) ~ :not([hidden]){--tw-space-y-reverse:0;margin-top:calc(0.5rem * calc(1 - var(--tw-space-y-reverse)));margin-bottom:calc(0.5rem * var(--tw-space-y-reverse))}.space-y-3 > :not([hidden]) ~ :not([hidden]){--tw-space-y-reverse:0;margin-top:calc(0.75rem * calc(1 - var(--tw-space-y-reverse)));margin-bottom:calc(0.75rem * var(--tw-space-y-reverse))}.overflow-x-auto{overflow-x:auto}.overflow-y-auto{overflow-y:auto}.truncate{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}.whitespace-nowrap{white-space:nowrap}.whitespace-pre-line{white-space:pre-line}.rounded{border-radius:0.25rem}.rounded-lg{border-radius:0.5rem}.border{border-width:1px}.border-b{border-bottom-width:1px}.border-b-2{border-bottom-width:2px}.border-t{border-top-width:1px}.border-t-2{border-top-width:2px}.border-blue-100{--tw-border-opacity:1;border-color:rgb(219 234 254 / var(--tw-border-opacity, 1))}.border-green-200{--tw-border-opacity:1;border-color:rgb(187 247 208 / var(--tw-border-opacity, 1))}.border-slate-200{--tw-border-opacity:1;border-color:rgb(226 232 240 / var(--tw-border-opacity, 1))}.border-slate-700{--tw-border-opacity:1;border-color:rgb(51 65 85 / var(--tw-border-opacity, 1))}.border-slate-800{--tw-border-opacity:1;border-color:rgb(30 41 59 / var(--tw-border-opacity, 1))}.border-white\/10{border-color:rgb(255 255 255 / 0.1)}.bg-white{--tw-bg-opacity:1;background-color:rgb(255 255 255 / var(--tw-bg-opacity, 1))}.bg-\[\#1b1b1b\]{--tw-bg-opacity:1;background-color:rgb(27 27 27 / var(--tw-bg-opacity, 1))}.bg-\[\#2ca01c\]{--tw-bg-opacity:1;background-color:rgb(44 160 28 / var(--tw-bg-opacity, 1))}.bg-\[\#111827\]{--tw-bg-opacity:1;background-color:rgb(17 24 39 / var(--tw-bg-opacity, 1))}.bg-\[\#2555c7\]{--tw-bg-opacity:1;background-color:rgb(44 160 28 / var(--tw-bg-opacity, 1))}.bg-\[\#c2650f\]{--tw-bg-opacity:1;background-color:rgb(194 101 15 / var(--tw-bg-opacity, 1))}.bg-black\/40{background-color:rgb(0 0 0 / 0.4)}.bg-blue-50{--tw-bg-opacity:1;background-color:rgb(239 246 255 / var(--tw-bg-opacity, 1))}.bg-green-50{--tw-bg-opacity:1;background-color:rgb(240 253 244 / var(--tw-bg-opacity, 1))}.bg-red-600\/90{background-color:rgb(220 38 38 / 0.9)}.bg-slate-50{--tw-bg-opacity:1;background-color:rgb(248 250 252 / var(--tw-bg-opacity, 1))}.bg-white\/10{background-color:rgb(255 255 255 / 0.1)}.p-1\.5{padding:0.375rem}.p-10{padding:2.5rem}.p-2{padding:0.5rem}.p-3{padding:0.75rem}.p-4{padding:1rem}.p-5{padding:1.25rem}.p-6{padding:1.5rem}.p-8{padding:2rem}.p-1{padding:0.25rem}.px-1\.5{padding-left:0.375rem;padding-right:0.375rem}.px-3{padding-left:0.75rem;padding-right:0.75rem}.px-4{padding-left:1rem;padding-right:1rem}.px-6{padding-left:1.5rem;padding-right:1.5rem}.py-1{padding-top:0.25rem;padding-bottom:0.25rem}.py-1\.5{padding-top:0.375rem;padding-bottom:0.375rem}.py-16{padding-top:4rem;padding-bottom:4rem}.py-2{padding-top:0.5rem;padding-bottom:0.5rem}.py-3{padding-top:0.75rem;padding-bottom:0.75rem}.pb-4{padding-bottom:1rem}.pr-3{padding-right:0.75rem}.pt-14{padding-top:3.5rem}.pt-2{padding-top:0.5rem}.pt-3{padding-top:0.75rem}.pt-4{padding-top:1rem}.pt-6{padding-top:1.5rem}.pt-8{padding-top:2rem}.pb-1{padding-bottom:0.25rem}.text-left{text-align:left}.text-center{text-align:center}.text-right{text-align:right}.text-\[10px\]{font-size:10px}.text-base{font-size:1rem;line-height:1.5rem}.text-lg{font-size:1.125rem;line-height:1.75rem}.text-sm{font-size:0.875rem;line-height:1.25rem}.text-xl{font-size:1.25rem;line-height:1.75rem}.text-xs{font-size:0.75rem;line-height:1rem}.font-bold{font-weight:700}.font-semibold{font-weight:600}.uppercase{text-transform:uppercase}.leading-none{line-height:1}.leading-relaxed{line-height:1.625}.leading-tight{line-height:1.25}.tracking-wide{letter-spacing:0.025em}.text-\[\#2ca01c\]{--tw-text-opacity:1;color:rgb(44 160 28 / var(--tw-text-opacity, 1))}.text-\[\#2555c7\]{--tw-text-opacity:1;color:rgb(44 160 28 / var(--tw-text-opacity, 1))}.text-blue-900{--tw-text-opacity:1;color:rgb(30 58 138 / var(--tw-text-opacity, 1))}.text-green-700{--tw-text-opacity:1;color:rgb(21 128 61 / var(--tw-text-opacity, 1))}.text-red-600{--tw-text-opacity:1;color:rgb(220 38 38 / var(--tw-text-opacity, 1))}.text-slate-400{--tw-text-opacity:1;color:rgb(148 163 184 / var(--tw-text-opacity, 1))}.text-slate-500{--tw-text-opacity:1;color:rgb(100 116 139 / var(--tw-text-opacity, 1))}.text-slate-600{--tw-text-opacity:1;color:rgb(71 85 105 / var(--tw-text-opacity, 1))}.text-slate-700{--tw-text-opacity:1;color:rgb(51 65 85 / var(--tw-text-opacity, 1))}.text-slate-800{--tw-text-opacity:1;color:rgb(30 41 59 / var(--tw-text-opacity, 1))}.text-white{--tw-text-opacity:1;color:rgb(255 255 255 / var(--tw-text-opacity, 1))}.text-blue-300{--tw-text-opacity:1;color:rgb(147 197 253 / var(--tw-text-opacity, 1))}.underline{-webkit-text-decoration-line:underline;text-decoration-line:underline}.shadow-md{--tw-shadow:0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);--tw-shadow-colored:0 4px 6px -1px var(--tw-shadow-color), 0 2px 4px -2px var(--tw-shadow-color);box-shadow:var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow)}.shadow-sm{--tw-shadow:0 1px 2px 0 rgb(0 0 0 / 0.05);--tw-shadow-colored:0 1px 2px 0 var(--tw-shadow-color);box-shadow:var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow)}.transition{transition-property:color, background-color, border-color, fill, stroke, opacity, box-shadow, transform, filter, -webkit-text-decoration-color, -webkit-backdrop-filter;transition-property:color, background-color, border-color, text-decoration-color, fill, stroke, opacity, box-shadow, transform, filter, backdrop-filter;transition-property:color, background-color, border-color, text-decoration-color, fill, stroke, opacity, box-shadow, transform, filter, backdrop-filter, -webkit-text-decoration-color, -webkit-backdrop-filter;transition-timing-function:cubic-bezier(0.4, 0, 0.2, 1);transition-duration:150ms}.hover\:border-\[\#2ca01c\]:hover{--tw-border-opacity:1;border-color:rgb(44 160 28 / var(--tw-border-opacity, 1))}.hover\:bg-\[\#238515\]:hover{--tw-bg-opacity:1;background-color:rgb(35 133 21 / var(--tw-bg-opacity, 1))}.hover\:bg-\[\#238515\]:hover{--tw-bg-opacity:1;background-color:rgb(35 133 21 / var(--tw-bg-opacity, 1))}.hover\:bg-\[\#a5560c\]:hover{--tw-bg-opacity:1;background-color:rgb(165 86 12 / var(--tw-bg-opacity, 1))}.hover\:bg-red-600:hover{--tw-bg-opacity:1;background-color:rgb(220 38 38 / var(--tw-bg-opacity, 1))}.hover\:bg-white\/20:hover{background-color:rgb(255 255 255 / 0.2)}.hover\:text-slate-600:hover{--tw-text-opacity:1;color:rgb(71 85 105 / var(--tw-text-opacity, 1))}.hover\:shadow-md:hover{--tw-shadow:0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);--tw-shadow-colored:0 4px 6px -1px var(--tw-shadow-color), 0 2px 4px -2px var(--tw-shadow-color);box-shadow:var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow)}@media (min-width: 768px){.md\:col-span-2{grid-column:span 2 / span 2}.md\:col-span-3{grid-column:span 3 / span 3}.md\:col-span-4{grid-column:span 4 / span 4}.md\:flex{display:flex}.md\:hidden{display:none}.md\:grid-cols-2{grid-template-columns:repeat(2, minmax(0, 1fr))}.md\:grid-cols-3{grid-template-columns:repeat(3, minmax(0, 1fr))}.md\:grid-cols-4{grid-template-columns:repeat(4, minmax(0, 1fr))}.md\:pt-0{padding-top:0px}}@media (min-width: 1024px){.lg\:grid-cols-2{grid-template-columns:repeat(2, minmax(0, 1fr))}}</style></head>
+<body class="bg-white min-h-screen">
 
-<!-- =================================================================== -->
-<!-- SECTION 2 END: CSS STYLES                                           -->
-<!-- =================================================================== -->
-
-
-
-<!-- =================================================================== -->
-<!-- SECTION 3 START: NAVIGATION & LAYOUT STRUCTURE                      -->
-<!-- =================================================================== -->
-<body>
-
-    <!-- AUTHENTICATION MODAL OVERLAY -->
-    <div id="login-modal">
-        <div class="login-card">
-            <h2 style="font-size: 18px; margin-bottom: 8px; text-align: center; color: var(--accent-primary);">PRIME INVESTMENT PLC</h2>
-            <p style="font-size: 11px; color: var(--text-muted); margin-bottom: 20px; text-align: center;">System Authentication Gateway</p>
-            <div class="form-group" style="margin-bottom: 12px;">
-                <label>Select User Role</label>
-                <select id="login-role-select">
-                    <option value="admin">Administrator (Full Access)</option>
-                    <option value="clerk">Data Entry Clerk (Entry Only)</option>
-                    <option value="investor">Investor (Read-Only Access)</option>
-                </select>
-            </div>
-            <button class="btn btn-blue" style="width: 100%; justify-content: center; padding: 9px;" onclick="performLogin()">Sign In</button>
-        </div>
+<!-- ============================= LOGIN ============================= -->
+<div id="login-view" class="min-h-screen flex items-center justify-center hidden">
+  <div class="bg-white rounded-lg shadow-md w-full max-w-sm p-8">
+    <div class="text-center mb-6">
+      <h1 class="text-lg font-bold text-slate-800">PRIME Investment Group Plc</h1>
+      <p class="text-xs text-slate-500">Operations Portal</p>
     </div>
+    <form id="login-form" class="space-y-3">
+      <input id="login-email" type="email" required="" placeholder="Email" class="w-full border p-2 rounded">
+      <input id="login-password" type="password" required="" placeholder="Password" class="w-full border p-2 rounded">
+      <button class="w-full bg-[#2ca01c] hover:bg-[#238515] text-white font-semibold py-2 rounded">Sign In</button>
+      <p id="login-error" class="text-red-600 text-xs hidden"></p>
+    </form>
+    <p class="text-xs text-slate-400 mt-4 text-center">Accounts are created by an administrator. Contact your admin if you don't have a login.</p>
+  </div>
+</div>
 
-    <!-- LEFT SIDEBAR NAVIGATION BAR -->
-    <aside class="sidebar">
-        <div class="sidebar-brand">
-            <span class="logo-box">P</span>
-            <span>PRIME GROUP</span>
-        </div>
-        
-        <nav class="sidebar-nav" id="main-nav-tabs">
-            <button class="tab-btn nav-dash active" onclick="switchTab('dashboard', this)">Dashboard</button>
-            <button class="tab-btn nav-report" onclick="switchTab('stockReport', this)">Stock Report</button>
-            <button class="tab-btn nav-swap" onclick="switchTab('stockSwap', this)">Stock Swap</button>
-            <button class="tab-btn nav-entry" onclick="switchTab('dataEntry', this)">Data Entry</button>
-            <button class="tab-btn nav-tax" onclick="switchTab('taxObligations', this)">Income Tax</button>
-            <button class="tab-btn nav-staff" onclick="switchTab('staffing', this)">Staff Management</button>
-            <button class="tab-btn nav-exp" onclick="switchTab('expenseLedger', this)">Expense Ledger</button>
-        </nav>
+<!-- ============================= LANDING / DEPARTMENT SELECTOR ============================= -->
+<div id="landing-view" class="min-h-screen hidden" style="background:#f4f5f7">
+  <div class="max-w-4xl mx-auto px-4 py-16">
+    <div class="text-center mb-10">
+      <div class="w-10 h-10 rounded bg-[#2ca01c] text-white font-bold flex items-center justify-center mx-auto mb-3">P</div>
+      <h1 class="text-lg font-bold text-[#2ca01c]">PRIME Investment Group Plc</h1>
+      <p class="text-xs text-slate-500 mt-1">Select your workspace to continue</p>
+    </div>
+    <div id="landing-grid" class="grid grid-cols-1 md:grid-cols-2 gap-4">
+    <button onclick="enterDepartment('sales')" class="text-left bg-white border border-slate-200 rounded-lg shadow-sm p-5 hover:border-[#2ca01c] hover:shadow-md transition">
+      <div class="font-bold text-sm text-[#2ca01c] mb-1">Sales Department</div>
+      <div class="text-xs text-slate-500">CRM, trip planning, cost requests &amp; proforma</div>
+    </button>
+    <button onclick="enterDepartment('dataentry')" class="text-left bg-white border border-slate-200 rounded-lg shadow-sm p-5 hover:border-[#2ca01c] hover:shadow-md transition">
+      <div class="font-bold text-sm text-[#2ca01c] mb-1">Data Entry</div>
+      <div class="text-xs text-slate-500">Log stock movements, expenses &amp; upload documents</div>
+    </button>
+    <button onclick="enterDepartment('finance')" class="text-left bg-white border border-slate-200 rounded-lg shadow-sm p-5 hover:border-[#2ca01c] hover:shadow-md transition">
+      <div class="font-bold text-sm text-[#2ca01c] mb-1">Finance &amp; Accounting</div>
+      <div class="text-xs text-slate-500">Stock report, expense ledger, billing, letters</div>
+    </button>
+    <button onclick="enterDepartment('hr')" class="text-left bg-white border border-slate-200 rounded-lg shadow-sm p-5 hover:border-[#2ca01c] hover:shadow-md transition">
+      <div class="font-bold text-sm text-[#2ca01c] mb-1">Human Resources</div>
+      <div class="text-xs text-slate-500">Employee records, leave, performance, discipline</div>
+    </button>
+    <button onclick="enterDepartment('management')" class="text-left bg-white border border-slate-200 rounded-lg shadow-sm p-5 hover:border-[#2ca01c] hover:shadow-md transition">
+      <div class="font-bold text-sm text-[#2ca01c] mb-1">Management / Executive</div>
+      <div class="text-xs text-slate-500">Dashboards, reports &amp; company-wide oversight</div>
+    </button>
+    <button onclick="enterDepartment('admin')" class="text-left bg-white border border-slate-200 rounded-lg shadow-sm p-5 hover:border-[#2ca01c] hover:shadow-md transition">
+      <div class="font-bold text-sm text-[#2ca01c] mb-1">Administration</div>
+      <div class="text-xs text-slate-500">Full system access &amp; user management</div>
+    </button></div>
+    <div class="text-center mt-10">
+      <button onclick="signOut()" class="text-xs text-slate-400 hover:text-slate-600 underline">Sign Out</button>
+    </div>
+  </div>
+</div>
 
-        <div class="sidebar-user">
+<!-- ============================= APP ============================= -->
+<div id="app-view" class="md:flex min-h-screen">
+
+  <!-- Mobile topbar -->
+  <div class="md:hidden fixed top-0 inset-x-0 bg-[#1b1b1b] text-white z-30 flex items-center justify-between px-4 py-3 no-print">
+    <button onclick="toggleSidebar()" class="text-lg leading-none">☰</button>
+    <div class="font-bold text-xs">PRIME GROUP PLC</div>
+    <div style="width:22px"></div>
+  </div>
+  <div id="sidebar-overlay" onclick="toggleSidebar()" class="hidden fixed inset-0 bg-black/40 z-30 md:hidden"></div>
+
+  <!-- Sidebar -->
+  <aside id="sidebar" class="bg-[#1b1b1b] text-white flex-shrink-0 flex flex-col no-print z-40">
+    <div class="p-5 border-b border-white/10 flex items-center gap-2">
+      <div class="w-8 h-8 rounded bg-[#2ca01c] flex items-center justify-center font-bold text-xs">P</div>
+      <div>
+        <div class="font-bold text-xs leading-tight tracking-wide">PRIME GROUP PLC</div>
+        <div class="text-[10px] text-slate-400">Operations Portal</div>
+      </div>
+    </div>
+    <nav id="sidebar-nav" class="flex-1 overflow-y-auto p-3 space-y-1"><button class="nav-link active" data-tab-id="overview">Dashboard Summary</button><button class="nav-link" data-tab-id="mqreport">Monthly / Quarterly Report</button><button class="nav-link" data-tab-id="stockreport">Stock Report &amp; Balances</button><button class="nav-link" data-tab-id="expenseledger">Expense Ledger</button><button class="nav-group-toggle"><span>Sales</span><span class="chev">▸</span></button><div class="nav-group-children hidden"><button class="nav-link nav-link-indent" data-tab-id="sales">Sales CRM</button><button class="nav-link nav-link-indent" data-tab-id="report">Sales Report</button><button class="nav-link nav-link-indent" data-tab-id="salestargets">Sales Targets &amp; Commission</button><button class="nav-link nav-link-indent" data-tab-id="tripcost">Trip Plan &amp; Cost Request</button><button class="nav-link nav-link-indent" data-tab-id="visitreport">Visit Activity Report</button></div><button class="nav-group-toggle"><span>Human Resources</span><span class="chev">▸</span></button><div class="nav-group-children hidden"><button class="nav-link nav-link-indent" data-tab-id="hremployees">Employee Directory</button><button class="nav-link nav-link-indent" data-tab-id="hrleave">Leave Requests</button><button class="nav-link nav-link-indent" data-tab-id="hrperformance">Performance Reviews</button><button class="nav-link nav-link-indent" data-tab-id="hrdisciplinary">Disciplinary Actions</button><button class="nav-link nav-link-indent" data-tab-id="hrreports">HR Reports</button></div><button class="nav-link" data-tab-id="dataentry">Data Entry Log</button><button class="nav-link" data-tab-id="proforma">Proforma</button><button class="nav-link" data-tab-id="billing">Customer Billing</button><button class="nav-link" data-tab-id="letters">Letters</button><button class="nav-link" data-tab-id="repository">Repository</button><button class="nav-link" data-tab-id="users">Users &amp; Roles</button></nav>
+    <div class="p-4 border-t border-white/10">
+      <div class="text-[10px] uppercase tracking-wide text-slate-400 mb-1">Workspace</div>
+      <div id="current-dept-label" class="text-xs font-semibold mb-2 truncate">Administration</div>
+      <button id="switch-dept-btn" onclick="switchDepartment()" class="w-full text-xs bg-white/10 hover:bg-white/20 px-3 py-1.5 rounded font-semibold mb-3">Switch Department</button>
+      <div class="text-[10px] uppercase tracking-wide text-slate-400 mb-1">Active Profile</div>
+      <div id="user-badge" class="text-xs font-semibold mb-3 truncate">bokanplc@gmail.com — admin</div>
+      <button onclick="signOut()" class="w-full text-xs bg-red-600/90 hover:bg-red-600 px-3 py-2 rounded font-semibold">Sign Out</button>
+    </div>
+  </aside>
+
+  <main class="flex-1 min-w-0 pt-14 md:pt-0">
+    <div class="max-w-6xl mx-auto p-4">
+
+    <!-- ---------- STOCK / PURCHASE / SALE ENTRY ---------- -->
+    <!-- ---------- DATA ENTRY LOG (entry forms only — no reports here) ---------- -->
+    <section id="tab-dataentry" class="tab-panel hidden">
+      <div class="mb-4 no-print">
+        <div class="page-eyebrow">Data Entry</div>
+        <h2 class="font-bold text-lg text-[#2ca01c]">Data Entry Log</h2>
+        <p class="text-xs text-slate-500">Log stock movements and expenses here. This page only shows what you personally entered recently — full ledgers and financial reports live on separate report pages.</p>
+      </div>
+
+      <div class="grid grid-cols-1 lg:grid-cols-2 gap-4 mb-4">
+        <!-- 1. Stock Movement & Swap Form -->
+        <div class="bg-white rounded-lg border border-slate-200 shadow-sm p-5 no-print">
+          <h3 class="font-bold text-sm mb-1 text-[#2ca01c]">1. Stock Movement &amp; Swap Form</h3>
+          <p class="text-xs text-slate-500 mb-3">One row per day. Enter only the columns that had movement — leave the rest at 0.</p>
+          <form id="ledger-form" class="grid grid-cols-1 md:grid-cols-3 gap-2">
             <div>
-                <label style="font-size: 10px; color: #64748b; text-transform: uppercase; font-weight: 700; display: block; margin-bottom: 4px;">Active Profile</label>
-                <select id="role-selector" style="width: 100%; background: #1e293b; color: #fff; border: 1px solid #475569; padding: 6px; border-radius: 4px; font-size: 11px; font-weight: 700;" onchange="switchRole(this.value)">
-                    <option value="admin">ADMINISTRATOR</option>
-                    <option value="clerk">DATA ENTRY CLERK</option>
-                    <option value="investor">INVESTOR (READ-ONLY)</option>
-                </select>
+              <label class="text-xs text-slate-500">Transaction Date</label>
+              <input id="lg-date" type="date" class="border p-1.5 rounded w-full text-xs" required="">
             </div>
-            <div style="display: flex; gap: 6px;">
-                <button class="btn btn-amber admin-only" style="flex: 1; justify-content: center; font-size: 10px;" onclick="resetData()">Reset</button>
-                <button class="btn btn-red" style="flex: 1; justify-content: center;" onclick="handleSignOut()">Sign Out</button>
-            </div>
-        </div>
-    </aside>
-
-    <!-- MAIN CONTENT AREA CONTAINER -->
-    <main class="main-wrapper">
-        <div class="top-bar">
             <div>
-                <h1 style="font-size: 16px; font-weight: 700; color: var(--accent-primary);">Corporate Financial &amp; Inventory Portal</h1>
-                <p style="font-size: 11px; color: var(--text-muted);">Real-time multi-business ledger and stock audit system</p>
+              <label class="text-xs text-slate-500">Purchased By / Funder</label>
+              <select id="lg-purchased-by" class="border p-1.5 rounded w-full text-xs">
+                <option value="none">— None —</option>
+                <option value="PRIME">PRIME</option>
+                <option value="BR">BR</option>
+              </select>
             </div>
+            <div>
+              <label class="text-xs text-slate-500">Factory Purchase Qty</label>
+              <input id="lg-factory-qty" type="number" step="0.01" value="0" class="border p-1.5 rounded w-full text-xs">
+            </div>
+
+            <div>
+              <label class="text-xs text-slate-500">Unit Purchase Price (ETB)</label>
+              <input id="lg-purchase-price" type="number" step="0.01" value="0" class="border p-1.5 rounded w-full text-xs">
+            </div>
+            <div>
+              <label class="text-xs text-slate-500">Shipped to Kolfe Qty</label>
+              <input id="lg-shipped-kolfe" type="number" step="0.01" value="0" class="border p-1.5 rounded w-full text-xs">
+            </div>
+            <div>
+              <label class="text-xs text-slate-500">Kolfe → Mes. Transfer Qty</label>
+              <input id="lg-kolfe-mes" type="number" step="0.01" value="0" class="border p-1.5 rounded w-full text-xs">
+            </div>
+
+            <div>
+              <label class="text-xs text-slate-500">Sales @ Kolfe Qty</label>
+              <input id="lg-sales-kolfe" type="number" step="0.01" value="0" class="border p-1.5 rounded w-full text-xs">
+            </div>
+            <div>
+              <label class="text-xs text-slate-500">Sales @ Mesalemya Qty</label>
+              <input id="lg-sales-mes" type="number" step="0.01" value="0" class="border p-1.5 rounded w-full text-xs">
+            </div>
+            <div>
+              <label class="text-xs text-slate-500">Sold By (Company)</label>
+              <select id="lg-sold-by" class="border p-1.5 rounded w-full text-xs">
+                <option value="-">—</option>
+                <option value="PRIME">PRIME</option>
+                <option value="BR">BR</option>
+              </select>
+            </div>
+
+            <div>
+              <label class="text-xs text-slate-500">Unit Sales Price (ETB)</label>
+              <input id="lg-sale-price" type="number" step="0.01" value="0" class="border p-1.5 rounded w-full text-xs">
+            </div>
+            <div class="md:col-span-2">
+              <label class="text-xs text-slate-500">Item / Notes</label>
+              <input id="lg-notes" placeholder="e.g. Plywood 18mm" class="border p-1.5 rounded w-full text-xs">
+            </div>
+
+            <div class="md:col-span-3 border-t pt-2 mt-1">
+              <div class="text-xs font-bold uppercase tracking-wide text-slate-500 mb-2">Trip / Delivery Details (optional)</div>
+            </div>
+            <input id="lg-driver-name" placeholder="Driver Name" class="border p-1.5 rounded text-xs">
+            <input id="lg-driver-license" placeholder="Driver License #" class="border p-1.5 rounded text-xs">
+            <input id="lg-vehicle-plate" placeholder="Vehicle Plate #" class="border p-1.5 rounded text-xs">
+            <div>
+              <label class="text-xs text-slate-500">Driver License Photo</label>
+              <input id="lg-file-license" type="file" class="border p-1.5 rounded w-full text-xs">
+            </div>
+            <div>
+              <label class="text-xs text-slate-500">Plate / Vehicle Photo</label>
+              <input id="lg-file-vehicle" type="file" class="border p-1.5 rounded w-full text-xs">
+            </div>
+            <div></div>
+
+            <div class="md:col-span-3 flex gap-2 mt-1">
+              <button class="flex-1 bg-[#2ca01c] hover:bg-[#238515] text-white rounded py-2 font-semibold text-xs" id="ledger-submit-btn">Submit Stock Entry</button>
+              <button type="button" onclick="cancelLedgerEdit()" id="ledger-cancel-btn" class="hidden px-4 rounded border font-semibold text-slate-600 text-xs">Cancel</button>
+            </div>
+          </form>
+          <div id="ledger-doc-status" class="text-xs text-slate-500 mt-1"></div>
+          <div class="mt-3 pt-3 border-t">
+            <h4 class="text-xs font-bold uppercase tracking-wide text-slate-500 mb-2">Your Recent Swap Entries</h4>
+            <div id="my-ledger-list" class="space-y-2 text-xs"></div>
+          </div>
         </div>
-<!-- =================================================================== -->
-<!-- SECTION 3 END: NAVIGATION & LAYOUT STRUCTURE                        -->
-<!-- =================================================================== -->
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-<!-- =================================================================== -->
-<!-- SECTION 4 START: DASHBOARDS & TAB PANELS CONTENT                    -->
-<!-- =================================================================== -->
-
-        <!-- TAB 1: EXECUTIVE DASHBOARD -->
-        <div id="dashboard" class="tab-pane active">
-            
-            <!-- SECTION 1: FINANCIAL PERFORMANCE & PROFITABILITY -->
-            <div class="dashboard-section">
-                <div class="section-header">💵 Financial Performance &amp; Profitability</div>
-                <div class="metrics-grid">
-                    <div class="metric-card" style="border-left-color: var(--accent-blue);">
-                        <div class="metric-title">Gross Revenue</div>
-                        <div class="metric-val" id="dash-gross-rev">ETB 3,326,600.00</div>
-                        <div class="metric-sub" id="dash-units-sold">Total Units Sold: 614 pcs</div>
-                    </div>
-                    <div class="metric-card" style="border-left-color: var(--accent-purple);">
-                        <div class="metric-title">Cost of Goods Sold (COGS)</div>
-                        <div class="metric-val" style="color: var(--accent-purple);" id="dash-cogs">ETB 2,640,200.00</div>
-                        <div class="metric-sub">Base Price @ ETB 4,300/unit</div>
-                    </div>
-                    <div class="metric-card" style="border-left-color: var(--accent-green);">
-                        <div class="metric-title">Gross Profit</div>
-                        <div class="metric-val" style="color: var(--accent-green);" id="dash-gross-profit">ETB 686,400.00</div>
-                        <div class="metric-sub" id="dash-gross-margin">Gross Margin: 20.6%</div>
-                    </div>
-                    <div class="metric-card" style="border-left-color: var(--accent-amber);">
-                        <div class="metric-title">Net Profit (Post-Tax &amp; Exp)</div>
-                        <div class="metric-val" style="color: var(--accent-amber);" id="dash-net-profit">ETB 302,401.00</div>
-                        <div class="metric-sub" id="dash-net-margin">Net Margin: 9.1%</div>
-                    </div>
-                </div>
-            </div>
-
-            <!-- SECTION 2: STOCK POSITION & WAREHOUSING -->
-            <div class="dashboard-section">
-                <div class="section-header">📦 Stock Position &amp; Warehouse Distribution</div>
-                <div class="metrics-grid">
-                    <div class="metric-card" style="border-left-color: var(--accent-blue);">
-                        <div class="metric-title">Total Available On-Hand</div>
-                        <div class="metric-val" id="dash-total-stock">586 pcs</div>
-                        <div class="metric-sub" id="dash-stock-loc">Kolfe: 140 | Mesalemya: 446</div>
-                    </div>
-                    <div class="metric-card" style="border-left-color: var(--accent-amber);">
-                        <div class="metric-title">In-Transit / Factory Stock</div>
-                        <div class="metric-val" style="color: var(--accent-amber);" id="dash-intransit">852 pcs</div>
-                        <div class="metric-sub">Pending Warehouse Arrival</div>
-                    </div>
-                    <div class="metric-card" style="border-left-color: var(--accent-green);">
-                        <div class="metric-title">BR / PRIME Stock Swap Balance</div>
-                        <div class="metric-val" id="dash-swap-bal" style="color: var(--accent-blue);">0 pcs</div>
-                        <div class="metric-sub" id="dash-swap-sub">Swap Account Settled</div>
-                    </div>
-                </div>
-            </div>
-
-            <!-- SECTION 3: EXPENSE & TAX AUDIT -->
-            <div class="dashboard-section">
-                <div class="section-header">🏛️ Capital Expenses &amp; Taxs</div>
-                <div class="metrics-grid">
-                    <div class="metric-card" style="border-left-color: var(--accent-red);">
-                        <div class="metric-title">Total Expenses Paid</div>
-                        <div class="metric-val" style="color: var(--accent-red);" id="dash-total-exp">ETB 178,079.00</div>
-                        <div class="metric-sub" id="dash-renov-sub">Renovation: ETB 86,649.00</div>
-                    </div>
-                    <div class="metric-card" style="border-left-color: var(--accent-blue);">
-                        <div class="metric-title">Net VAT Status</div>
-                        <div class="metric-val" id="dash-net-vat" style="color: var(--accent-green);">ETB 824,550.00</div>
-                        <div class="metric-sub" id="dash-vat-sub">VAT Credit / Refund Due</div>
-                    </div>
-                    <div class="metric-card" style="border-left-color: var(--accent-purple);">
-                        <div class="metric-title">Withholding Tax (WHT 3%)</div>
-                        <div class="metric-val" style="color: var(--accent-purple);" id="dash-wht">ETB 99,798.00</div>
-                        <div class="metric-sub">Collected on B2B Sales</div>
-                    </div>
-                    <div class="metric-card" style="border-left-color: var(--accent-amber);">
-                        <div class="metric-title">Est. Corp Profit Tax (30%)</div>
-                        <div class="metric-val" style="color: var(--accent-amber);" id="dash-corp-tax">ETB 205,920.00</div>
-                        <div class="metric-sub">Provision for Income Tax</div>
-                    </div>
-                </div>
-            </div>
-
-        </div>
-
-        <!-- TAB 2: STOCK REPORT & BALANCES -->
-        <div id="stockReport" class="tab-pane">
-            <div class="card">
-                <h3>PRIME Plywood Stock Report Ledger</h3>
-                <div class="table-wrap">
-                    <table id="table-stock-report">
-                        <thead>
-                            <tr>
-                                <th>Date</th><th>Opening Stock</th><th>PRIME Factory Purch.</th><th>BR Factory Purch.</th><th>Shipped Kolfe</th><th>In-Transit / Factory</th><th>Kolfe -&gt; Mes.</th><th>Sales @ Kolfe</th><th>Sold By</th><th>Kolfe Bal.</th><th>Sales @ Mes.</th><th>Sold By</th>
-                            </tr>
-                        </thead>
-                        <tbody id="stock-tbody"></tbody>
-                        <tfoot>
-                            <tr id="tfoot-stock-report">
-                                <td>TOTALS</td><td>-</td><td>1500</td><td>552</td><td>1200</td><td>852</td><td>790</td><td>270</td><td>-</td><td>140</td><td>344</td><td>-</td>
-                            </tr>
-                        </tfoot>
-                    </table>
-                </div>
-            </div>
-        </div>
-
-        <!-- TAB 3: BR STOCK SWAP -->
-        <div id="stockSwap" class="tab-pane">
-            <div class="card">
-                <h3>BR / PRIME Stock Swap Settlement Ledger</h3>
-                <div class="table-wrap">
-                    <table id="table-stock-swap">
-                        <thead>
-                            <tr>
-                                <th>Date / Event</th>
-                                <th>BR Factory Purch.</th>
-                                <th>In-Transit / Factory</th>
-                                <th>Borrowed PRIME Stock</th>
-                                <th>Replenished to PRIME</th>
-                                <th>Outstanding Stock Balance</th>
-                                <th>Settlement Notes</th>
-                            </tr>
-                        </thead>
-                        <tbody id="tbody-stock-swap"></tbody>
-                        <tfoot>
-                            <tr id="tfoot-stock-swap">
-                                <td>TOTALS</td><td>552</td><td>552</td><td style="color: var(--accent-red);">614</td><td style="color: var(--accent-green);">614</td><td style="color: var(--accent-amber);">0</td><td>Net Settlement Balance</td>
-                            </tr>
-                        </tfoot>
-                    </table>
-                </div>
-            </div>
-        </div>
-
-        <!-- TAB 4: DATA ENTRY -->
-        <div id="dataEntry" class="tab-pane">
-            <div class="data-entry-grid">
-                <div class="card form-container">
-                    <h3>1. Data Entry - Stock Movement &amp; Swap Form</h3>
-                    <form id="entry-form" onsubmit="addTransaction(event)">
-                        <div class="form-grid">
-                            <div class="form-group"><label>Transaction Date</label><input type="date" id="tx-date" required></div>
-                            <div class="form-group"><label>Purchased By / Funder</label><select id="tx-funder"><option value="PRIME">PRIME</option><option value="BR">BR</option></select></div>
-                            <div class="form-group"><label>Factory Purchase Qty</label><input type="number" id="tx-purch-qty" value="0"></div>
-                            <div class="form-group"><label>Unit Purchase Price (ETB)</label><input type="number" id="tx-purch-price" placeholder="4300" value="4300"></div>
-                            <div class="form-group"><label>Shipped to Kolfe Qty</label><input type="number" id="tx-ship-kolfe" value="0"></div>
-                            <div class="form-group"><label>Kolfe -&gt; Mesalemya Transfer Qty</label><input type="number" id="tx-transfer" value="0"></div>
-                            <div class="form-group"><label>Sales @ Kolfe Qty</label><input type="number" id="tx-sales-kolfe" value="0"></div>
-                            <div class="form-group"><label>Sales @ Mesalemya Shop Qty</label><input type="number" id="tx-sales-mes" value="0"></div>
-                            <div class="form-group"><label>Sold By (Company)</label><select id="tx-soldby"><option value="BR">BR</option><option value="PRIME">PRIME</option></select></div>
-                            <div class="form-group"><label>Unit Sales Price (ETB)</label><input type="number" id="tx-sales-price" placeholder="5400" value="5400"></div>
-                        </div>
-                        <button type="submit" class="btn btn-blue" style="width: 100%; justify-content: center; padding: 9px;">Submit Stock Entry</button>
-                    </form>
-                </div>
-
-                <div class="card form-container">
-                    <h3>2. Data Entry - Standard Expenses Form</h3>
-                    <form id="expense-form" onsubmit="addExpenseSafe(event)"
-                        <div class="form-grid">
-                            <div class="form-group"><label>Expense Date</label><input type="date" id="exp-date" required></div>
-                            <div class="form-group">
-                                <label>Expense Category</label>
-                                <select id="exp-category" required>
-                                    <optgroup label="CAPITAL EXPENDITURES &amp; RENOVATIONS">
-                                        <option value="Leasehold Improvements (Mesalemya Renovation)">Leasehold Improvements (Mesalemya Renovation)</option>
-                                        <option value="Fixtures &amp; Store Furniture">Fixtures &amp; Store Furniture</option>
-                                    </optgroup>
-                                    <optgroup label="FREIGHT, FULFILLMENT &amp; LOGISTICS">
-                                        <option value="Freight In (Factory to Kolfe Trucking)">Freight In (Factory to Kolfe Trucking)</option>
-                                        <option value="Freight Out (Customer Delivery Transport)">Freight Out (Customer Delivery Transport)</option>
-                                        <option value="Inter-Warehouse Transfer Transport (Kolfe to Mes.)">Inter-Warehouse Transfer Transport (Kolfe to Mes.)</option>
-                                        <option value="Loading &amp; Offloading Labor Fees">Loading &amp; Offloading Labor Fees</option>
-                                        <option value="Demurrage &amp; Storage Charges">Demurrage &amp; Storage Charges</option>
-                                    </optgroup>
-                                    <optgroup label="OPERATING &amp; OCCUPANCY EXPENSES">
-                                        <option value="Warehouse Rent (Kolfe Yard)">Warehouse Rent (Kolfe Yard)</option>
-                                        <option value="Retail Store Rent (Mesalemya Shop)">Retail Store Rent (Mesalemya Shop)</option>
-                                        <option value="Utilities (Power, Water, Refuse)">Utilities (Power, Water, Refuse)</option>
-                                        <option value="Store &amp; Warehouse Security">Store &amp; Warehouse Security</option>
-                                        <option value="Facility Repairs &amp; Maintenance">Facility Repairs &amp; Maintenance</option>
-                                    </optgroup>
-                                    <optgroup label="SELLING &amp; DIRECT PERSONNEL EXPENSES">
-                                        <option value="Sales Commissions &amp; Incentives">Sales Commissions &amp; Incentives</option>
-                                        <option value="Casual Day Labor &amp; Porter Wages">Casual Day Labor &amp; Porter Wages</option>
-                                        <option value="Marketing, Signage &amp; Promotions">Marketing, Signage &amp; Promotions</option>
-                                    </optgroup>
-                                    <optgroup label="GENERAL &amp; ADMINISTRATIVE (G&amp;A)">
-                                        <option value="Staff Payroll &amp; Salaries">Staff Payroll &amp; Salaries</option>
-                                        <option value="Legal, Accounting &amp; Audit Fees">Legal, Accounting &amp; Audit Fees</option>
-                                        <option value="Bank Service Fees &amp; Transfer Costs">Bank Service Fees &amp; Transfer Costs</option>
-                                        <option value="Printing, Stationery &amp; Office Supplies">Printing, Stationery &amp; Office Supplies</option>
-                                        <option value="Phone, Mobile Airtime &amp; Internet">Phone, Mobile Airtime &amp; Internet</option>
-                                        <option value="Business Travel &amp; Daily Meal Allowances">Business Travel &amp; Daily Meal Allowances</option>
-                                        <option value="Municipal Licenses, Permits &amp; Taxes">Municipal Licenses, Permits &amp; Taxes</option>
-                                        <option value="Other Miscellaneous G&amp;A Expenses">Other Miscellaneous G&amp;A Expenses</option>
-                                    </optgroup>
-                                </select>
-                            </div>
-                            <div class="form-group"><label>Amount (ETB)</label><input type="number" id="exp-amount" placeholder="e.g. 15000" step="0.01" required></div>
-                            <div class="form-group">
-                                <label>Paid By / Funder</label>
-                                <select id="exp-funder">
-                                    <option value="PRIME PLC">PRIME PLC</option>
-                                    <option value="BR PLC">BR PLC</option>
-                                </select>
-                            </div>
-                            <div class="form-group" style="grid-column: span 2;">
-                                <label>Description / Payee Details</label>
-                                <input type="text" id="exp-desc" placeholder="e.g. Paid to Driver Worku for truck freight" required>
-                            </div>
-                        </div>
-                        <button type="submit" class="btn btn-amber" style="width: 100%; justify-content: center; padding: 9px;">Submit Expense Entry</button>
-                    </form>
-                </div>
-            </div>
-        </div>
-
-        <!-- TAB 5: Income TAX -->
-        <div id="taxObligations" class="tab-pane">
-            <!-- SUMMARY CARDS GRID -->
-            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-bottom: 20px;">
-                
-                <!-- SUMMARY CARD 1: VAT & WHT OVERVIEW -->
-                <div class="card">
-                    <h3>Value Added Tax (VAT 15%) &amp; Withholding Tax (WHT 3%)</h3>
-                    <table style="width: 100%; font-size: 12px; border-collapse: collapse;">
-                        <tbody>
-                            <tr style="border-bottom: 1px solid var(--border);">
-                                <td style="padding: 8px 0;">Output VAT Collected from Customers (15%):</td>
-                                <td style="text-align: right; font-weight: 700; color: var(--accent-blue);">ETB 498,990.00</td>
-                            </tr>
-                            <tr style="border-bottom: 1px solid var(--border);">
-                                <td style="padding: 8px 0;">Input VAT Paid on Purchases (15%):</td>
-                                <td style="text-align: right; font-weight: 700; color: var(--accent-green);">ETB 1,323,540.00</td>
-                            </tr>
-                            <tr style="border-bottom: 1px solid var(--border); font-weight: 800;">
-                                <td style="padding: 8px 0; color: var(--accent-green);">Net VAT Status:</td>
-                                <td style="text-align: right; font-weight: 800; color: var(--accent-green);">ETB 824,550.00 (VAT Credit / Refund)</td>
-                            </tr>
-                            <tr style="border-bottom: 1px solid var(--border);">
-                                <td style="padding: 8px 0;">WHT Paid on Purchases (3%):</td>
-                                <td style="text-align: right; font-weight: 700; color: var(--accent-blue);">ETB 264,708.00</td>
-                            </tr>
-                            <tr>
-                                <td style="padding: 8px 0;">WHT Collected on Sales (3%):</td>
-                                <td style="text-align: right; font-weight: 700; color: var(--accent-amber);">ETB 99,798.00</td>
-                            </tr>
-                        </tbody>
-                    </table>
-                </div>
-
-                <!-- SUMMARY CARD 2: CORPORATE PROFIT TAX BREAKDOWN -->
-                <div class="card">
-                    <h3>Corporate Profit Tax Breakdown (30%)</h3>
-                    <table style="width: 100%; font-size: 12px; border-collapse: collapse;">
-                        <tbody>
-                            <tr style="border-bottom: 1px solid var(--border);">
-                                <td style="padding: 8px 0;">Gross Sales Revenue:</td>
-                                <td style="text-align: right; font-weight: 700;">ETB 3,326,600.00</td>
-                            </tr>
-                            <tr style="border-bottom: 1px solid var(--border);">
-                                <td style="padding: 8px 0;">Cost of Goods Sold (COGS @ ETB 4,300):</td>
-                                <td style="text-align: right; font-weight: 700; color: var(--accent-red);">ETB 2,640,200.00</td>
-                            </tr>
-                            <tr style="border-bottom: 1px solid var(--border); font-weight: 800;">
-                                <td style="padding: 8px 0; color: var(--accent-green);">Gross Profit:</td>
-                                <td style="text-align: right; font-weight: 800; color: var(--accent-green);">ETB 686,400.00</td>
-                            </tr>
-                            <tr>
-                                <td style="padding: 12px 0 8px 0; font-weight: 800;">30% Corporate Profit Tax Payable:</td>
-                                <td style="text-align: right; font-weight: 800; color: var(--accent-amber);">ETB 205,920.00</td>
-                            </tr>
-                        </tbody>
-                    </table>
-                </div>
-
-            </div>
-
-            <!-- AUDIT TABLE -->
-            <div class="card">
-                <h3>Detailed Purchase &amp; Sales Tax Audit Breakdown (VAT 15% &amp; WHT 3%)</h3>
-                <div class="table-wrap">
-                    <table>
-                        <thead>
-                            <tr>
-                                <th>DATE</th>
-                                <th>PURCH. QTY</th>
-                                <th>PURCH. PRICE</th>
-                                <th>PURCH. BASE (ETB)</th>
-                                <th>INPUT VAT (15%)</th>
-                                <th>PURCH. WHT (3%)</th>
-                                <th>SALES QTY</th>
-                                <th>SALES PRICE</th>
-                                <th>SALES BASE (ETB)</th>
-                                <th>OUTPUT VAT (15%)</th>
-                                <th>SALES WHT (3%)</th>
-                                <th>NET VAT (DAILY)</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr>
-                                <td>2026-06-25</td>
-                                <td>1500</td>
-                                <td>4300</td>
-                                <td>ETB 6,450,000</td>
-                                <td style="color: var(--accent-blue);">ETB 967,500</td>
-                                <td>ETB 193,500</td>
-                                <td>0</td>
-                                <td>-</td>
-                                <td>-</td>
-                                <td>-</td>
-                                <td>-</td>
-                                <td style="color: var(--accent-green); font-weight:700;">ETB -967,500</td>
-                            </tr>
-                            <tr>
-                                <td>2026-06-30</td>
-                                <td>0</td>
-                                <td>-</td>
-                                <td>-</td>
-                                <td>-</td>
-                                <td>-</td>
-                                <td>120</td>
-                                <td>5200</td>
-                                <td>ETB 624,000</td>
-                                <td style="color: var(--accent-blue);">ETB 93,600</td>
-                                <td>ETB 18,720</td>
-                                <td style="color: var(--accent-amber); font-weight:700;">ETB 93,600</td>
-                            </tr>
-                            <tr>
-                                <td>2026-07-15</td>
-                                <td>0</td>
-                                <td>-</td>
-                                <td>-</td>
-                                <td>-</td>
-                                <td>-</td>
-                                <td>0</td>
-                                <td>-</td>
-                                <td>-</td>
-                                <td>-</td>
-                                <td>-</td>
-                                <td>-</td>
-                            </tr>
-                            <tr>
-                                <td>2026-07-16</td>
-                                <td>0</td>
-                                <td>-</td>
-                                <td>-</td>
-                                <td>-</td>
-                                <td>-</td>
-                                <td>0</td>
-                                <td>-</td>
-                                <td>-</td>
-                                <td>-</td>
-                                <td>-</td>
-                                <td>-</td>
-                            </tr>
-                            <tr>
-                                <td>2026-07-18</td>
-                                <td>0</td>
-                                <td>-</td>
-                                <td>-</td>
-                                <td>-</td>
-                                <td>-</td>
-                                <td>0</td>
-                                <td>-</td>
-                                <td>-</td>
-                                <td>-</td>
-                                <td>-</td>
-                                <td>-</td>
-                            </tr>
-                            <tr>
-                                <td>2026-07-28</td>
-                                <td>0</td>
-                                <td>4300</td>
-                                <td>-</td>
-                                <td>-</td>
-                                <td>-</td>
-                                <td>17</td>
-                                <td>5400</td>
-                                <td>ETB 91,800</td>
-                                <td style="color: var(--accent-blue);">ETB 13,770</td>
-                                <td>ETB 2,754</td>
-                                <td style="color: var(--accent-amber); font-weight:700;">ETB 13,770</td>
-                            </tr>
-                            <tr>
-                                <td>2026-07-30</td>
-                                <td>300</td>
-                                <td>4300</td>
-                                <td>ETB 1,290,000</td>
-                                <td style="color: var(--accent-blue);">ETB 193,500</td>
-                                <td>ETB 38,700</td>
-                                <td>200</td>
-                                <td>5500</td>
-                                <td>ETB 1,100,000</td>
-                                <td style="color: var(--accent-blue);">ETB 165,000</td>
-                                <td>ETB 33,000</td>
-                                <td style="color: var(--accent-green); font-weight:700;">ETB -28,500</td>
-                            </tr>
-                            <tr>
-                                <td>2026-07-31</td>
-                                <td>125</td>
-                                <td>4300</td>
-                                <td>ETB 537,500</td>
-                                <td style="color: var(--accent-blue);">ETB 80,625</td>
-                                <td>ETB 16,125</td>
-                                <td>150</td>
-                                <td>5500</td>
-                                <td>ETB 825,000</td>
-                                <td style="color: var(--accent-blue);">ETB 123,750</td>
-                                <td>ETB 24,750</td>
-                                <td style="color: var(--accent-amber); font-weight:700;">ETB 43,125</td>
-                            </tr>
-                            <tr>
-                                <td>2026-08-04</td>
-                                <td>17</td>
-                                <td>4300</td>
-                                <td>ETB 73,100</td>
-                                <td style="color: var(--accent-blue);">ETB 10,965</td>
-                                <td>ETB 2,193</td>
-                                <td>17</td>
-                                <td>5400</td>
-                                <td>ETB 91,800</td>
-                                <td style="color: var(--accent-blue);">ETB 13,770</td>
-                                <td>ETB 2,754</td>
-                                <td style="color: var(--accent-amber); font-weight:700;">ETB 2,805</td>
-                            </tr>
-                            <tr>
-                                <td>2026-08-04</td>
-                                <td>110</td>
-                                <td>4300</td>
-                                <td>ETB 473,000</td>
-                                <td style="color: var(--accent-blue);">ETB 70,950</td>
-                                <td>ETB 14,190</td>
-                                <td>110</td>
-                                <td>5400</td>
-                                <td>ETB 594,000</td>
-                                <td style="color: var(--accent-blue);">ETB 89,100</td>
-                                <td>ETB 17,820</td>
-                                <td style="color: var(--accent-amber); font-weight:700;">ETB 18,150</td>
-                            </tr>
-                            <tr>
-                                <td>2026-08-05</td>
-                                <td>0</td>
-                                <td>-</td>
-                                <td>-</td>
-                                <td>-</td>
-                                <td>-</td>
-                                <td>0</td>
-                                <td>-</td>
-                                <td>-</td>
-                                <td>-</td>
-                                <td>-</td>
-                                <td>-</td>
-                            </tr>
-                        </tbody>
-                        <tfoot>
-                            <tr>
-                                <td>TOTALS</td>
-                                <td>2052</td>
-                                <td>-</td>
-                                <td>ETB 8,823,600</td>
-                                <td style="color: var(--accent-blue);">ETB 1,323,540</td>
-                                <td>ETB 264,708</td>
-                                <td>614</td>
-                                <td>-</td>
-                                <td>ETB 3,326,600</td>
-                                <td style="color: var(--accent-blue);">ETB 498,990</td>
-                                <td>ETB 99,798</td>
-                                <td style="color: var(--accent-green); font-weight:800;">ETB 824,550</td>
-                            </tr>
-                        </tfoot>
-                    </table>
-                </div>
-            </div>
-        </div>
-
-
-
-
-        
-<!-- TAB 6: STAFF MANAGEMENT & TIMESHEET -->
-        <div id="staffing" class="tab-pane">
-            <div class="dashboard-section">
-                <div class="section-header">Section Staff Management &amp; Timesheet</div>
-                <p style="font-size: 11px; color: var(--text-muted); margin-bottom: 16px;">Permanent Staff Registry, Casual Yard Labor Roster &amp; Payout Processing</p>
-            </div>
-
-            <div class="data-entry-grid" style="margin-bottom: 16px;">
-                <!-- Register Permanent Employee -->
-                <div class="card form-container">
-                    <h3>Register Permanent Employee</h3>
-                    <form id="employee-form" onsubmit="addEmployee(event)">
-                        <div class="form-grid">
-                            <div class="form-group">
-                                <label>FULL NAME</label>
-                                <input type="text" id="emp-name" placeholder="Ato Yohannes" value="Ato Yohannes" required>
-                            </div>
-                            <div class="form-group">
-                                <label>ROLE / TITLE</label>
-                                <input type="text" id="emp-role" placeholder="Warehouse Supervisor" value="Warehouse Supervisor" required>
-                            </div>
-                            <div class="form-group">
-                                <label>MONTHLY SALARY (ETB)</label>
-                                <input type="number" id="emp-salary" placeholder="15000" value="15000" required>
-                            </div>
-                            <div class="form-group">
-                                <label>ENTITY ASSIGNMENT</label>
-                                <select id="emp-entity">
-                                    <option value="Prime Investment Group">Prime Investment Group</option>
-                                    <option value="BR Investment">BR Investment</option>
-                                </select>
-                            </div>
-                        </div>
-                        <button type="submit" class="btn btn-blue" style="width: 100%; justify-content: center; padding: 9px;">Save Employee Record</button>
-                    </form>
-                </div>
-
-                <!-- Daily Casual Labor Timesheet -->
-                <div class="card form-container">
-                    <h3>Daily Labor Timesheet</h3>
-                    <form id="labor-form" onsubmit="addLaborShift(event)">
-                        <div class="form-grid">
-                            <div class="form-group">
-                                <label>DATE</label>
-                                <input type="date" id="labor-date" required>
-                            </div>
-                            <div class="form-group">
-                                <label>LOCATION </label>
-                                <select id="labor-location">
-                                    <option value="Kolfe / Lebu Warehouse">Kolfe / Lebu Warehouse</option>
-                                    <option value="Mesalemya Shop">Mesalemya Shop</option>
-                                </select>
-                            </div>
-                            <div class="form-group">
-                                <label>WORKER HEADCOUNT</label>
-                                <input type="number" id="labor-headcount" value="10" required>
-                            </div>
-                            <div class="form-group">
-                                <label>DAILY RATE PER WORKER (ETB)</label>
-                                <input type="number" id="labor-rate" value="500" required>
-                            </div>
-                        </div>
-                        <button type="submit" class="btn btn-blue" style="width: 100%; justify-content: center; padding: 9px;">Record Daily Labor Shift</button>
-                    </form>
-                </div>
-            </div>
-
-            <!-- REGISTRIES & VOUCHERS TABLES -->
-            <div class="data-entry-grid">
-                <div class="card">
-                    <h3>Permanent Staff Registry</h3>
-                    <div class="table-wrap">
-                        <table>
-                            <thead>
-                                <tr>
-                                    <th>NAME</th>
-                                    <th>ROLE</th>
-                                    <th>SALARY (ETB)</th>
-                                    <th>ENTITY</th>
-                                </tr>
-                            </thead>
-                            <tbody id="tbody-permanent-staff">
-                                <tr>
-                                    <td><strong>Ato Yohannes</strong><br><span style="font-size: 10px; color: var(--text-muted);">Warehouse Supervisor</span></td>
-                                    <td>Warehouse Supervisor</td>
-                                    <td>18,000.00</td>
-                                    <td>Prime</td>
-                                </tr>
-                            </tbody>
-                        </table>
-                    </div>
-                </div>
-
-                <div class="card">
-                    <h3>Casual Labor Payout Vouchers</h3>
-                    <div class="table-wrap">
-                        <table>
-                            <thead>
-                                <tr>
-                                    <th>DATE</th>
-                                    <th>LOCATION</th>
-                                    <th>HEADCOUNT</th>
-                                    <th>RATE</th>
-                                    <th>TOTAL (ETB)</th>
-                                </tr>
-                            </thead>
-                            <tbody id="tbody-labor-vouchers">
-                                <tr>
-                                    <td>2026-08-07</td>
-                                    <td>Kolfe / Lebu</td>
-                                    <td>12</td>
-                                    <td>500.00</td>
-                                    <td style="font-weight: 800;">6,000.00</td>
-                                </tr>
-                            </tbody>
-                        </table>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <!-- TAB 6: EXPENSE LEDGER -->
-        <div id="expenseLedger" class="tab-pane">
-            <div class="card">
-                <h3>Operating &amp; Capital Expenses Ledger</h3>
-                <div class="table-wrap">
-                    <table id="table-expenses">
-                        <thead>
-                            <tr>
-                                <th>Date</th><th>Category</th><th>Description / Payee</th><th>Paid By</th><th>Amount (ETB)</th>
-                            </tr>
-                        </thead>
-                        <tbody id="tbody-expenses"></tbody>
-                        <tfoot>
-                            <tr>
-                                <td colspan="4">TOTAL EXPENSES PAID</td>
-                                <td style="color: var(--accent-red);" id="tfoot-exp-total">ETB 178,079.00</td>
-                            </tr>
-                        </tfoot>
-                    </table>
-                </div>
-            </div>
-        </div>
-
-    </main>
-<!-- =================================================================== -->
-<!-- SECTION 4 END: DASHBOARDS & TAB PANELS CONTENT                      -->
-<!-- =================================================================== -->
-
-
-
-
-
-
-
-
-
-
-
-
-<!-- =================================================================== -->
-<!-- SECTION 5 START: JAVASCRIPT LOGIC & APPLICATION STATE              -->
-<!-- =================================================================== -->
-    <script>
-        // Data Store State
-        let stockReportData = [
-            { date: "2026-06-25", open: 0, primePurch: 1500, brPurch: 0, shipKolfe: 1200, inTransit: 300, transfer: 0, salesKolfe: 0, soldBy1: "-", kolfeBal: 1200, salesMes: 0, soldBy2: "-" },
-            { date: "2026-06-30", open: 0, primePurch: 0, brPurch: 0, shipKolfe: 0, inTransit: 0, transfer: 0, salesKolfe: 120, soldBy1: "BR", kolfeBal: 1080, salesMes: 0, soldBy2: "BR" },
-            { date: "2026-07-15", open: 0, primePurch: 0, brPurch: 0, shipKolfe: 0, inTransit: 0, transfer: 150, salesKolfe: 0, soldBy1: "-", kolfeBal: 930, salesMes: 0, soldBy2: "-" },
-            { date: "2026-07-16", open: 0, primePurch: 0, brPurch: 0, shipKolfe: 0, inTransit: 0, transfer: 150, salesKolfe: 0, soldBy1: "-", kolfeBal: 780, salesMes: 0, soldBy2: "-" },
-            { date: "2026-07-18", open: 0, primePurch: 0, brPurch: 0, shipKolfe: 0, inTransit: 0, transfer: 150, salesKolfe: 0, soldBy1: "-", kolfeBal: 630, salesMes: 0, soldBy2: "-" },
-            { date: "2026-07-28", open: 0, primePurch: 0, brPurch: 0, shipKolfe: 0, inTransit: 0, transfer: 0, salesKolfe: 0, soldBy1: "BR", kolfeBal: 630, salesMes: 17, soldBy2: "BR" },
-            { date: "2026-07-30", open: 0, primePurch: 0, brPurch: 300, shipKolfe: 0, inTransit: 300, transfer: 0, salesKolfe: 0, soldBy1: "BR", kolfeBal: 630, salesMes: 200, soldBy2: "BR" },
-            { date: "2026-07-31", open: 0, primePurch: 0, brPurch: 125, shipKolfe: 0, inTransit: 125, transfer: 170, salesKolfe: 150, soldBy1: "BR", kolfeBal: 310, salesMes: 0, soldBy2: "BR" },
-            { date: "2026-08-04", open: 0, primePurch: 0, brPurch: 17, shipKolfe: 0, inTransit: 17, transfer: 0, salesKolfe: 0, soldBy1: "BR", kolfeBal: 310, salesMes: 17, soldBy2: "BR" },
-            { date: "2026-08-04", open: 0, primePurch: 0, brPurch: 110, shipKolfe: 0, inTransit: 110, transfer: 0, salesKolfe: 0, soldBy1: "BR", kolfeBal: 310, salesMes: 110, soldBy2: "BR" },
-            { date: "2026-08-05", open: 0, primePurch: 0, brPurch: 0, shipKolfe: 0, inTransit: 0, transfer: 170, salesKolfe: 0, soldBy1: "-", kolfeBal: 140, salesMes: 0, soldBy2: "-" }
-        ];
-
-        let stockSwapData = [
-            { date: "26-06-25", brPurch: 0, inTransit: 0, borrowed: 0, replenished: 0, balance: 0, notes: "Replenishment / Factory Direct" },
-            { date: "26-06-30", brPurch: 0, inTransit: 0, borrowed: 120, replenished: 62, balance: 58, notes: "Stock Borrowed for Sales" },
-            { date: "26-07-15", brPurch: 0, inTransit: 0, borrowed: 0, replenished: 0, balance: 58, notes: "Replenishment / Factory Direct" },
-            { date: "26-07-16", brPurch: 0, inTransit: 0, borrowed: 0, replenished: 0, balance: 58, notes: "Replenishment / Factory Direct" },
-            { date: "26-07-18", brPurch: 0, inTransit: 0, borrowed: 0, replenished: 0, balance: 58, notes: "Replenishment / Factory Direct" },
-            { date: "26-07-28", brPurch: 0, inTransit: 0, borrowed: 17, replenished: 0, balance: 75, notes: "Stock Borrowed for Sales" },
-            { date: "26-07-30", brPurch: 300, inTransit: 300, borrowed: 200, replenished: 300, balance: -25, notes: "Stock Borrowed for Sales" },
-            { date: "2026-07-31", brPurch: 125, inTransit: 125, borrowed: 150, replenished: 125, balance: 0, notes: "Stock Borrowed for Sales" },
-            { date: "2026-08-04", brPurch: 17, inTransit: 17, borrowed: 17, replenished: 17, balance: 0, notes: "Stock Borrowed for Sales" },
-            { date: "2026-08-04", brPurch: 110, inTransit: 110, borrowed: 110, replenished: 110, balance: 0, notes: "Stock Borrowed for Sales" },
-            { date: "2026-08-05", brPurch: 0, inTransit: 0, borrowed: 0, replenished: 0, balance: 0, notes: "Replenishment / Factory Direct" }
-        ];
-
-        // Real Detailed Corporate Expense Ledger Entries
-        let expenseData = [
-            { date: "2026-07-12", category: "Leasehold Improvements (Mesalemia Renovation)", desc: "Storefront branding, metal shutter repair, and electrical work", funder: "PRIME", amount: 35000.00 },
-            { date: "2026-07-15", category: "Inter-Warehouse Transfer Transport", desc: "Trucking payment to transport 150 pcs from Kolfe to Mesalemya", funder: "PRIME", amount: 12000.00 },
-            { date: "2026-07-15", category: "Loading & Offloading Fees", desc: "Casual labor fee for loading/offloading plywood at Mesalemya shop", funder: "PRIME", amount: 4500.00 },
-            { date: "2026-07-30", category: "Leasehold Improvements (Mesalemia Renovation)", desc: "Front door opening advance", funder: "PRIME", amount: 6000.00 },
-            { date: "2026-08-01", category: "Leasehold Improvements (Mesalemia Renovation)", desc: "door opening", funder: "PRIME", amount: 4000.00 },
-            { date: "2026-08-01", category: "Leasehold Improvements (Mesalemia Renovation)", desc: "door opening", funder: "BR", amount: 2000.00 },
-            { date: "2026-08-03", category: "Leasehold Improvements (Mesalemia Renovation)", desc: "Morale for partition", funder: "BR", amount: 8500.00 },
-            { date: "2026-07-31", category: "Leasehold Improvements (Mesalemia Renovation)", desc: "morale for plywood placement", funder: "BR", amount: 1800.00 },
-            { date: "2026-08-05", category: "Leasehold Improvements (Mesalemia Renovation)", desc: "semaru advance labor partition", funder: "BR", amount: 800.00 },
-            { date: "2026-08-05", category: "Utilities (Electricity & Water)", desc: "electricity", funder: "BR", amount: 400.00 },
-            { date: "2026-08-05", category: "Leasehold Improvements (Mesalemia Renovation)", desc: "morale for partition", funder: "PRIME", amount: 1899.00 },
-            { date: "2026-08-05", category: "Leasehold Improvements (Mesalemia Renovation)", desc: "Compensato for partition cover", funder: "PRIME", amount: 15600.00 },
-            { date: "2026-06-30", category: "Loading & Offloading Fees", desc: "mesalemiya sales to Temsaer Realestate", funder: "BR", amount: 2400.00 },
-            { date: "2026-06-30", category: "Freight Out (Distribution Freight)", desc: "transportation to Temsaer Realestate Bole Altes", funder: "BR", amount: 12000.00 },
-            { date: "2026-07-11", category: "Loading & Offloading Fees", desc: "loading at kolfe", funder: "BR", amount: 3000.00 },
-            { date: "2026-07-11", category: "Freight Out (Distribution Freight)", desc: "Matusala Realestate", funder: "PRIME", amount: 12000.00 },
-            { date: "2026-07-28", category: "Freight Out (Distribution Freight)", desc: "Transportation", funder: "BR", amount: 5000.00 },
-            { date: "2026-07-28", category: "Loading & Offloading Fees", desc: "loading", funder: "BR", amount: 340.00 },
-            { date: "2026-07-30", category: "Loading & Offloading Fees", desc: "loading at mesalemya MEtal", funder: "BR", amount: 4000.00 },
-            { date: "2026-07-30", category: "Freight Out (Distribution Freight)", desc: "FST", funder: "BR", amount: 17000.00 },
-            { date: "2026-08-04", category: "Freight Out (Distribution Freight)", desc: "transporation", funder: "BR", amount: 5000.00 },
-            { date: "2026-08-04", category: "Loading & Offloading Fees", desc: "loading mesalmya", funder: "BR", amount: 340.00 },
-            { date: "2026-08-04", category: "Loading & Offloading Fees", desc: "loading Gonder", funder: "BR", amount: 2200.00 },
-            { date: "2026-08-04", category: "Freight Out (Distribution Freight)", desc: "transportation", funder: "BR", amount: 10000.00 },
-            { date: "2026-08-03", category: "Leasehold Improvements (Mesalemia Renovation)", desc: "advance semeru partition labor", funder: "BR", amount: 2000.00 },
-            { date: "2026-08-03", category: "Leasehold Improvements (Mesalemia Renovation)", desc: "sand", funder: "BR", amount: 2000.00 },
-            { date: "2026-08-04", category: "Repairs & Maintenance", desc: "Divider", funder: "BR", amount: 1250.00 },
-            { date: "2026-07-23", category: "Leasehold Improvements (Mesalemia Renovation)", desc: "sand", funder: "BR", amount: 2350.00 },
-            { date: "2026-07-25", category: "Leasehold Improvements (Mesalemia Renovation)", desc: "sand", funder: "BR", amount: 4700.00 }
-        ];
-
-        // Rendering Functions
-        function renderStockReport() {
-            const tbody = document.getElementById('tbody-stock-report');
-            tbody.innerHTML = '';
-            stockReportData.forEach(row => {
-                tbody.innerHTML += `
-                    <tr>
-                        <td>${row.date}</td>
-                        <td>${row.open}</td>
-                        <td>${row.primePurch}</td>
-                        <td>${row.brPurch}</td>
-                        <td>${row.shipKolfe}</td>
-                        <td>${row.inTransit}</td>
-                        <td>${row.transfer}</td>
-                        <td>${row.salesKolfe}</td>
-                        <td>${row.soldBy1}</td>
-                        <td style="color: var(--accent-blue); font-weight: 700;">${row.kolfeBal}</td>
-                        <td>${row.salesMes}</td>
-                        <td>${row.soldBy2}</td>
-                    </tr>`;
-            });
-        }
-
-        function renderStockSwap() {
-            const tbody = document.getElementById('tbody-stock-swap');
-            tbody.innerHTML = '';
-            stockSwapData.forEach(row => {
-                tbody.innerHTML += `
-                    <tr>
-                        <td>${row.date}</td>
-                        <td>${row.brPurch}</td>
-                        <td>${row.inTransit}</td>
-                        <td style="color: var(--accent-red); font-weight: 700;">${row.borrowed}</td>
-                        <td style="color: var(--accent-green); font-weight: 700;">${row.replenished}</td>
-                        <td style="color: ${row.balance < 0 ? 'var(--accent-green)' : 'var(--accent-amber)'}; font-weight: 700;">${row.balance}</td>
-                        <td>${row.notes}</td>
-                    </tr>`;
-            });
-        }
-
-        function renderExpenses() {
-            const tbody = document.getElementById('tbody-expenses');
-            tbody.innerHTML = '';
-            let total = 0;
-            expenseData.forEach((row, index) => {
-                total += row.amount;
-                tbody.innerHTML += `
-                    <tr>
-                        <td>${row.date}</td>
-                        <td>${row.category}</td>
-                        <td>${row.desc}</td>
-                        <td>${row.funder}</td>
-                        <td style="font-weight:600;">ETB ${row.amount.toLocaleString('en-US', {minimumFractionDigits: 2})}</td>
-                        <td class="admin-only"><button class="btn btn-red" onclick="deleteExpense(${index})">Delete</button></td>
-                    </tr>`;
-            });
-            document.getElementById('tfoot-exp-total').innerText = 'ETB ' + total.toLocaleString('en-US', {minimumFractionDigits: 2});
-            document.getElementById('dash-total-exp').innerText = 'ETB ' + total.toLocaleString('en-US', {minimumFractionDigits: 2});
-        }
-
-        function deleteExpense(index) {
-            if (confirm("Are you sure you want to delete this expense record?")) {
-                expenseData.splice(index, 1);
-                renderExpenses();
-            }
-        }
-
-        // Tab Navigation
-        function switchTab(tabId, btn) {
-            document.querySelectorAll('.tab-pane').forEach(el => el.classList.remove('active'));
-            document.querySelectorAll('.tab-btn').forEach(el => el.classList.remove('active'));
-            document.getElementById(tabId).classList.add('active');
-            btn.classList.add('active');
-        }
-
-        // Role-Based UI Control
-        function switchRole(role) {
-            document.querySelectorAll('.admin-only').forEach(el => {
-                el.style.display = (role === 'admin') ? 'inline-block' : 'none';
-            });
-            const navEntry = document.querySelector('.nav-entry');
-            if (role === 'investor') {
-                navEntry.style.display = 'none';
-                switchTab('dashboard', document.querySelector('.nav-dash'));
-            } else if (role === 'clerk') {
-                navEntry.style.display = 'inline-block';
-                switchTab('dataEntry', navEntry);
-            } else {
-                navEntry.style.display = 'inline-block';
-            }
-        }
-
-        function performLogin() {
-            const selectedRole = document.getElementById('login-role-select').value;
-            document.getElementById('role-selector').value = selectedRole;
-            switchRole(selectedRole);
-            document.getElementById('login-modal').style.display = 'none';
-        }
-
-        function handleSignOut() {
-            document.getElementById('login-modal').style.display = 'flex';
-        }
-
-       async function addTransaction(e) {
-  e.preventDefault();
-
-  try {
-    // 1. Grab date safely (fallback to today if blank)
-    const rawDate = document.getElementById('tx-date')?.value;
-    const cleanDate = rawDate && rawDate.trim() !== "" ? rawDate : new Date().toISOString().split('T')[0];
-
-    // 2. Build complete payload matching form fields
-    const payload = {
-      transaction_date: cleanDate,
-      purchasd_by: document.getElementById('tx-funder')?.value || 'PRIME',
-      factory_purchase_qty: Number(document.getElementById('tx-purch-qty')?.value) || 0,
-      shipped_to_kolfe_qty: Number(document.getElementById('tx-ship-kolfe')?.value) || 0,
-      transfer_qty: Number(document.getElementById('tx-transfer')?.value) || 0,
-      sales_kolfe_qty: Number(document.getElementById('tx-sales-kolfe')?.value) || 0,
-      sales_mesalemya_qty: Number(document.getElementById('tx-sales-mes')?.value) || 0,
-      sold_by: document.getElementById('tx-soldby')?.value || 'BR',
-unit_sales_price: Number(document.getElementById('tx-sales-price')?.value) || 0
-    };
-
-    console.log("Submitting to Supabase:", payload);
-
-// 3. Perform Insert
-const { data, error } = await _supabase
-    .from('Stock Movement')
-    .insert([payload])
-    .select();
-    if (error) {
-      console.error("Supabase error detail:", error);
-      alert("DATABASE REJECTED ENTRY: " + error.message + "\nDetails: " + (error.details || error.hint || 'None'));
-      return;
-    }
-
-    alert("Stock Entry Saved Successfully!");
-
-   // 4. Reset & Refresh
-    const form = document.getElementById('entry-form');
-    if (form) form.reset();
-
-    await loadLiveData();
-
-  } catch (err) {
-    console.error("JavaScript Execution Error:", err);
-    alert("Execution Error: " + err.message);
-  }
-}
-
-        function resetData() {
-            if (confirm('Are you sure you want to reset all data back to original defaults?')) {
-                location.reload();
-            }
-        }
-
-       // Initial Load & Supabase Connection
-const _supabase = supabase.createClient('https://xyauecfuqropmqpchcny.supabase.co', 'sb_publishable_5K6WvT-11QWjsEVklanBpA_ABGRamqt');
-
-// 1. Standalone function to load live data from Supabase
-async function loadLiveData() {
-  try {
-    const { data: stockRows, error: stockErr } = await _supabase.from('Stock Movement').select('*');
-   const { data: expenseRows, error: expErr } = await _supabase.from('expenses').select('*').order('expense_date', { ascending: false });
-
-    if (stockErr) console.error("Error fetching stock:", stockErr);
-
-    if (stockRows && stockRows.length > 0) {
-      stockReportData = stockRows.map(row => ({
-        date: row.transaction_date,
-        open: 0,
-        primePurch: row.purchasd_by === 'PRIME' ? (Number(row.factory_purchase_qty) || 0) : 0,
-        brPurch: row.purchasd_by === 'BR' ? (Number(row.factory_purchase_qty) || 0) : 0,
-        shipKolfe: Number(row.shipped_to_kolfe_qty) || 0,
-        inTransit: (Number(row.factory_purchase_qty) || 0) - (Number(row.shipped_to_kolfe_qty) || 0),
-        transfer: Number(row.transfer_qty) || 0,
-        salesKolfe: Number(row.sales_kolfe_qty) || 0,
-        soldBy1: (Number(row.sales_kolfe_qty) || 0) > 0 ? (row.sold_by || '-') : '-',
-        kolfeBal: 0,
-        salesMes: Number(row.sales_mesalemya_qty) || 0,
-        soldBy2: (Number(row.sales_mesalemya_qty) || 0) > 0 ? (row.sold_by || '-') : '-'
-      }));
-
-      renderStockTable();
-    renderStockSwapTable();
-  }
-
-   if (expenseRows && expenseRows.length > 0) {
-            expenseData = expenseRows.map(row => ({
-                date: row.expense_date || row.date || '-',
-                category: row.category || '-',
-                description: row.description || row.desc || '-',
-                funder: row.funder || '-',
-                amount: Number(row.amount || 0)
-            }));
-            renderExpenseTable();
-        }
-  } catch (err) {
-    console.error("Error loading live data from Supabase:", err);
-  }
-}
-
-// 2. Render functions to display data on screen
-function renderStockTable() {
-  const tbody = document.querySelector("#stock-table tbody") || document.querySelector("tbody");
-  if (!tbody) return;
-
-  let runningKolfeBal = 0;
-
-  tbody.innerHTML = stockReportData.map(row => {
-    const shippedIn = Number(row.shipKolfe) || 0;
-    const soldOut = Number(row.salesKolfe) || 0;
-    runningKolfeBal = runningKolfeBal + shippedIn - soldOut;
-    row.kolfeBal = runningKolfeBal;
-
-    return `
-      <tr>
-        <td>${row.date || '-'}</td>
-        <td>${row.open || 0}</td>
-        <td>${row.primePurch || 0}</td>
-        <td>${row.brPurch || 0}</td>
-        <td>${shippedIn}</td>
-        <td>${row.inTransit || 0}</td>
-        <td>${row.transfer || 0}</td>
-        <td>${soldOut}</td>
-        <td>${row.soldBy1 || '-'}</td>
-        <td><strong>${runningKolfeBal}</strong></td>
-        <td>${row.salesMes || 0}</td>
-        <td>${row.soldBy2 || '-'}</td>
-      </tr>
-    `;
-  }).join('');
-}
-
-// Render Stock Swap Table
-function renderStockSwapTable() {
-    const tbody = document.getElementById("tbody-stock-swap") || document.querySelector("#table-stock-swap tbody");
-    if (!tbody || !stockSwapData) return;
-
-    let runningBal = 0;
-    tbody.innerHTML = stockSwapData.map(row => {
-        const borrowed = Number(row.borrowed || row.borrowed_qty || 0);
-        const replenished = Number(row.replenished || row.replenished_qty || 0);
-        runningBal += (borrowed - replenished);
-
-        return `
-            <tr>
-                <td>${row.date || row.transaction_date || '-'}</td>
-                <td>${row.brPurch || row.purch_qty || 0}</td>
-                <td>${row.inTransit || row.in_transit || 0}</td>
-                <td style="color: var(--accent-red);">${borrowed}</td>
-                <td style="color: var(--accent-green);">${replenished}</td>
-                <td style="color: var(--accent-amber);">${runningBal}</td>
-                <td>${row.notes || row.settlement_notes || '-'}</td>
-            </tr>`;
-    }).join('');
-}
-
-// Render Expense Ledger Table
-function renderExpenseTable() {
-   const tbody = document.getElementById("tbody-expenses") || document.getElementById("tbody-expense-ledger") || document.querySelector("#expense-table tbody");
-    if (!tbody || !expenseData) return;
-
-    tbody.innerHTML = expenseData.map(row => `
-        <tr>
-            <td>${row.date || '-'}</td>
-            <td>${row.category || '-'}</td>
-            <td>${row.desc || row.description || '-'}</td>
-            <td>${row.funder || '-'}</td>
-            <td>ETB ${Number(row.amount || 0).toLocaleString(undefined, {minimumFractionDigits: 2})}</td>
-        </tr>
-    `).join('');
-}
-
-// 3. Run on initial page load
-window.onload = async function() {
-    await loadLiveData();
-    if (typeof renderExpenseTable === 'function') renderExpenseTable();
-  const today = new Date().toISOString().split('T')[0];
-  if (document.getElementById('tx-date')) document.getElementById('tx-date').value = today;
-  if (document.getElementById('exp-date')) document.getElementById('exp-date').value = today;
-};
-
-// 4. App action functions
-function switchRole(role) { console.log("Switched role to:", role); }
-function resetData() { if (confirm("Are you sure?")) console.log("Reset"); }
-function handleSignOut() { document.getElementById('login-modal').style.display = 'flex'; }
-function performLogin() { document.getElementById('login-modal').style.display = 'none'; }
-
-async function addTransaction(event) {
-  event.preventDefault();
-
-  try {
-    const rawDate = document.getElementById('tx-date')?.value;
-    const cleanDate = rawDate && rawDate.trim() !== "" ? rawDate : new Date().toISOString().split('T')[0];
-
-    const payload = {
-      transaction_date: cleanDate,
-      purchasd_by: document.getElementById('tx-funder')?.value || 'PRIME',
-      factory_purchase_qty: Number(document.getElementById('tx-purch-qty')?.value) || 0,
-      shipped_to_kolfe_qty: Number(document.getElementById('tx-ship-kolfe')?.value) || 0,
-      transfer_qty: Number(document.getElementById('tx-transfer')?.value) || 0,
-      sales_kolfe_qty: Number(document.getElementById('tx-sales-kolfe')?.value) || 0,
-      sales_mesalemya_qty: Number(document.getElementById('tx-sales-mes')?.value) || 0,
-      sold_by: document.getElementById('tx-soldby')?.value || 'BR'
-    };
-
-    const { data, error } = await _supabase
-      .from('Stock Movement')
-      .insert([payload]);
-
-    if (error) {
-      console.error("Error inserting transaction:", error);
-      alert("Error saving transaction: " + error.message);
-      return;
-    }
-
-    alert("Transaction successfully recorded!");
-
-    const form = document.getElementById('entry-form');
-    if (form) form.reset();
-
-    if (typeof loadLiveData === 'function') {
-      await loadLiveData();
-    }
-
-  } catch (err) {
-    console.error("Execution Error:", err);
-    alert("System Error: " + err.message);
-  }
-}
-
-// 6. Handle New Expense Form Submission
-async function addExpense(event) {
-  event.preventDefault();
-}
-// NEW ISOLATED EXPENSE SUBMISSION FUNCTION
-async function addExpenseSafe(event) {
-    if (event) event.preventDefault();
-
-    try {
-        const category = document.getElementById('exp-category')?.value || 'General';
-        const desc = document.getElementById('exp-desc')?.value || '';
-        const funder = document.getElementById('exp-funder')?.value || 'PRIME';
-        const amount = parseFloat(document.getElementById('exp-amount')?.value) || 0;
-
-        if (amount <= 0) {
-            alert("Please enter a valid expense amount greater than 0.");
-            return;
-       }
-
-const rawDate = document.getElementById('exp-date')?.value;
-const cleanDate = rawDate && rawDate.trim() !== "" ? rawDate : new Date().toISOString().split('T')[0];
-
-const payload = { expense_date: cleanDate, category, description: desc, funder, amount };
-
-const { error } = await _supabase.from('expenses').insert([payload]);
-        if (error) {
-            alert("Error saving expense: " + error.message);
-            return;
-        }
-
-        alert("Expense Entry Logged Successfully!");
-        
-        // Reset expense form fields safely
-        const form = document.getElementById('expense-form');
-        if (form) form.reset();
-
-        // Refresh tables without touching other forms
-        if (typeof loadLiveData === 'function') await loadLiveData();
-        if (typeof renderExpenseTable === 'function') renderExpenseTable();
-
-    } catch (err) {
-        console.error("Expense Save Error:", err);
-        alert("System Error: " + err.message);
-    }
-}
-</script>
-</body>
-</html>
+      </div>
+    </section>
+  </main>
+</div>
+</body></html>
