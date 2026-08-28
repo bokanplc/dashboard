@@ -1549,34 +1549,32 @@ function populateExpenseCategoryDropdown() {
 }
 
 // Initializer
-// Initializer
-document.addEventListener('DOMContentLoaded', () => {
-    populateExpenseCategoryDropdown();
+populateExpenseCategoryDropdown();
 
-    // Handle login form submission
-    const loginForm = document.getElementById('login-form');
-    if (loginForm) {
-        loginForm.addEventListener('submit', async (e) => {
-            e.preventDefault();
-            const email = document.getElementById('login-email').value;
-            const password = document.getElementById('login-password').value;
-            const errorElement = document.getElementById('login-error');
+// Handle login form submission
+const loginForm = document.getElementById('login-form');
+if (loginForm) {
+    loginForm.addEventListener('submit', async (e) => {
+        e.preventDefault();
+        const email = document.getElementById('login-email').value;
+        const password = document.getElementById('login-password').value;
+        const errorElement = document.getElementById('login-error');
 
-            const { data, error } = await sb.auth.signInWithPassword({
-                email: email,
-                password: password
-            });
-
-            if (error) {
-                if (errorElement) {
-                    errorElement.textContent = error.message;
-                    errorElement.classList.remove('hidden');
-                }
-            } else {
-                // Successfully logged in, reload or transition views
-                window.location.reload();
-            }
+        const { data, error } = await sb.auth.signInWithPassword({
+            email: email,
+            password: password
         });
+
+        if (error) {
+            if (errorElement) {
+                errorElement.textContent = error.message;
+                errorElement.classList.remove('hidden');
+            }
+        } else {
+            // Successfully logged in, reload or transition views
+            window.location.reload();
+        }
+    });
+}
 </script>
-</body>
 </html>
