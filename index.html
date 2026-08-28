@@ -1448,5 +1448,106 @@
   </div>
   </main>
 </div>
-
 <script>
+// ---- Supabase project connection ----
+// Fill these in with YOUR OWN project's values (Supabase Dashboard -> Project Settings -> API)
+// The "anon / publishable" key is safe to leave in client-side code (it is designed for public use);
+// your data stays protected by the Row Level Security (RLS) policies on your tables.
+const SUPABASE_URL = 'https://jqdsgtbkyxbjgeqtdsdy.supabase.co';
+const SUPABASE_KEY = 'sb_publishable_jtovxa6yaAKDAte62b6E7A_fWY-0txb';
+
+// Chart of Accounts Data Structure
+const CHART_OF_ACCOUNTS = {
+  'Operating Expenses': [
+    'Rent Expense – Office / Head Office',
+    'Rent Expense – Warehouse / Factory',
+    'Utilities – Electricity',
+    'Utilities – Water',
+    'Utilities – Internet',
+    'Telephone / Airtime Allowance',
+    'Office Supplies & Stationery',
+    'Bank Charges & Fees',
+    'Professional Fees – Accounting / Audit',
+    'Professional Fees – Legal',
+    'Consulting Fees',
+    'License, Permit & Registration Fees',
+    'Penalties & Fines',
+    'Repairs & Maintenance – Office & Furniture',
+    'Cleaning & Sanitation Supplies',
+    'Staff Welfare & Coffee / Tea',
+    'Meals & Refreshments (Administrative)',
+    'Medical Expenses & First Aid (Staff)',
+    'Security Services',
+    'Software & Cloud Subscriptions',
+    'Depreciation Expense – Buildings',
+    'Depreciation Expense – Machinery',
+    'Depreciation Expense – Vehicles',
+    'Depreciation Expense – Office Equipment',
+    'Amortization Expense – Intangibles',
+    'Loss on Disposal of Assets',
+    'Miscellaneous / General Expense'
+  ],
+  'Payroll & Employee Benefits': [
+    'Salaries & Wages – Admin / Exec',
+    'Pension Contribution (Employer 11%)',
+    'Overtime Pay',
+    'Staff Allowances (Transport, Housing, Fuel)',
+    'Employee Health Insurance',
+    'Severance Pay',
+    'Staff Training & Development'
+  ],
+  'Logistics, Fuel & Vehicles': [
+    'Fuel – Transport Vehicles',
+    'Fuel – Officers / Admin Vehicles',
+    'Fuel – Generator',
+    'Vehicle Maintenance & Repairs',
+    'Vehicle Insurance (Third Party & Comprehensive)',
+    'Driver Per Diem & Field Allowances',
+    'Parking & Toll Fees'
+  ],
+  'Finance & Tax Expense': [
+    'Interest Expense – Bank Loans',
+    'Interest Expense – Shareholder / Director Loans',
+    'Foreign Exchange Loss',
+    'Business Profit Tax Expense',
+    'Withholding Tax Expense (Non-creditable)'
+  ]
+};
+
+// QuickBooks Color Palette & Brand Style Variables
+const QB_PALETTE = {
+  primary: '#2CA01C',        // QuickBooks Signature Green
+  primaryHover: '#108000',   // Darker Green Hover
+  secondary: '#0077C5',      // QuickBooks Accent Blue
+  bgLight: '#F4F5F8',        // QuickBooks Card/Background Light Gray
+  textDark: '#393A3D',       // QuickBooks Primary Text Dark Gray
+  textMuted: '#6B6C72',      // QuickBooks Subtitle/Label Gray
+  border: '#D4D7DC'          // QuickBooks Standard Border Slate
+};
+
+// Dynamic Option Populator for Expense Categories
+function populateExpenseCategories() {
+  const expCatSelect = document.getElementById('exp-category');
+  if (!expCatSelect) return;
+  expCatSelect.innerHTML = '';
+  
+  for (const [groupName, categories] of Object.entries(CHART_OF_ACCOUNTS)) {
+    const optgroup = document.createElement('optgroup');
+    optgroup.label = groupName;
+    categories.forEach(cat => {
+      const option = document.createElement('option');
+      option.value = cat;
+      option.textContent = cat;
+      optgroup.appendChild(option);
+    });
+    expCatSelect.appendChild(optgroup);
+  }
+}
+
+// Global UI Initialization logic
+document.addEventListener('DOMContentLoaded', () => {
+  populateExpenseCategories();
+});
+</script>
+</body>
+</html>
