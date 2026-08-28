@@ -1,249 +1,434 @@
-<html lang="en"><head>
+<!doctype html>
+<html lang="en">
+<head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>PRIME Investment Group PLC — Operations Portal</title>
+<title>PRIME Investment Group PLC — Enterprise Operations &amp; Management Dashboard</title>
 <script src="https://cdn.tailwindcss.com"></script>
-<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <style>
-  @media print {
-    body * { visibility: hidden; }
-    .printable-doc, .printable-doc * { visibility: visible; }
-    .printable-doc { position: absolute; top: 0; left: 0; width: 100%; }
-    .no-print { display: none !important; }
-  }
-  body { font-family: 'Avenir', 'Helvetica Neue', Helvetica, Arial, sans-serif; background:#f4f5f7; color: #393939; }
-  .tab-btn.active { background: #2ca01c; color: #fff; }
-  .locked-badge { font-size: 10px; }
-  .kpi-card { border-left: 4px solid #2ca01c; }
-  .section-card h3 { letter-spacing: .02em; text-transform: uppercase; font-size: 12px; color: #6b6c6e; }
-  .bar-track { background: #e0e0e0; border-radius: 4px; overflow: hidden; height: 10px; }
-  .bar-fill { height: 100%; border-radius: 4px; }
-  .dash-section { border-top: 3px solid #2ca01c; }
-  .dash-section-label { font-size: 11px; letter-spacing: .08em; text-transform: uppercase; color: #fff; background:#2ca01c; display:inline-block; padding:4px 12px; border-radius:0 0 6px 6px; }
-  .alert-card { border-left: 4px solid #b45309; background:#fffbeb; }
-  .alert-card.danger { border-left-color:#be123c; background:#fff1f2; }
-  .alert-card.ok { border-left-color:#15803d; background:#f0fdf4; }
-  .subtab-btn.active { background:#2ca01c; color:#fff; }
-  .corp-card-title { font-size:11px; text-transform:uppercase; letter-spacing:.04em; color:#2ca01c; font-weight:700; margin-bottom:10px; padding-bottom:6px; border-bottom:2px solid #e0e0e0; }
-  .stat-line { display:flex; justify-content:space-between; align-items:baseline; padding:6px 0; border-bottom:1px solid #f4f5f7; }
-  .stat-line:last-child { border-bottom:none; }
-  .stat-line .label { color:#6b6c6e; font-size:12px; }
-  .stat-line .value { font-weight:700; color:#2ca01c; font-size:13px; white-space:nowrap; margin-left:12px; }
-
-  /* ---------- Sidebar navigation ---------- */
-  #sidebar { width: 250px; background:#1b1b1b !important; }
-  .nav-link { display:block; width:100%; text-align:left; padding:8px 14px; border-radius:6px; color:#b8b8b8; font-size:12px; font-weight:500; }
-  .nav-link:hover { background:rgba(255,255,255,.06); color:#fff; }
-  .nav-link.active { background:#2ca01c; color:#fff; font-weight:600; }
-  .nav-link-indent { padding-left:26px; }
-  .nav-group-toggle { display:flex; justify-content:space-between; align-items:center; width:100%; text-align:left; padding:8px 14px; border-radius:6px; color:#e0e0e0; font-size:11px; font-weight:700; letter-spacing:.04em; text-transform:uppercase; margin-top:6px; }
-  .nav-group-toggle:hover { background:rgba(255,255,255,.06); color:#fff; }
-  .nav-group-toggle .chev { font-size:9px; color:#888; }
-  .nav-group-children { display:block; }
-  .nav-group-children.hidden { display:none; }
-  .nav-section-gap { height:6px; }
-  .role-pill { display:inline-block; font-size:10px; font-weight:700; letter-spacing:.04em; text-transform:uppercase; background:rgba(255,255,255,.1); color:#7ef29d; padding:2px 8px; border-radius:999px; }
-  .page-eyebrow { font-size:10px; letter-spacing:.08em; text-transform:uppercase; color:#2ca01c; font-weight:700; }
-  .summary-callout { background:linear-gradient(135deg,#1b1b1b,#2b2b2b); color:#fff; border-radius:12px; }
-  .summary-callout .metric-label { color:#7ef29d; font-size:11px; text-transform:uppercase; letter-spacing:.04em; }
-  @media (max-width: 767px) {
-    #sidebar { transform: translateX(-100%); position: fixed; top:0; bottom:0; left:0; z-index:40; }
-    #sidebar.open { transform: translateX(0); }
-  }
+  body { font-family: "Avenir", "Helvetica Neue", Helvetica, Arial, sans-serif; background: #f4f5f7; color: #2b2f33; }
+  .corp-card-title { font-size: 11px; text-transform: uppercase; letter-spacing: .04em; color: #2b2f33; font-weight: 700; margin-bottom: 10px; padding-bottom: 6px; border-bottom: 2px solid #e2e8f0; }
+  .page-eyebrow { font-size: 10px; letter-spacing: .08em; text-transform: uppercase; color: #2ca01c; font-weight: 700; }
+  .section-box { background: #ffffff; border: 1px solid #e2e8f0; border-radius: 8px; box-shadow: 0 1px 3px rgba(0,0,0,0.05); padding: 20px; margin-bottom: 20px; }
+  label { font-size: 11px; color: #64748b; font-weight: 600; text-transform: uppercase; letter-spacing: 0.02em; display: block; margin-bottom: 4px; }
+  input, select, textarea { border: 1px solid #cbd5e1; padding: 8px 10px; border-radius: 6px; font-size: 12px; width: 100%; outline: none; background: #fff; }
+  input:focus, select:focus, textarea:focus { border-color: #2ca01c; box-shadow: 0 0 0 2px rgba(44,160,28,0.1); }
+  .btn-primary { background: #2ca01c; color: white; font-weight: 600; padding: 9px 16px; border-radius: 6px; font-size: 12px; cursor: pointer; border: none; width: 100%; text-align: center; }
+  .btn-primary:hover { background: #238116; }
+  .nav-tab { font-size: 11px; font-weight: 700; text-transform: uppercase; padding: 8px 14px; border-radius: 6px; cursor: pointer; background: #e2e8f0; color: #475569; border: none; }
+  .nav-tab.active { background: #2ca01c; color: white; }
+  .tab-content { display: none; }
+  .tab-content.active { display: block; }
 </style>
-<style>*, ::before, ::after{--tw-border-spacing-x:0;--tw-border-spacing-y:0;--tw-translate-x:0;--tw-translate-y:0;--tw-rotate:0;--tw-skew-x:0;--tw-skew-y:0;--tw-scale-x:1;--tw-scale-y:1;--tw-pan-x: ;--tw-pan-y: ;--tw-pinch-zoom: ;--tw-scroll-snap-strictness:proximity;--tw-gradient-from-position: ;--tw-gradient-via-position: ;--tw-gradient-to-position: ;--tw-ordinal: ;--tw-slashed-zero: ;--tw-numeric-figure: ;--tw-numeric-spacing: ;--tw-numeric-fraction: ;--tw-ring-inset: ;--tw-ring-offset-width:0px;--tw-ring-offset-color:#fff;--tw-ring-color:rgb(44 160 28 / 0.5);--tw-ring-offset-shadow:0 0 #0000;--tw-ring-shadow:0 0 #0000;--tw-shadow:0 0 #0000;--tw-shadow-colored:0 0 #0000;--tw-blur: ;--tw-brightness: ;--tw-contrast: ;--tw-grayscale: ;--tw-hue-rotate: ;--tw-invert: ;--tw-saturate: ;--tw-sepia: ;--tw-drop-shadow: ;--tw-backdrop-blur: ;--tw-backdrop-brightness: ;--tw-backdrop-contrast: ;--tw-backdrop-grayscale: ;--tw-backdrop-hue-rotate: ;--tw-backdrop-invert: ;--tw-backdrop-opacity: ;--tw-backdrop-saturate: ;--tw-backdrop-sepia: ;--tw-contain-size: ;--tw-contain-layout: ;--tw-contain-paint: ;--tw-contain-style: }::backdrop{--tw-border-spacing-x:0;--tw-border-spacing-y:0;--tw-translate-x:0;--tw-translate-y:0;--tw-rotate:0;--tw-skew-x:0;--tw-skew-y:0;--tw-scale-x:1;--tw-scale-y:1;--tw-pan-x: ;--tw-pan-y: ;--tw-pinch-zoom: ;--tw-scroll-snap-strictness:proximity;--tw-gradient-from-position: ;--tw-gradient-via-position: ;--tw-gradient-to-position: ;--tw-ordinal: ;--tw-slashed-zero: ;--tw-numeric-figure: ;--tw-numeric-spacing: ;--tw-numeric-fraction: ;--tw-ring-inset: ;--tw-ring-offset-width:0px;--tw-ring-offset-color:#fff;--tw-ring-color:rgb(44 160 28 / 0.5);--tw-ring-offset-shadow:0 0 #0000;--tw-ring-shadow:0 0 #0000;--tw-shadow:0 0 #0000;--tw-shadow-colored:0 0 #0000;--tw-blur: ;--tw-brightness: ;--tw-contrast: ;--tw-grayscale: ;--tw-hue-rotate: ;--tw-invert: ;--tw-saturate: ;--tw-sepia: ;--tw-drop-shadow: ;--tw-backdrop-blur: ;--tw-backdrop-brightness: ;--tw-backdrop-contrast: ;--tw-backdrop-grayscale: ;--tw-backdrop-hue-rotate: ;--tw-backdrop-invert: ;--tw-backdrop-opacity: ;--tw-backdrop-saturate: ;--tw-backdrop-sepia: ;--tw-contain-size: ;--tw-contain-layout: ;--tw-contain-paint: ;--tw-contain-style: }/* ! tailwindcss v3.4.17 | MIT License | https://tailwindcss.com */*,::after,::before{box-sizing:border-box;border-width:0;border-style:solid;border-color:#e0e0e0}::after,::before{--tw-content:''}:host,html{line-height:1.5;-webkit-text-size-adjust:100%;-moz-tab-size:4;tab-size:4;font-family:'Avenir', 'Helvetica Neue', Helvetica, Arial, sans-serif;font-feature-settings:normal;font-variation-settings:normal;-webkit-tap-highlight-color:transparent}body{margin:0;line-height:inherit}hr{height:0;color:inherit;border-top-width:1px}abbr:where([title]){-webkit-text-decoration:underline dotted;text-decoration:underline dotted}h1,h2,h3,h4,h5,h6{font-size:inherit;font-weight:inherit}a{color:inherit;text-decoration:inherit}b,strong{font-weight:bolder}code,kbd,pre,samp{font-family:ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;font-feature-settings:normal;font-variation-settings:normal;font-size:1em}small{font-size:80%}sub,sup{font-size:75%;line-height:0;position:relative;vertical-align:baseline}sub{bottom:-.25em}sup{top:-.5em}table{text-indent:0;border-color:inherit;border-collapse:collapse}button,input,optgroup,select,textarea{font-family:inherit;font-feature-settings:inherit;font-variation-settings:inherit;font-size:100%;font-weight:inherit;line-height:inherit;letter-spacing:inherit;color:inherit;margin:0;padding:0}button,select{text-transform:none}button,input:where([type=button]),input:where([type=reset]),input:where([type=submit]){-webkit-appearance:button;background-color:transparent;background-image:none}:-moz-focusring{outline:auto}:-moz-ui-invalid{box-shadow:none}progress{vertical-align:baseline}::-webkit-inner-spin-button,::-webkit-outer-spin-button{height:auto}[type=search]{-webkit-appearance:textfield;outline-offset:-2px}::-webkit-search-decoration{-webkit-appearance:none}::-webkit-file-upload-button{-webkit-appearance:button;font:inherit}summary{display:list-item}blockquote,dd,dl,figure,h1,h2,h3,h4,h5,h6,hr,p,pre{margin:0}fieldset{margin:0;padding:0}legend{padding:0}menu,ol,ul{list-style:none;margin:0;padding:0}dialog{padding:0}textarea{resize:vertical}input::placeholder,textarea::placeholder{opacity:1;color:#9ca3af}[role=button],button{cursor:pointer}:disabled{cursor:default}audio,canvas,embed,iframe,img,object,svg,video{display:block;vertical-align:middle}img,video{max-width:100%;height:auto}[hidden]:where(:not([hidden=until-found])){display:none}.fixed{position:fixed}.inset-0{inset:0px}.inset-x-0{left:0px;right:0px}.top-0{top:0px}.z-30{z-index:30}.z-40{z-index:40}.col-span-1{grid-column:span 1 / span 1}.col-span-2{grid-column:span 2 / span 2}.col-span-3{grid-column:span 3 / span 3}.col-span-4{grid-column:span 4 / span 4}.col-span-5{grid-column:span 5 / span 5}.col-span-6{grid-column:span 6 / span 6}.mx-auto{margin-left:auto;margin-right:auto}.mb-0{margin-bottom:0px}.mb-1{margin-bottom:0.25rem}.mb-10{margin-bottom:2.5rem}.mb-2{margin-bottom:0.5rem}.mb-3{margin-bottom:0.75rem}.mb-4{margin-bottom:1rem}.mb-6{margin-bottom:1.5rem}.mb-8{margin-bottom:2rem}.mt-1{margin-top:0.25rem}.mt-10{margin-top:2.5rem}.mt-2{margin-top:0.5rem}.mt-3{margin-top:0.75rem}.mt-4{margin-top:1rem}.mt-6{margin-top:1.5rem}.flex{display:flex}.grid{display:grid}.hidden{display:none}.h-10{height:2.5rem}.h-8{height:2rem}.max-h-72{max-height:18rem}.min-h-screen{min-height:100vh}.w-10{width:2.5rem}.w-20{width:5rem}.w-56{width:14rem}.w-64{width:16rem}.w-8{width:2rem}.w-full{width:100%}.min-w-0{min-width:0px}.max-w-4xl{max-width:56rem}.max-w-6xl{max-width:72rem}.max-w-sm{max-width:24rem}.flex-1{flex:1 1 0%}.flex-shrink-0{flex-shrink:0}.border-collapse{border-collapse:collapse}.grid-cols-1{grid-template-columns:repeat(1, minmax(0, 1fr))}.grid-cols-2{grid-template-columns:repeat(2, minmax(0, 1fr))}.grid-cols-12{grid-template-columns:repeat(12, minmax(0, 1fr))}.flex-col{flex-direction:column}.flex-wrap{flex-wrap:wrap}.items-start{align-items:flex-start}.items-center{align-items:center}.justify-end{justify-content:flex-end}.justify-center{justify-content:center}.justify-between{justify-content:space-between}.gap-1{gap:0.25rem}.gap-2{gap:0.5rem}.gap-3{gap:0.75rem}.gap-4{gap:1rem}.gap-6{gap:1.5rem}.space-y-1 > :not([hidden]) ~ :not([hidden]){--tw-space-y-reverse:0;margin-top:calc(0.25rem * calc(1 - var(--tw-space-y-reverse)));margin-bottom:calc(0.25rem * var(--tw-space-y-reverse))}.space-y-2 > :not([hidden]) ~ :not([hidden]){--tw-space-y-reverse:0;margin-top:calc(0.5rem * calc(1 - var(--tw-space-y-reverse)));margin-bottom:calc(0.5rem * var(--tw-space-y-reverse))}.space-y-3 > :not([hidden]) ~ :not([hidden]){--tw-space-y-reverse:0;margin-top:calc(0.75rem * calc(1 - var(--tw-space-y-reverse)));margin-bottom:calc(0.75rem * var(--tw-space-y-reverse))}.overflow-x-auto{overflow-x:auto}.overflow-y-auto{overflow-y:auto}.truncate{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}.whitespace-nowrap{white-space:nowrap}.whitespace-pre-line{white-space:pre-line}.rounded{border-radius:0.25rem}.rounded-lg{border-radius:0.5rem}.border{border-width:1px}.border-b{border-bottom-width:1px}.border-b-2{border-bottom-width:2px}.border-t{border-top-width:1px}.border-t-2{border-top-width:2px}.border-blue-100{--tw-border-opacity:1;border-color:rgb(219 234 254 / var(--tw-border-opacity, 1))}.border-green-200{--tw-border-opacity:1;border-color:rgb(187 247 208 / var(--tw-border-opacity, 1))}.border-slate-200{--tw-border-opacity:1;border-color:rgb(226 232 240 / var(--tw-border-opacity, 1))}.border-slate-700{--tw-border-opacity:1;border-color:rgb(51 65 85 / var(--tw-border-opacity, 1))}.border-slate-800{--tw-border-opacity:1;border-color:rgb(30 41 59 / var(--tw-border-opacity, 1))}.border-white\/10{border-color:rgb(255 255 255 / 0.1)}.bg-white{--tw-bg-opacity:1;background-color:rgb(255 255 255 / var(--tw-bg-opacity, 1))}.bg-\[\#1b1b1b\]{--tw-bg-opacity:1;background-color:rgb(27 27 27 / var(--tw-bg-opacity, 1))}.bg-\[\#2ca01c\]{--tw-bg-opacity:1;background-color:rgb(44 160 28 / var(--tw-bg-opacity, 1))}.bg-\[\#111827\]{--tw-bg-opacity:1;background-color:rgb(17 24 39 / var(--tw-bg-opacity, 1))}.bg-\[\#2555c7\]{--tw-bg-opacity:1;background-color:rgb(44 160 28 / var(--tw-bg-opacity, 1))}.bg-\[\#c2650f\]{--tw-bg-opacity:1;background-color:rgb(194 101 15 / var(--tw-bg-opacity, 1))}.bg-black\/40{background-color:rgb(0 0 0 / 0.4)}.bg-blue-50{--tw-bg-opacity:1;background-color:rgb(239 246 255 / var(--tw-bg-opacity, 1))}.bg-green-50{--tw-bg-opacity:1;background-color:rgb(240 253 244 / var(--tw-bg-opacity, 1))}.bg-red-600\/90{background-color:rgb(220 38 38 / 0.9)}.bg-slate-50{--tw-bg-opacity:1;background-color:rgb(248 250 252 / var(--tw-bg-opacity, 1))}.bg-white\/10{background-color:rgb(255 255 255 / 0.1)}.p-1\.5{padding:0.375rem}.p-10{padding:2.5rem}.p-2{padding:0.5rem}.p-3{padding:0.75rem}.p-4{padding:1rem}.p-5{padding:1.25rem}.p-6{padding:1.5rem}.p-8{padding:2rem}.p-1{padding:0.25rem}.px-1\.5{padding-left:0.375rem;padding-right:0.375rem}.px-3{padding-left:0.75rem;padding-right:0.75rem}.px-4{padding-left:1rem;padding-right:1rem}.px-6{padding-left:1.5rem;padding-right:1.5rem}.py-1{padding-top:0.25rem;padding-bottom:0.25rem}.py-1\.5{padding-top:0.375rem;padding-bottom:0.375rem}.py-16{padding-top:4rem;padding-bottom:4rem}.py-2{padding-top:0.5rem;padding-bottom:0.5rem}.py-3{padding-top:0.75rem;padding-bottom:0.75rem}.pb-4{padding-bottom:1rem}.pr-3{padding-right:0.75rem}.pt-14{padding-top:3.5rem}.pt-2{padding-top:0.5rem}.pt-3{padding-top:0.75rem}.pt-4{padding-top:1rem}.pt-6{padding-top:1.5rem}.pt-8{padding-top:2rem}.pb-1{padding-bottom:0.25rem}.text-left{text-align:left}.text-center{text-align:center}.text-right{text-align:right}.text-\[10px\]{font-size:10px}.text-base{font-size:1rem;line-height:1.5rem}.text-lg{font-size:1.125rem;line-height:1.75rem}.text-sm{font-size:0.875rem;line-height:1.25rem}.text-xl{font-size:1.25rem;line-height:1.75rem}.text-xs{font-size:0.75rem;line-height:1rem}.font-bold{font-weight:700}.font-semibold{font-weight:600}.uppercase{text-transform:uppercase}.leading-none{line-height:1}.leading-relaxed{line-height:1.625}.leading-tight{line-height:1.25}.tracking-wide{letter-spacing:0.025em}.text-\[\#2ca01c\]{--tw-text-opacity:1;color:rgb(44 160 28 / var(--tw-text-opacity, 1))}.text-\[\#2555c7\]{--tw-text-opacity:1;color:rgb(44 160 28 / var(--tw-text-opacity, 1))}.text-blue-900{--tw-text-opacity:1;color:rgb(30 58 138 / var(--tw-text-opacity, 1))}.text-green-700{--tw-text-opacity:1;color:rgb(21 128 61 / var(--tw-text-opacity, 1))}.text-red-600{--tw-text-opacity:1;color:rgb(220 38 38 / var(--tw-text-opacity, 1))}.text-slate-400{--tw-text-opacity:1;color:rgb(148 163 184 / var(--tw-text-opacity, 1))}.text-slate-500{--tw-text-opacity:1;color:rgb(100 116 139 / var(--tw-text-opacity, 1))}.text-slate-600{--tw-text-opacity:1;color:rgb(71 85 105 / var(--tw-text-opacity, 1))}.text-slate-700{--tw-text-opacity:1;color:rgb(51 65 85 / var(--tw-text-opacity, 1))}.text-slate-800{--tw-text-opacity:1;color:rgb(30 41 59 / var(--tw-text-opacity, 1))}.text-white{--tw-text-opacity:1;color:rgb(255 255 255 / var(--tw-text-opacity, 1))}.text-blue-300{--tw-text-opacity:1;color:rgb(147 197 253 / var(--tw-text-opacity, 1))}.underline{-webkit-text-decoration-line:underline;text-decoration-line:underline}.shadow-md{--tw-shadow:0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);--tw-shadow-colored:0 4px 6px -1px var(--tw-shadow-color), 0 2px 4px -2px var(--tw-shadow-color);box-shadow:var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow)}.shadow-sm{--tw-shadow:0 1px 2px 0 rgb(0 0 0 / 0.05);--tw-shadow-colored:0 1px 2px 0 var(--tw-shadow-color);box-shadow:var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow)}.transition{transition-property:color, background-color, border-color, fill, stroke, opacity, box-shadow, transform, filter, -webkit-text-decoration-color, -webkit-backdrop-filter;transition-property:color, background-color, border-color, text-decoration-color, fill, stroke, opacity, box-shadow, transform, filter, backdrop-filter;transition-property:color, background-color, border-color, text-decoration-color, fill, stroke, opacity, box-shadow, transform, filter, backdrop-filter, -webkit-text-decoration-color, -webkit-backdrop-filter;transition-timing-function:cubic-bezier(0.4, 0, 0.2, 1);transition-duration:150ms}.hover\:border-\[\#2ca01c\]:hover{--tw-border-opacity:1;border-color:rgb(44 160 28 / var(--tw-border-opacity, 1))}.hover\:bg-\[\#238515\]:hover{--tw-bg-opacity:1;background-color:rgb(35 133 21 / var(--tw-bg-opacity, 1))}.hover\:bg-\[\#238515\]:hover{--tw-bg-opacity:1;background-color:rgb(35 133 21 / var(--tw-bg-opacity, 1))}.hover\:bg-\[\#a5560c\]:hover{--tw-bg-opacity:1;background-color:rgb(165 86 12 / var(--tw-bg-opacity, 1))}.hover\:bg-red-600:hover{--tw-bg-opacity:1;background-color:rgb(220 38 38 / var(--tw-bg-opacity, 1))}.hover\:bg-white\/20:hover{background-color:rgb(255 255 255 / 0.2)}.hover\:text-slate-600:hover{--tw-text-opacity:1;color:rgb(71 85 105 / var(--tw-text-opacity, 1))}.hover\:shadow-md:hover{--tw-shadow:0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);--tw-shadow-colored:0 4px 6px -1px var(--tw-shadow-color), 0 2px 4px -2px var(--tw-shadow-color);box-shadow:var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow)}@media (min-width: 768px){.md\:col-span-2{grid-column:span 2 / span 2}.md\:col-span-3{grid-column:span 3 / span 3}.md\:col-span-4{grid-column:span 4 / span 4}.md\:flex{display:flex}.md\:hidden{display:none}.md\:grid-cols-2{grid-template-columns:repeat(2, minmax(0, 1fr))}.md\:grid-cols-3{grid-template-columns:repeat(3, minmax(0, 1fr))}.md\:grid-cols-4{grid-template-columns:repeat(4, minmax(0, 1fr))}.md\:pt-0{padding-top:0px}}@media (min-width: 1024px){.lg\:grid-cols-2{grid-template-columns:repeat(2, minmax(0, 1fr))}}</style></head>
-<body class="bg-white min-h-screen">
+<script>
+  function switchTab(tabId) {
+    document.querySelectorAll('.tab-content').forEach(el => el.classList.remove('active'));
+    document.querySelectorAll('.nav-tab').forEach(el => el.classList.remove('active'));
+    document.getElementById(tabId).classList.add('active');
+    event.currentTarget.classList.add('active');
+  }
+</script>
+</head>
+<body class="p-4 md:p-8">
 
-<!-- ============================= LOGIN ============================= -->
-<div id="login-view" class="min-h-screen flex items-center justify-center hidden">
-  <div class="bg-white rounded-lg shadow-md w-full max-w-sm p-8">
-    <div class="text-center mb-6">
-      <h1 class="text-lg font-bold text-slate-800">PRIME Investment Group Plc</h1>
-      <p class="text-xs text-slate-500">Operations Portal</p>
+<div class="max-w-6xl mx-auto">
+  <!-- Header Branding -->
+  <div class="mb-6 flex flex-col md:flex-row md:items-center md:justify-between border-b pb-4 gap-4">
+    <div>
+      <div class="page-eyebrow">PRIME Investment Group PLC &amp; Union Trade</div>
+      <h1 class="text-xl font-bold text-[#2b2f33]">Enterprise Management &amp; Operations Portal</h1>
+      <p class="text-xs text-slate-500 mt-1">Addis Ketema, Woreda 01, H.No 08 | Centralized Wholesale, Logistics &amp; CRM Hub</p>
     </div>
-    <form id="login-form" class="space-y-3">
-      <input id="login-email" type="email" required="" placeholder="Email" class="w-full border p-2 rounded">
-      <input id="login-password" type="password" required="" placeholder="Password" class="w-full border p-2 rounded">
-      <button class="w-full bg-[#2ca01c] hover:bg-[#238515] text-white font-semibold py-2 rounded">Sign In</button>
-      <p id="login-error" class="text-red-600 text-xs hidden"></p>
-    </form>
-    <p class="text-xs text-slate-400 mt-4 text-center">Accounts are created by an administrator. Contact your admin if you don't have a login.</p>
-  </div>
-</div>
-
-<!-- ============================= LANDING / DEPARTMENT SELECTOR ============================= -->
-<div id="landing-view" class="min-h-screen hidden" style="background:#f4f5f7">
-  <div class="max-w-4xl mx-auto px-4 py-16">
-    <div class="text-center mb-10">
-      <div class="w-10 h-10 rounded bg-[#2ca01c] text-white font-bold flex items-center justify-center mx-auto mb-3">P</div>
-      <h1 class="text-lg font-bold text-[#2ca01c]">PRIME Investment Group Plc</h1>
-      <p class="text-xs text-slate-500 mt-1">Select your workspace to continue</p>
-    </div>
-    <div id="landing-grid" class="grid grid-cols-1 md:grid-cols-2 gap-4">
-    <button onclick="enterDepartment('sales')" class="text-left bg-white border border-slate-200 rounded-lg shadow-sm p-5 hover:border-[#2ca01c] hover:shadow-md transition">
-      <div class="font-bold text-sm text-[#2ca01c] mb-1">Sales Department</div>
-      <div class="text-xs text-slate-500">CRM, trip planning, cost requests &amp; proforma</div>
-    </button>
-    <button onclick="enterDepartment('dataentry')" class="text-left bg-white border border-slate-200 rounded-lg shadow-sm p-5 hover:border-[#2ca01c] hover:shadow-md transition">
-      <div class="font-bold text-sm text-[#2ca01c] mb-1">Data Entry</div>
-      <div class="text-xs text-slate-500">Log stock movements, expenses &amp; upload documents</div>
-    </button>
-    <button onclick="enterDepartment('finance')" class="text-left bg-white border border-slate-200 rounded-lg shadow-sm p-5 hover:border-[#2ca01c] hover:shadow-md transition">
-      <div class="font-bold text-sm text-[#2ca01c] mb-1">Finance &amp; Accounting</div>
-      <div class="text-xs text-slate-500">Stock report, expense ledger, billing, letters</div>
-    </button>
-    <button onclick="enterDepartment('hr')" class="text-left bg-white border border-slate-200 rounded-lg shadow-sm p-5 hover:border-[#2ca01c] hover:shadow-md transition">
-      <div class="font-bold text-sm text-[#2ca01c] mb-1">Human Resources</div>
-      <div class="text-xs text-slate-500">Employee records, leave, performance, discipline</div>
-    </button>
-    <button onclick="enterDepartment('management')" class="text-left bg-white border border-slate-200 rounded-lg shadow-sm p-5 hover:border-[#2ca01c] hover:shadow-md transition">
-      <div class="font-bold text-sm text-[#2ca01c] mb-1">Management / Executive</div>
-      <div class="text-xs text-slate-500">Dashboards, reports &amp; company-wide oversight</div>
-    </button>
-    <button onclick="enterDepartment('admin')" class="text-left bg-white border border-slate-200 rounded-lg shadow-sm p-5 hover:border-[#2ca01c] hover:shadow-md transition">
-      <div class="font-bold text-sm text-[#2ca01c] mb-1">Administration</div>
-      <div class="text-xs text-slate-500">Full system access &amp; user management</div>
-    </button></div>
-    <div class="text-center mt-10">
-      <button onclick="signOut()" class="text-xs text-slate-400 hover:text-slate-600 underline">Sign Out</button>
+    <!-- Navigation Tabs -->
+    <div class="flex flex-wrap gap-2">
+      <button class="nav-tab active" onclick="switchTab('tab-sales')">Sales &amp; CRM</button>
+      <button class="nav-tab" onclick="switchTab('tab-inventory')">Stock &amp; Data Entry</button>
+      <button class="nav-tab" onclick="switchTab('tab-expenses')">Expenses &amp; Finance</button>
+      <button class="nav-tab" onclick="switchTab('tab-logistics')">Trip &amp; Logistics</button>
     </div>
   </div>
-</div>
 
-<!-- ============================= APP ============================= -->
-<div id="app-view" class="md:flex min-h-screen">
-
-  <!-- Mobile topbar -->
-  <div class="md:hidden fixed top-0 inset-x-0 bg-[#1b1b1b] text-white z-30 flex items-center justify-between px-4 py-3 no-print">
-    <button onclick="toggleSidebar()" class="text-lg leading-none">☰</button>
-    <div class="font-bold text-xs">PRIME GROUP PLC</div>
-    <div style="width:22px"></div>
-  </div>
-  <div id="sidebar-overlay" onclick="toggleSidebar()" class="hidden fixed inset-0 bg-black/40 z-30 md:hidden"></div>
-
-  <!-- Sidebar -->
-  <aside id="sidebar" class="bg-[#1b1b1b] text-white flex-shrink-0 flex flex-col no-print z-40">
-    <div class="p-5 border-b border-white/10 flex items-center gap-2">
-      <div class="w-8 h-8 rounded bg-[#2ca01c] flex items-center justify-center font-bold text-xs">P</div>
-      <div>
-        <div class="font-bold text-xs leading-tight tracking-wide">PRIME GROUP PLC</div>
-        <div class="text-[10px] text-slate-400">Operations Portal</div>
-      </div>
-    </div>
-    <nav id="sidebar-nav" class="flex-1 overflow-y-auto p-3 space-y-1"><button class="nav-link active" data-tab-id="overview">Dashboard Summary</button><button class="nav-link" data-tab-id="mqreport">Monthly / Quarterly Report</button><button class="nav-link" data-tab-id="stockreport">Stock Report &amp; Balances</button><button class="nav-link" data-tab-id="expenseledger">Expense Ledger</button><button class="nav-group-toggle"><span>Sales</span><span class="chev">▸</span></button><div class="nav-group-children hidden"><button class="nav-link nav-link-indent" data-tab-id="sales">Sales CRM</button><button class="nav-link nav-link-indent" data-tab-id="report">Sales Report</button><button class="nav-link nav-link-indent" data-tab-id="salestargets">Sales Targets &amp; Commission</button><button class="nav-link nav-link-indent" data-tab-id="tripcost">Trip Plan &amp; Cost Request</button><button class="nav-link nav-link-indent" data-tab-id="visitreport">Visit Activity Report</button></div><button class="nav-group-toggle"><span>Human Resources</span><span class="chev">▸</span></button><div class="nav-group-children hidden"><button class="nav-link nav-link-indent" data-tab-id="hremployees">Employee Directory</button><button class="nav-link nav-link-indent" data-tab-id="hrleave">Leave Requests</button><button class="nav-link nav-link-indent" data-tab-id="hrperformance">Performance Reviews</button><button class="nav-link nav-link-indent" data-tab-id="hrdisciplinary">Disciplinary Actions</button><button class="nav-link nav-link-indent" data-tab-id="hrreports">HR Reports</button></div><button class="nav-link" data-tab-id="dataentry">Data Entry Log</button><button class="nav-link" data-tab-id="proforma">Proforma</button><button class="nav-link" data-tab-id="billing">Customer Billing</button><button class="nav-link" data-tab-id="letters">Letters</button><button class="nav-link" data-tab-id="repository">Repository</button><button class="nav-link" data-tab-id="users">Users &amp; Roles</button></nav>
-    <div class="p-4 border-t border-white/10">
-      <div class="text-[10px] uppercase tracking-wide text-slate-400 mb-1">Workspace</div>
-      <div id="current-dept-label" class="text-xs font-semibold mb-2 truncate">Administration</div>
-      <button id="switch-dept-btn" onclick="switchDepartment()" class="w-full text-xs bg-white/10 hover:bg-white/20 px-3 py-1.5 rounded font-semibold mb-3">Switch Department</button>
-      <div class="text-[10px] uppercase tracking-wide text-slate-400 mb-1">Active Profile</div>
-      <div id="user-badge" class="text-xs font-semibold mb-3 truncate">bokanplc@gmail.com — admin</div>
-      <button onclick="signOut()" class="w-full text-xs bg-red-600/90 hover:bg-red-600 px-3 py-2 rounded font-semibold">Sign Out</button>
-    </div>
-  </aside>
-
-  <main class="flex-1 min-w-0 pt-14 md:pt-0">
-    <div class="max-w-6xl mx-auto p-4">
-
-    <!-- ---------- STOCK / PURCHASE / SALE ENTRY ---------- -->
-    <!-- ---------- DATA ENTRY LOG (entry forms only — no reports here) ---------- -->
-    <section id="tab-dataentry" class="tab-panel hidden">
-      <div class="mb-4 no-print">
-        <div class="page-eyebrow">Data Entry</div>
-        <h2 class="font-bold text-lg text-[#2ca01c]">Data Entry Log</h2>
-        <p class="text-xs text-slate-500">Log stock movements and expenses here. This page only shows what you personally entered recently — full ledgers and financial reports live on separate report pages.</p>
-      </div>
-
-      <div class="grid grid-cols-1 lg:grid-cols-2 gap-4 mb-4">
-        <!-- 1. Stock Movement & Swap Form -->
-        <div class="bg-white rounded-lg border border-slate-200 shadow-sm p-5 no-print">
-          <h3 class="font-bold text-sm mb-1 text-[#2ca01c]">1. Stock Movement &amp; Swap Form</h3>
-          <p class="text-xs text-slate-500 mb-3">One row per day. Enter only the columns that had movement — leave the rest at 0.</p>
-          <form id="ledger-form" class="grid grid-cols-1 md:grid-cols-3 gap-2">
+  <!-- TAB 1: SALES & CRM -->
+  <div id="tab-sales" class="tab-content active">
+    <!-- SECTION 1: SALES CRM & INTERACTION LOGGING -->
+    <div class="section-box">
+      <div class="corp-card-title">1. Sales CRM &amp; Customer Interaction Logging</div>
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+        
+        <!-- Interaction Form -->
+        <div class="md:col-span-2 space-y-3">
+          <h3 class="font-bold text-xs uppercase tracking-wide text-slate-700">Log Customer Interaction</h3>
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-3">
             <div>
-              <label class="text-xs text-slate-500">Transaction Date</label>
-              <input id="lg-date" type="date" class="border p-1.5 rounded w-full text-xs" required="">
+              <label>Customer / Company Name</label>
+              <input type="text" placeholder="Gold Star Real Estate, etc.">
             </div>
             <div>
-              <label class="text-xs text-slate-500">Purchased By / Funder</label>
-              <select id="lg-purchased-by" class="border p-1.5 rounded w-full text-xs">
-                <option value="none">— None —</option>
-                <option value="PRIME">PRIME</option>
-                <option value="BR">BR</option>
+              <label>Contact Person Name</label>
+              <input type="text" placeholder="Name">
+            </div>
+          </div>
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-3">
+            <div>
+              <label>Phone Number</label>
+              <input type="text" placeholder="+251...">
+            </div>
+            <div>
+              <label>Lead Source</label>
+              <select>
+                <option>Direct Visit</option>
+                <option>Cold Call</option>
+                <option>Referral</option>
+                <option>Social Media</option>
+              </select>
+            </div>
+          </div>
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-3">
+            <div>
+              <label>Pipeline Status</label>
+              <select>
+                <option>New Lead</option>
+                <option>Proforma Sent</option>
+                <option>Meeting Scheduled</option>
+                <option>Closed / Won</option>
+                <option>Closed / Lost</option>
               </select>
             </div>
             <div>
-              <label class="text-xs text-slate-500">Factory Purchase Qty</label>
-              <input id="lg-factory-qty" type="number" step="0.01" value="0" class="border p-1.5 rounded w-full text-xs">
+              <label>Deal Value (ETB)</label>
+              <input type="number" placeholder="0.00">
             </div>
+          </div>
+          <div>
+            <label>Notes &amp; Follow-up Actions</label>
+            <textarea rows="3" placeholder="Summary of discussion, agreed price points, or next steps..."></textarea>
+          </div>
+          <button class="btn-primary">Save Interaction &amp; Update CRM</button>
+        </div>
 
-            <div>
-              <label class="text-xs text-slate-500">Unit Purchase Price (ETB)</label>
-              <input id="lg-purchase-price" type="number" step="0.01" value="0" class="border p-1.5 rounded w-full text-xs">
+        <!-- Pipeline Snapshot Sidebar -->
+        <div class="bg-slate-50 p-4 rounded-lg border border-slate-200">
+          <h3 class="font-bold text-xs uppercase tracking-wide text-slate-700 mb-3">Pipeline Snapshot</h3>
+          <div class="space-y-2 text-xs">
+            <div class="flex justify-between p-2 bg-white rounded border">
+              <span>New Leads</span>
+              <span class="font-bold text-blue-600">4 Active</span>
             </div>
-            <div>
-              <label class="text-xs text-slate-500">Shipped to Kolfe Qty</label>
-              <input id="lg-shipped-kolfe" type="number" step="0.01" value="0" class="border p-1.5 rounded w-full text-xs">
+            <div class="flex justify-between p-2 bg-white rounded border">
+              <span>Proformas Sent</span>
+              <span class="font-bold text-amber-600">2 Pending</span>
             </div>
-            <div>
-              <label class="text-xs text-slate-500">Kolfe → Mes. Transfer Qty</label>
-              <input id="lg-kolfe-mes" type="number" step="0.01" value="0" class="border p-1.5 rounded w-full text-xs">
+            <div class="flex justify-between p-2 bg-white rounded border">
+              <span>Closed / Won (Month)</span>
+              <span class="font-bold text-green-600">12 Deals</span>
             </div>
+          </div>
+          <div class="mt-4 pt-3 border-t">
+            <h4 class="font-bold text-[11px] uppercase text-slate-600 mb-2">Assigned Products</h4>
+            <div class="flex flex-wrap gap-1">
+              <span class="px-2 py-1 bg-white border rounded text-[10px]">Plywood</span>
+              <span class="px-2 py-1 bg-white border rounded text-[10px]">Sewing Thread</span>
+              <span class="px-2 py-1 bg-white border rounded text-[10px]">Rebar</span>
+              <span class="px-2 py-1 bg-white border rounded text-[10px]">Morale Timber</span>
+            </div>
+          </div>
+        </div>
 
-            <div>
-              <label class="text-xs text-slate-500">Sales @ Kolfe Qty</label>
-              <input id="lg-sales-kolfe" type="number" step="0.01" value="0" class="border p-1.5 rounded w-full text-xs">
+      </div>
+    </div>
+
+    <!-- SECTION 2: SALES TARGETS & COMMISSION CONFIGURATION -->
+    <div class="section-box">
+      <div class="corp-card-title">2. Sales Targets &amp; Commission Setup</div>
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+        <div>
+          <label>Sales Representative</label>
+          <input type="text" placeholder="Rep Name">
+        </div>
+        <div>
+          <label>Period (Month)</label>
+          <input type="month" value="2026-08">
+        </div>
+        <div>
+          <label>Target Quantity / Units</label>
+          <input type="number" placeholder="e.g. 5000">
+        </div>
+      </div>
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mt-3">
+        <div>
+          <label>Rep Hierarchy Level</label>
+          <select>
+            <option>Independent (no override)</option>
+            <option>Junior Rep</option>
+            <option>Senior Rep</option>
+            <option>Manager</option>
+          </select>
+        </div>
+        <div>
+          <label>Commission Structure</label>
+          <select>
+            <option>Percent of Deal Value (2%)</option>
+            <option>Flat Rate per Unit</option>
+          </select>
+        </div>
+      </div>
+      <div class="mt-4">
+        <button class="btn-primary md:w-auto px-6">Save Sales Target Configuration</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- TAB 2: INVENTORY & DATA ENTRY -->
+  <div id="tab-inventory" class="tab-content">
+    <div class="section-box">
+      <div class="corp-card-title">Stock Movement &amp; Data Entry Logs</div>
+      <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+        
+        <!-- Stock Movement Form -->
+        <div class="bg-slate-50 p-4 rounded-lg border border-slate-200">
+          <h3 class="font-bold text-xs uppercase tracking-wide text-slate-700 mb-3">Stock Movement &amp; Swap Entry</h3>
+          <div class="space-y-3">
+            <div class="grid grid-cols-2 gap-2">
+              <div>
+                <label>Transaction Date</label>
+                <input type="date" value="2026-08-28">
+              </div>
+              <div>
+                <label>Purchased By / Funder</label>
+                <select>
+                  <option value="PRIME">PRIME</option>
+                  <option value="BR">BR</option>
+                </select>
+              </div>
+            </div>
+            <div class="grid grid-cols-3 gap-2">
+              <div>
+                <label>Factory Purchase Qty</label>
+                <input type="number" value="0">
+              </div>
+              <div>
+                <label>Shipped to Kolfe Qty</label>
+                <input type="number" value="0">
+              </div>
+              <div>
+                <label>Kolfe → Mes. Transfer</label>
+                <input type="number" value="0">
+              </div>
+            </div>
+            <div class="grid grid-cols-2 gap-2">
+              <div>
+                <label>Sales @ Kolfe Qty</label>
+                <input type="number" value="0">
+              </div>
+              <div>
+                <label>Sales @ Mesalemya Qty</label>
+                <input type="number" value="0">
+              </div>
             </div>
             <div>
-              <label class="text-xs text-slate-500">Sales @ Mesalemya Qty</label>
-              <input id="lg-sales-mes" type="number" step="0.01" value="0" class="border p-1.5 rounded w-full text-xs">
+              <label>Item / Notes</label>
+              <input type="text" placeholder="e.g. Plywood 18mm or Rebar">
+            </div>
+            <button class="btn-primary">Submit Stock Entry</button>
+          </div>
+        </div>
+
+        <!-- Inventory Status Summary Table -->
+        <div class="bg-slate-50 p-4 rounded-lg border border-slate-200">
+          <h3 class="font-bold text-xs uppercase tracking-wide text-slate-700 mb-3">Active Inventory Overview</h3>
+          <div class="overflow-x-auto">
+            <table class="w-full text-left text-xs bg-white rounded border">
+              <thead class="bg-slate-100 border-b text-[10px] uppercase text-slate-600">
+                <tr>
+                  <th class="p-2">Item Name</th>
+                  <th class="p-2">Kolfe Stock</th>
+                  <th class="p-2">Mesalemya Stock</th>
+                  <th class="p-2">Status</th>
+                </tr>
+              </thead>
+              <tbody class="divide-y text-slate-700">
+                <tr>
+                  <td class="p-2 font-medium">Plywood 18mm (Bokan)</td>
+                  <td class="p-2">1,200 Pcs</td>
+                  <td class="p-2">350 Pcs</td>
+                  <td class="p-2 text-green-600 font-semibold">In Stock</td>
+                </tr>
+                <tr>
+                  <td class="p-2 font-medium">Rebar (Grade Level)</td>
+                  <td class="p-2">4,500 Tons</td>
+                  <td class="p-2">1,100 Tons</td>
+                  <td class="p-2 text-green-600 font-semibold">In Stock</td>
+                </tr>
+                <tr>
+                  <td class="p-2 font-medium">Bag-Closing Industrial Thread</td>
+                  <td class="p-2">800 Cones</td>
+                  <td class="p-2">200 Cones</td>
+                  <td class="p-2 text-green-600 font-semibold">In Stock</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+  <!-- TAB 3: EXPENSES & FINANCE -->
+  <div id="tab-expenses" class="tab-content">
+    <div class="section-box">
+      <div class="corp-card-title">Standard Expenses Ledger &amp; Entry</div>
+      <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+        
+        <!-- Expense Entry Form -->
+        <div class="bg-slate-50 p-4 rounded-lg border border-slate-200 space-y-3">
+          <h3 class="font-bold text-xs uppercase tracking-wide text-slate-700">New Expense Entry</h3>
+          <div>
+            <label>Category</label>
+            <select>
+              <option>Transport & Fuel</option>
+              <option>Loading & Unloading</option>
+              <option>Office Supplies</option>
+              <option>Utilities & Rent</option>
+            </select>
+          </div>
+          <div class="grid grid-cols-2 gap-2">
+            <div>
+              <label>Amount (ETB)</label>
+              <input type="number" placeholder="0.00">
             </div>
             <div>
-              <label class="text-xs text-slate-500">Sold By (Company)</label>
-              <select id="lg-sold-by" class="border p-1.5 rounded w-full text-xs">
-                <option value="-">—</option>
-                <option value="PRIME">PRIME</option>
-                <option value="BR">BR</option>
+              <label>Location</label>
+              <select>
+                <option>Mesalemya</option>
+                <option>Kolfe</option>
+                <option>Lebu</option>
+                <option>Head Office</option>
               </select>
             </div>
+          </div>
+          <div>
+            <label>Description</label>
+            <textarea rows="3" placeholder="Detail expense description..."></textarea>
+          </div>
+          <button class="btn-primary">Save Expense</button>
+        </div>
 
-            <div>
-              <label class="text-xs text-slate-500">Unit Sales Price (ETB)</label>
-              <input id="lg-sale-price" type="number" step="0.01" value="0" class="border p-1.5 rounded w-full text-xs">
-            </div>
-            <div class="md:col-span-2">
-              <label class="text-xs text-slate-500">Item / Notes</label>
-              <input id="lg-notes" placeholder="e.g. Plywood 18mm" class="border p-1.5 rounded w-full text-xs">
-            </div>
+        <!-- Expense Ledger Table (Span 2) -->
+        <div class="lg:col-span-2 bg-slate-50 p-4 rounded-lg border border-slate-200">
+          <div class="flex justify-between items-center mb-3">
+            <h3 class="font-bold text-xs uppercase tracking-wide text-slate-700">Recent Expense Records</h3>
+            <button class="text-[11px] font-semibold text-emerald-700 bg-white border border-emerald-300 px-3 py-1 rounded hover:bg-emerald-50">Export CSV</button>
+          </div>
+          <div class="overflow-x-auto">
+            <table class="w-full text-left text-xs bg-white rounded border">
+              <thead class="bg-slate-100 border-b text-[10px] uppercase text-slate-600">
+                <tr>
+                  <th class="p-2">Date</th>
+                  <th class="p-2">Category</th>
+                  <th class="p-2">Location</th>
+                  <th class="p-2">Amount (ETB)</th>
+                </tr>
+              </thead>
+              <tbody class="divide-y text-slate-700">
+                <tr>
+                  <td class="p-2">2026-08-27</td>
+                  <td class="p-2">Transport & Fuel</td>
+                  <td class="p-2">Kolfe</td>
+                  <td class="p-2 font-semibold">14,500.00</td>
+                </tr>
+                <tr>
+                  <td class="p-2">2026-08-26</td>
+                  <td class="p-2">Loading & Unloading</td>
+                  <td class="p-2">Mesalemya</td>
+                  <td class="p-2 font-semibold">3,200.00</td>
+                </tr>
+                <tr>
+                  <td class="p-2">2026-08-25</td>
+                  <td class="p-2">Utilities & Rent</td>
+                  <td class="p-2">Head Office</td>
+                  <td class="p-2 font-semibold">25,000.00</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
 
-            <div class="md:col-span-3 border-t pt-2 mt-1">
-              <div class="text-xs font-bold uppercase tracking-wide text-slate-500 mb-2">Trip / Delivery Details (optional)</div>
-            </div>
-            <input id="lg-driver-name" placeholder="Driver Name" class="border p-1.5 rounded text-xs">
-            <input id="lg-driver-license" placeholder="Driver License #" class="border p-1.5 rounded text-xs">
-            <input id="lg-vehicle-plate" placeholder="Vehicle Plate #" class="border p-1.5 rounded text-xs">
-            <div>
-              <label class="text-xs text-slate-500">Driver License Photo</label>
-              <input id="lg-file-license" type="file" class="border p-1.5 rounded w-full text-xs">
-            </div>
-            <div>
-              <label class="text-xs text-slate-500">Plate / Vehicle Photo</label>
-              <input id="lg-file-vehicle" type="file" class="border p-1.5 rounded w-full text-xs">
-            </div>
-            <div></div>
+      </div>
+    </div>
+  </div>
 
-            <div class="md:col-span-3 flex gap-2 mt-1">
-              <button class="flex-1 bg-[#2ca01c] hover:bg-[#238515] text-white rounded py-2 font-semibold text-xs" id="ledger-submit-btn">Submit Stock Entry</button>
-              <button type="button" onclick="cancelLedgerEdit()" id="ledger-cancel-btn" class="hidden px-4 rounded border font-semibold text-slate-600 text-xs">Cancel</button>
+  <!-- TAB 4: TRIP PLAN & LOGISTICS -->
+  <div id="tab-logistics" class="tab-content">
+    <div class="section-box">
+      <div class="corp-card-title">Trip Plan &amp; Cost Request Hub</div>
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+        <div class="bg-slate-50 p-4 rounded-lg border border-slate-200 space-y-3">
+          <h3 class="font-bold text-xs uppercase tracking-wide text-slate-700">Submit Transport / Trip Itinerary</h3>
+          <div class="grid grid-cols-2 gap-2">
+            <div>
+              <label>Departure Date</label>
+              <input type="date" value="2026-08-29">
             </div>
-          </form>
-          <div id="ledger-doc-status" class="text-xs text-slate-500 mt-1"></div>
-          <div class="mt-3 pt-3 border-t">
-            <h4 class="text-xs font-bold uppercase tracking-wide text-slate-500 mb-2">Your Recent Swap Entries</h4>
-            <div id="my-ledger-list" class="space-y-2 text-xs"></div>
+            <div>
+              <label>Destination Corridor</label>
+              <select>
+                <option>Adama</option>
+                <option>Hawassa</option>
+                <option>Bahir Dar</option>
+                <option>Dire Dawa</option>
+              </select>
+            </div>
+          </div>
+          <div>
+            <label>Assigned Vehicle / Truck No.</label>
+            <input type="text" placeholder="e.g. Isuzu Forward / Plate No.">
+          </div>
+          <div class="grid grid-cols-2 gap-2">
+            <div>
+              <label>Estimated Cost (ETB)</label>
+              <input type="number" placeholder="0.00">
+            </div>
+            <div>
+              <label>Freight Status</label>
+              <select>
+                <option>Pending Approval</option>
+                <option>Dispatched</option>
+                <option>Delivered</option>
+              </select>
+            </div>
+          </div>
+          <div>
+            <label>Cargo Description</label>
+            <textarea rows="2" placeholder="Specify load details (Plywood, Rebar, Thread)..."></textarea>
+          </div>
+          <button class="btn-primary">Submit Trip Request</button>
+        </div>
+
+        <div class="bg-slate-50 p-4 rounded-lg border border-slate-200">
+          <h3 class="font-bold text-xs uppercase tracking-wide text-slate-700 mb-3">Active Logistics Status</h3>
+          <div class="space-y-2 text-xs">
+            <div class="p-3 bg-white rounded border flex justify-between items-center">
+              <div>
+                <div class="font-bold text-slate-800">Route: Addis Ababa → Adama</div>
+                <div class="text-slate-500 text-[10px]">Cargo: 18mm Plywood Bokan Bundle</div>
+              </div>
+              <span class="px-2 py-1 bg-amber-100 text-amber-800 font-semibold rounded text-[10px]">Dispatched</span>
+            </div>
+            <div class="p-3 bg-white rounded border flex justify-between items-center">
+              <div>
+                <div class="font-bold text-slate-800">Route: Addis Ababa → Hawassa</div>
+                <div class="text-slate-500 text-[10px]">Cargo: Industrial Bag-Closing Thread</div>
+              </div>
+              <span class="px-2 py-1 bg-green-100 text-green-800 font-semibold rounded text-[10px]">Delivered</span>
+            </div>
           </div>
         </div>
       </div>
-    </section>
-  </main>
+    </div>
+  </div>
+
 </div>
-</body></html>
+
+</body>
+</html>
