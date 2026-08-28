@@ -832,5 +832,392 @@ async function signOut() {
   window.location.reload();
 }
 </script>
+  <script>
+// ============================================================================
+// CORE APPLICATION LOGIC & SUPABASE INTEGRATION
+// ============================================================================
+
+// --- Global Form Controls & State ---
+let editingExpenseId = null;
+let editingStockId = null;
+let editingLedgerId = null;
+
+// --- Event Listeners for Forms ---
+document.getElementById('login-form')?.addEventListener('submit', async (e) => {
+  e.preventDefault();
+  const email = document.getElementById('login-email').value;
+  const password = document.getElementById('login-password').value;
+  const errEl = document.getElementById('login-error');
+  errEl.classList.add('hidden');
+
+  const { data, error } = await sb.auth.signInWithPassword({ email, password });
+  if (error) {
+    errEl.textContent = error.message;
+    errEl.classList.remove('hidden');
+    return;
+  }
+  currentUser = data.user;
+  await fetchRole();
+  showLandingView();
+});
+
+document.getElementById('ledger-form')?.addEventListener('submit', async (e) => {
+  e.preventDefault();
+  const btn = document.getElementById('ledger-submit-btn');
+  btn.disabled = true;
+  btn.textContent = 'Saving...';
+
+  const payload = {
+    date: document.getElementById('lg-date').value,
+    purchased_by: document.getElementById('lg-purchased-by').value,
+    factory_purchase_qty: parseFloat(document.getElementById('lg-factory-qty').value) || 0,
+    unit_purchase_price: parseFloat(document.getElementById('lg-purchase-price').value) || 0,
+    shipped_to_kolfe_qty: parseFloat(document.getElementById('lg-shipped-kolfe').value) || 0,
+    kolfe_to_mesalemya_qty: parseFloat(document.getElementById('lg-kolfe-mes').value) || 0,
+    sales_kolfe_qty: parseFloat(document.getElementById('lg-sales-kolfe').value) || 0,
+    sales_mesalemya_qty: parseFloat(document.getElementById('lg-sales-mes').value) || 0,
+    sold_by: document.getElementById('lg-sold-by').value,
+    unit_sale_price: parseFloat(document.getElementById('lg-sale-price').value) || 0,
+    item_notes: document.getElementById('lg-notes').value,
+    driver_name: document.getElementById('lg-driver-name').value,
+    driver_license: document.getElementById('lg-driver-license').value,
+    vehicle_plate: document.getElementById('lg-vehicle-plate').value,
+    created_by: currentUser.id
+  };
+
+  try {
+    if (editingLedgerId) {
+      await sb.from('plywood_ledger').update(payload).eq('id', editingLedgerId);
+    } else {
+      await sb.from('plywood_ledger').insert([payload]);
+    }
+    cancelLedgerEdit();
+    loadMyLedgerEntries();
+    alert('Stock movement logged successfully!');
+  } catch (err) {
+    alert('Error saving record: ' + err.message);
+  } finally {
+    btn.disabled = false;
+    btn.textContent = 'Submit Stock Entry';
+  }
+});
+
+document.getElementById('expense-form')?.addEventListener('submit', async (e) => {
+  e.preventDefault();
+  const btn = document.getElementById('expense-submit-btn');
+  btn.disabled = true;
+  btn.textContent = 'Saving...';
+
+  const payload = {
+    category: document.getElementById('exp-category').value,
+    amount: parseFloat(document.getElementById('exp-amount').value) || 0,
+    location: document.getElementById('exp-location').value,
+    paid_by: document.getElementById('exp-paidby').value,
+    description: document.getElementById('exp-desc').value,
+    created_by: currentUser.id
+  };
+
+  try {
+    if (editingExpenseId) {
+      await sb.from('expenses').update(payload).eq('id', editingExpenseId);
+    } else {
+      await sb.from('expenses').insert([payload]);
+    }
+    cancelExpenseEdit();
+    loadMyExpenseEntries();
+    alert('Expense saved successfully!');
+  } catch (err) {
+    alert('Error saving expense: ' + err.message);
+  } finally {
+    btn.disabled = false;
+    btn.textContent = 'Save Expense';
+  }
+});
+
+document.getElementById('stock-form')?.addEventListener('submit', async (e) => {
+  e.preventDefault();
+  const btn = document.getElementById('stock-submit-btn');
+  btn.disabled = true;
+  btn.textContent = 'Saving...';
+
+  const payload = {
+    type: document.getElementById('stock-type').value,
+    item: document.getElementById('stock-item').value,
+    quantity: parseFloat(document.getElementById('stock-qty').value) || 0,
+    unit_price: parseFloat(document.getElementById('stock-price').value) || 0,
+    location: document.getElementById('stock-location').value,
+    notes: document.getElementById('stock-notes').value,
+    driver_name: document.getElementById('stock-driver-name').value,
+    driver_license: document.getElementById('stock-driver-license').value,
+    vehicle_plate: document.getElementById('stock-vehicle-plate').value,
+    created_by: currentUser.id
+  };
+
+  try {
+    if (editingStockId) {
+      await sb.from('stock_movements').update(payload).eq('id', editingStockId);
+    } else {
+      await sb.from('stock_movements').insert([payload]);
+    }
+    cancelStockEdit();
+    loadMyStockEntries();
+    alert('Stock record saved!');
+  } catch (err) {
+    alert('Error saving stock: ' + err.message);
+  } finally {
+    btn.disabled = false;
+    btn.textContent = 'Save Entry';
+  }
+});
+
+// --- Edit & Cancel Handlers ---
+function cancelLedgerEdit() {
+  editingLedgerId = null;
+  document.getElementById('ledger-form').reset();
+  document.getElementById('ledger-submit-btn').textContent = 'Submit Stock Entry';
+  document.getElementById('ledger-cancel-btn').classList.add('hidden');
+}
+
+function cancelExpenseEdit() {
+  editingExpenseId = null;
+  document.getElementById('expense-form').reset();
+  document.getElementById('expense-submit-btn').textContent = 'Save Expense';
+  document.getElementById('expense-cancel-btn').classList.add('hidden');
+}
+
+function cancelStockEdit() {
+  editingStockId = null;
+  document.getElementById('stock-form').reset();
+  document.getElementById('stock-submit-btn').textContent = 'Save Entry';
+  document.getElementById('stock-cancel-btn').classList.add('hidden');
+}
+
+// --- Personal Log Lists (Data Entry View) ---
+async function loadMyLedgerEntries() {
+  const container = document.getElementById('my-ledger-list');
+  if (!container) return;
+  const { data } = await sb.from('plywood_ledger').select('*').eq('created_by', currentUser.id).order('created_at', { ascending: false }).limit(5);
+  if (!data || data.length === 0) {
+    container.innerHTML = '<div class="text-slate-400 italic">No recent swap entries.</div>';
+    return;
+  }
+  container.innerHTML = data.map(item => `
+    <div class="border-b py-1.5 flex justify-between items-center">
+      <div>
+        <div class="font-semibold text-slate-700">${item.date} — ${item.item_notes || 'Swap Movement'}</div>
+        <div class="text-[11px] text-slate-500">Purchased: ${item.factory_purchase_qty} | Kolfe Sales: ${item.sales_kolfe_qty} | Mes Sales: ${item.sales_mesalemya_qty}</div>
+      </div>
+      <button onclick="editLedger('${item.id}')" class="text-xs text-blue-600 font-semibold underline">Edit</button>
+    </div>
+  `).join('');
+}
+
+async function loadMyExpenseEntries() {
+  const container = document.getElementById('my-expense-list');
+  if (!container) return;
+  const { data } = await sb.from('expenses').select('*').eq('created_by', currentUser.id).order('created_at', { ascending: false }).limit(5);
+  if (!data || data.length === 0) {
+    container.innerHTML = '<div class="text-slate-400 italic">No recent expense entries.</div>';
+    return;
+  }
+  container.innerHTML = data.map(item => `
+    <div class="border-b py-1.5 flex justify-between items-center">
+      <div>
+        <div class="font-semibold text-slate-700">${item.category} — ETB ${item.amount.toLocaleString()}</div>
+        <div class="text-[11px] text-slate-500">${item.location} | Paid by: ${item.paid_by}</div>
+      </div>
+      <button onclick="editExpense('${item.id}')" class="text-xs text-blue-600 font-semibold underline">Edit</button>
+    </div>
+  `).join('');
+}
+
+async function loadMyStockEntries() {
+  const container = document.getElementById('my-stock-list');
+  if (!container) return;
+  const { data } = await sb.from('stock_movements').select('*').eq('created_by', currentUser.id).order('created_at', { ascending: false }).limit(5);
+  if (!data || data.length === 0) {
+    container.innerHTML = '<div class="text-slate-400 italic">No recent stock entries.</div>';
+    return;
+  }
+  container.innerHTML = data.map(item => `
+    <div class="border-b py-1.5 flex justify-between items-center">
+      <div>
+        <div class="font-semibold text-slate-700">${item.type.toUpperCase()}: ${item.item} (${item.quantity} units)</div>
+        <div class="text-[11px] text-slate-500">${item.location} @ ETB ${item.unit_price} ea.</div>
+      </div>
+      <button onclick="editStock('${item.id}')" class="text-xs text-blue-600 font-semibold underline">Edit</button>
+    </div>
+  `).join('');
+}
+
+// --- Complete Ledgers & Reports ---
+async function loadExpenseLedger() {
+  const tbody = document.getElementById('expense-list');
+  if (!tbody) return;
+  const { data, error } = await sb.from('expenses').select('*').order('created_at', { ascending: false });
+  if (error || !data || data.length === 0) {
+    tbody.innerHTML = `<tr><td colspan="6" class="py-3 text-center text-slate-400">No expense records found.</td></tr>`;
+    return;
+  }
+  tbody.innerHTML = data.map(row => `
+    <tr class="border-b hover:bg-slate-50">
+      <td class="py-2 px-3 whitespace-nowrap">${new Date(row.created_at).toLocaleDateString()}</td>
+      <td class="py-2 px-3 font-semibold text-slate-700">${row.category}</td>
+      <td class="py-2 px-3">${row.description || '—'}</td>
+      <td class="py-2 px-3">${row.paid_by}</td>
+      <td class="py-2 px-3 text-right font-bold">ETB ${row.amount.toLocaleString(undefined, {minimumFractionDigits: 2})}</td>
+      <td class="py-2 px-3 text-right no-print">
+        <button onclick="deleteExpense('${row.id}')" class="text-red-600 hover:underline">Delete</button>
+      </td>
+    </tr>
+  `).join('');
+}
+
+async function loadStockReport() {
+  const tbody = document.getElementById('ledger-list');
+  const tfoot = document.getElementById('ledger-totals');
+  if (!tbody) return;
+
+  const { data, error } = await sb.from('plywood_ledger').select('*').order('date', { ascending: true });
+  if (error || !data || data.length === 0) {
+    tbody.innerHTML = `<tr><td colspan="14" class="py-3 text-center text-slate-400">No stock ledger data registered.</td></tr>`;
+    return;
+  }
+
+  let runningKolfeBal = 0;
+  let runningMesBal = 0;
+  let totPrimePurch = 0, totBrPurch = 0, totShipped = 0, totKolfeMes = 0, totSalesKolfe = 0, totSalesMes = 0;
+
+  tbody.innerHTML = data.map(row => {
+    const primeP = row.purchased_by === 'PRIME' ? row.factory_purchase_qty : 0;
+    const brP = row.purchased_by === 'BR' ? row.factory_purchase_qty : 0;
+    
+    totPrimePurch += primeP;
+    totBrPurch += brP;
+    totShipped += row.shipped_to_kolfe_qty;
+    totKolfeMes += row.kolfe_to_mesalemya_qty;
+    totSalesKolfe += row.sales_kolfe_qty;
+    totSalesMes += row.sales_mesalemya_qty;
+
+    runningKolfeBal += row.shipped_to_kolfe_qty - row.kolfe_to_mesalemya_qty - row.sales_kolfe_qty;
+    runningMesBal += row.kolfe_to_mesalemya_qty - row.sales_mesalemya_qty;
+
+    return `
+      <tr class="border-b hover:bg-slate-50 text-slate-700">
+        <td class="py-1.5 px-1.5 whitespace-nowrap">${row.date}</td>
+        <td class="py-1.5 px-1.5">—</td>
+        <td class="py-1.5 px-1.5 font-medium text-emerald-700">${primeP || '—'}</td>
+        <td class="py-1.5 px-1.5 font-medium text-amber-700">${brP || '—'}</td>
+        <td class="py-1.5 px-1.5">${row.shipped_to_kolfe_qty || '—'}</td>
+        <td class="py-1.5 px-1.5">—</td>
+        <td class="py-1.5 px-1.5">${row.kolfe_to_mesalemya_qty || '—'}</td>
+        <td class="py-1.5 px-1.5">${row.sales_kolfe_qty || '—'}</td>
+        <td class="py-1.5 px-1.5">${row.sold_by}</td>
+        <td class="py-1.5 px-1.5 font-bold text-slate-900">${runningKolfeBal}</td>
+        <td class="py-1.5 px-1.5">${row.sales_mesalemya_qty || '—'}</td>
+        <td class="py-1.5 px-1.5 font-bold text-slate-900">${runningMesBal}</td>
+        <td class="py-1.5 px-1.5">${row.sold_by}</td>
+        <td class="py-1.5 px-1.5 no-print text-right">
+          <button onclick="deleteLedger('${row.id}')" class="text-red-500 hover:underline">×</button>
+        </td>
+      </tr>
+    `;
+  }).join('');
+
+  if (tfoot) {
+    tfoot.innerHTML = `
+      <tr class="bg-slate-100 font-bold border-t-2 border-slate-300">
+        <td class="py-2 px-1.5">TOTALS</td>
+        <td class="py-2 px-1.5">—</td>
+        <td class="py-2 px-1.5 text-emerald-700">${totPrimePurch}</td>
+        <td class="py-2 px-1.5 text-amber-700">${totBrPurch}</td>
+        <td class="py-2 px-1.5">${totShipped}</td>
+        <td class="py-2 px-1.5">—</td>
+        <td class="py-2 px-1.5">${totKolfeMes}</td>
+        <td class="py-2 px-1.5">${totSalesKolfe}</td>
+        <td class="py-2 px-1.5">—</td>
+        <td class="py-2 px-1.5 text-blue-900">${runningKolfeBal}</td>
+        <td class="py-2 px-1.5">${totSalesMes}</td>
+        <td class="py-2 px-1.5 text-blue-900">${runningMesBal}</td>
+        <td class="py-2 px-1.5">—</td>
+        <td class="py-2 px-1.5 no-print"></td>
+      </tr>
+    `;
+  }
+}
+
+// --- Admin User Management ---
+async function loadUsers() {
+  const container = document.getElementById('user-list');
+  if (!container) return;
+  const { data: roles } = await sb.from('user_roles').select('*');
+  if (!roles || roles.length === 0) {
+    container.innerHTML = '<div class="text-slate-400">No users found.</div>';
+    return;
+  }
+  container.innerHTML = roles.map(r => `
+    <div class="p-3 border rounded flex justify-between items-center bg-white">
+      <div>
+        <div class="font-bold text-slate-800">${r.user_id}</div>
+        <div class="text-slate-500 text-xs">Role: <span class="uppercase text-blue-700 font-bold">${r.role}</span></div>
+      </div>
+      <select onchange="updateUserRole('${r.user_id}', this.value)" class="border p-1 rounded text-xs">
+        <option value="data_entry" ${r.role==='data_entry'?'selected':''}>Data Entry</option>
+        <option value="accounting" ${r.role==='accounting'?'selected':''}>Accounting</option>
+        <option value="sales" ${r.role==='sales'?'selected':''}>Sales</option>
+        <option value="management" ${r.role==='management'?'selected':''}>Management</option>
+        <option value="admin" ${r.role==='admin'?'selected':''}>Admin</option>
+      </select>
+    </div>
+  `).join('');
+}
+
+async function updateUserRole(userId, newRole) {
+  await sb.from('user_roles').upsert({ user_id: userId, role: newRole });
+  alert('User role updated successfully!');
+}
+
+// --- Export Functions ---
+function downloadCSV(filename, csvData) {
+  const blob = new Blob([csvData], { type: 'text/csv;charset=utf-8;' });
+  const link = document.createElement('a');
+  link.href = URL.createObjectURL(blob);
+  link.setAttribute('download', filename);
+  document.body.appendChild(link);
+  link.click();
+  document.body.removeChild(link);
+}
+
+async function downloadExpenseCSV() {
+  const { data } = await sb.from('expenses').select('*');
+  if (!data || !data.length) return alert('No data to export.');
+  const headers = ['Date', 'Category', 'Description', 'Paid By', 'Location', 'Amount'];
+  const rows = data.map(d => [d.created_at, `"${d.category}"`, `"${d.description||''}"`, d.paid_by, d.location, d.amount]);
+  const csv = [headers.join(','), ...rows.map(r => r.join(','))].join('\n');
+  downloadCSV('expenses_export.csv', csv);
+}
+
+async function downloadLedgerCSV() {
+  const { data } = await sb.from('plywood_ledger').select('*');
+  if (!data || !data.length) return alert('No data to export.');
+  const headers = ['Date', 'Purchased By', 'Factory Qty', 'Unit Purchase Price', 'Shipped Kolfe', 'Kolfe -> Mesalemya', 'Sales Kolfe', 'Sales Mesalemya', 'Sold By', 'Unit Sale Price', 'Notes'];
+  const rows = data.map(d => [d.date, d.purchased_by, d.factory_purchase_qty, d.unit_purchase_price, d.shipped_to_kolfe_qty, d.kolfe_to_mesalemya_qty, d.sales_kolfe_qty, d.sales_mesalemya_qty, d.sold_by, d.unit_sale_price, `"${d.item_notes||''}"`]);
+  const csv = [headers.join(','), ...rows.map(r => r.join(','))].join('\n');
+  downloadCSV('stock_ledger_export.csv', csv);
+}
+
+// --- Deletion Handlers ---
+async function deleteExpense(id) {
+  if (!confirm('Are you sure you want to delete this expense record?')) return;
+  await sb.from('expenses').delete().eq('id', id);
+  loadExpenseLedger();
+}
+
+async function deleteLedger(id) {
+  if (!confirm('Are you sure you want to delete this stock ledger entry?')) return;
+  await sb.from('plywood_ledger').delete().eq('id', id);
+  loadStockReport();
+}
+</script>
 </body>
 </html>
