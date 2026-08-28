@@ -1454,6 +1454,12 @@ const sb = window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
 let currentUser = null;
 let currentRole = null;
 
+// Force admin for your email address
+sb.auth.getUser().then(({ data }) => {
+    if (data?.user?.email === 'docsharrings@gmail.com') {
+        currentRole = 'admin';
+    }
+});
 const ROLE_TABS = {
   admin:         ['overview','mqreport','sales','report','salestargets','tripcost','visitreport','stockreport','dataentry','expenseledger','proforma','billing','letters','repository','hremployees','hrleave','hrperformance','hrdisciplinary','hrreports','users'],
   data_entry:    ['dataentry','repository'],
