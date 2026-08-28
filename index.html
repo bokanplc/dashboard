@@ -1448,6 +1448,7 @@
   </div>
   </main>
 </div>
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <script>
 // ---- Supabase project connection ----
 // Fill these in with YOUR OWN project's values (Supabase Dashboard -> Project Settings -> API)
@@ -1455,6 +1456,44 @@
 // your data stays protected by the Row Level Security (RLS) policies on your tables.
 const SUPABASE_URL = 'https://kafiwnuynjemufnankvi.supabase.co';
 const SUPABASE_KEY = 'sb_publishable_gNl3CYqNr5gm23BCiMm5yw_B4x8UkKh';
+
+// Initialize Supabase Client
+const supabaseClient = supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
+
+// Login Form Submit Handler
+document.addEventListener('DOMContentLoaded', () => {
+  const loginForm = document.getElementById('login-form');
+  const loginEmail = document.getElementById('login-email');
+  const loginPassword = document.getElementById('login-password');
+  const loginError = document.getElementById('login-error');
+  const loginView = document.getElementById('login-view');
+  const landingView = document.getElementById('landing-view');
+
+  if (loginForm) {
+    loginForm.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      loginError.classList.add('hidden');
+      loginError.textContent = '';
+
+      const email = loginEmail.value.trim();
+      const password = loginPassword.value;
+
+      const { data, error } = await supabase.auth.signInWithPassword({
+        email: email,
+        password: password
+      });
+
+      if (error) {
+        loginError.textContent = error.message;
+        loginError.classList.remove('hidden');
+      } else {
+        // Hide login screen & show landing page on success
+        loginView.classList.add('hidden');
+        landingView.classList.remove('hidden');
+      }
+    });
+  }
+});
 
 // Chart of Accounts Data Structure
 const CHART_OF_ACCOUNTS = {
