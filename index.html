@@ -1458,7 +1458,8 @@ const SUPABASE_URL = 'https://kafiwnuynjemufnankvi.supabase.co';
 const SUPABASE_KEY = 'sb_publishable_gNl3CYqNr5gm23BCiMm5yw_B4x8UkKh';
 
 // Initialize Supabase Client
-const supabaseClient = supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
+// Initialize Supabase Client globally using window.supabase
+const supabaseClient = window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
 
 // Login Form Submit Handler
 document.addEventListener('DOMContentLoaded', () => {
@@ -1478,18 +1479,22 @@ document.addEventListener('DOMContentLoaded', () => {
       const email = loginEmail.value.trim();
       const password = loginPassword.value;
 
-      const { data, error } = await supabase.auth.signInWithPassword({
-        email: email,
-        password: password
-      });
+      try {
+        const { data, error } = await supabaseClient.auth.signInWithPassword({
+          email: email,
+          password: password
+        });
 
-      if (error) {
-        loginError.textContent = error.message;
-        loginError.classList.remove('hidden');
-      } else {
-        // Hide login screen & show landing page on success
-        loginView.classList.add('hidden');
-        landingView.classList.remove('hidden');
+        if (error) {
+          loginError.textContent = error.message;
+          loginError.classList.remove('hidden');
+        } else {
+          // Hide login screen & show main landing page on success
+          loginView.classList.add('hidden');
+          landingView.classList.remove('hidden');
+        }
+      } catch (err) {
+        console.error('Login error:', err);
       }
     });
   }
