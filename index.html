@@ -12,77 +12,78 @@
     .printable-doc { position: absolute; top: 0; left: 0; width: 100%; }
     .no-print { display: none !important; }
   }
-  body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; background:#f6f7f9; }
-  .tab-btn.active { background: #0f2f4f; color: #fff; }
+  body { font-family: 'Avenir Next', 'Helvetica Neue', Arial, sans-serif; background:#F4F5F8; color: #393A3D; }
+  .tab-btn.active { background: #2CA01C; color: #fff; }
   .locked-badge { font-size: 10px; }
-  .kpi-card { border-left: 4px solid #0f2f4f; }
-  .section-card h3 { letter-spacing: .02em; text-transform: uppercase; font-size: 12px; color: #64748b; }
-  .bar-track { background: #e2e8f0; border-radius: 4px; overflow: hidden; height: 10px; }
-  .bar-fill { height: 100%; border-radius: 4px; }
-  .dash-section { border-top: 3px solid #0f2f4f; }
-  .dash-section-label { font-size: 11px; letter-spacing: .08em; text-transform: uppercase; color: #fff; background:#0f2f4f; display:inline-block; padding:4px 12px; border-radius:0 0 6px 6px; }
-  .alert-card { border-left: 4px solid #b45309; background:#fffbeb; }
-  .alert-card.danger { border-left-color:#be123c; background:#fff1f2; }
-  .alert-card.ok { border-left-color:#15803d; background:#f0fdf4; }
-  .subtab-btn.active { background:#0f2f4f; color:#fff; }
-  .corp-card-title { font-size:11px; text-transform:uppercase; letter-spacing:.04em; color:#0f2f4f; font-weight:700; margin-bottom:10px; padding-bottom:6px; border-bottom:2px solid #e2e8f0; }
-  .stat-line { display:flex; justify-content:space-between; align-items:baseline; padding:6px 0; border-bottom:1px solid #f1f5f9; }
+  .kpi-card { border-left: 4px solid #2CA01C; }
+  .section-card h3 { letter-spacing: .02em; text-transform: uppercase; font-size: 12px; color: #6B6C72; }
+  .bar-track { background: #E3E5E8; border-radius: 4px; overflow: hidden; height: 10px; }
+  .bar-fill { height: 100%; border-radius: 4px; background: #2CA01C; }
+  .dash-section { border-top: 3px solid #2CA01C; }
+  .dash-section-label { font-size: 11px; letter-spacing: .08em; text-transform: uppercase; color: #fff; background:#2CA01C; display:inline-block; padding:4px 12px; border-radius:0 0 6px 6px; }
+  .alert-card { border-left: 4px solid #D97706; background:#FEF3C7; }
+  .alert-card.danger { border-left-color:#DC2626; background:#FEE2E2; }
+  .alert-card.ok { border-left-color:#2CA01C; background:#DCFCE7; }
+  .subtab-btn.active { background:#2CA01C; color:#fff; }
+  .corp-card-title { font-size:11px; text-transform:uppercase; letter-spacing:.04em; color:#393A3D; font-weight:700; margin-bottom:10px; padding-bottom:6px; border-bottom:2px solid #E3E5E8; }
+  .stat-line { display:flex; justify-content:space-between; align-items:baseline; padding:6px 0; border-bottom:1px solid #ECEEF1; }
   .stat-line:last-child { border-bottom:none; }
-  .stat-line .label { color:#64748b; font-size:12px; }
-  .stat-line .value { font-weight:700; color:#0f2f4f; font-size:13px; white-space:nowrap; margin-left:12px; }
+  .stat-line .label { color:#6B6C72; font-size:12px; }
+  .stat-line .value { font-weight:700; color:#393A3D; font-size:13px; white-space:nowrap; margin-left:12px; }
 
   /* ---------- Sidebar navigation ---------- */
-  #sidebar { width: 250px; background:#0b1220 !important; }
-  .nav-link { display:block; width:100%; text-align:left; padding:8px 14px; border-radius:6px; color:#9aa8ba; font-size:12px; font-weight:500; }
-  .nav-link:hover { background:rgba(255,255,255,.06); color:#fff; }
-  .nav-link.active { background:#2555c7; color:#fff; font-weight:600; }
+  #sidebar { width: 250px; background:#1C252C !important; }
+  .nav-link { display:block; width:100%; text-align:left; padding:8px 14px; border-radius:6px; color:#BABEC5; font-size:12px; font-weight:500; }
+  .nav-link:hover { background:rgba(255,255,255,.08); color:#fff; }
+  .nav-link.active { background:#2CA01C; color:#fff; font-weight:600; }
   .nav-link-indent { padding-left:26px; }
-  .nav-group-toggle { display:flex; justify-content:space-between; align-items:center; width:100%; text-align:left; padding:8px 14px; border-radius:6px; color:#c3ccd8; font-size:11px; font-weight:700; letter-spacing:.04em; text-transform:uppercase; margin-top:6px; }
-  .nav-group-toggle:hover { background:rgba(255,255,255,.06); color:#fff; }
-  .nav-group-toggle .chev { font-size:9px; color:#5c7086; }
+  .nav-group-toggle { display:flex; justify-content:space-between; align-items:center; width:100%; text-align:left; padding:8px 14px; border-radius:6px; color:#D4D7DC; font-size:11px; font-weight:700; letter-spacing:.04em; text-transform:uppercase; margin-top:6px; }
+  .nav-group-toggle:hover { background:rgba(255,255,255,.08); color:#fff; }
+  .nav-group-toggle .chev { font-size:9px; color:#8D9096; }
   .nav-group-children { display:block; }
   .nav-group-children.hidden { display:none; }
   .nav-section-gap { height:6px; }
-  .role-pill { display:inline-block; font-size:10px; font-weight:700; letter-spacing:.04em; text-transform:uppercase; background:rgba(255,255,255,.1); color:#93c5fd; padding:2px 8px; border-radius:999px; }
-  .page-eyebrow { font-size:10px; letter-spacing:.08em; text-transform:uppercase; color:#2555c7; font-weight:700; }
-  .summary-callout { background:linear-gradient(135deg,#0b1220,#132a4a); color:#fff; border-radius:12px; }
-  .summary-callout .metric-label { color:#93c5fd; font-size:11px; text-transform:uppercase; letter-spacing:.04em; }
+  .role-pill { display:inline-block; font-size:10px; font-weight:700; letter-spacing:.04em; text-transform:uppercase; background:rgba(255,255,255,.15); color:#A7F3D0; padding:2px 8px; border-radius:999px; }
+  .page-eyebrow { font-size:10px; letter-spacing:.08em; text-transform:uppercase; color:#2CA01C; font-weight:700; }
+  .summary-callout { background:linear-gradient(135deg,#1C252C,#2D3B45); color:#fff; border-radius:12px; }
+  .summary-callout .metric-label { color:#A7F3D0; font-size:11px; text-transform:uppercase; letter-spacing:.04em; }
   @media (max-width: 767px) {
     #sidebar { transform: translateX(-100%); position: fixed; top:0; bottom:0; left:0; z-index:40; }
     #sidebar.open { transform: translateX(0); }
   }
 </style>
 </head>
-<body class="bg-white min-h-screen">
+<body class="bg-[#F4F5F8] min-h-screen">
 
 <!-- ============================= LOGIN ============================= -->
 <div id="login-view" class="min-h-screen flex items-center justify-center">
-  <div class="bg-white rounded-lg shadow-md w-full max-w-sm p-8">
+  <div class="bg-white rounded-lg shadow-md border border-[#D4D7DC] w-full max-w-sm p-8">
     <div class="text-center mb-6">
-      <h1 class="text-lg font-bold text-slate-800">PRIME Investment Group Plc</h1>
-      <p class="text-xs text-slate-500">Operations Portal</p>
+      <div class="w-12 h-12 rounded bg-[#2CA01C] text-white font-bold text-xl flex items-center justify-center mx-auto mb-2">P</div>
+      <h1 class="text-lg font-bold text-[#393A3D]">PRIME Investment Group Plc</h1>
+      <p class="text-xs text-[#6B6C72]">Operations Portal</p>
     </div>
     <form id="login-form" class="space-y-3">
-      <input id="login-email" type="email" required placeholder="Email" class="w-full border p-2 rounded">
-      <input id="login-password" type="password" required placeholder="Password" class="w-full border p-2 rounded">
-      <button class="w-full bg-[#0f2f4f] hover:bg-[#123a63] text-white font-semibold py-2 rounded">Sign In</button>
+      <input id="login-email" type="email" required placeholder="Email" class="w-full border border-[#D4D7DC] p-2 rounded text-xs focus:outline-none focus:border-[#2CA01C]">
+      <input id="login-password" type="password" required placeholder="Password" class="w-full border border-[#D4D7DC] p-2 rounded text-xs focus:outline-none focus:border-[#2CA01C]">
+      <button class="w-full bg-[#2CA01C] hover:bg-[#238016] text-white font-semibold py-2 rounded text-xs">Sign In</button>
       <p id="login-error" class="text-red-600 text-xs hidden"></p>
     </form>
-    <p class="text-xs text-slate-400 mt-4 text-center">Accounts are created by an administrator. Contact your admin if you don't have a login.</p>
+    <p class="text-xs text-[#8D9096] mt-4 text-center">Accounts are created by an administrator. Contact your admin if you don't have a login.</p>
   </div>
 </div>
 
 <!-- ============================= LANDING / DEPARTMENT SELECTOR ============================= -->
-<div id="landing-view" class="hidden min-h-screen" style="background:#f6f7f9">
+<div id="landing-view" class="hidden min-h-screen bg-[#F4F5F8]">
   <div class="max-w-4xl mx-auto px-4 py-16">
     <div class="text-center mb-10">
-      <div class="w-10 h-10 rounded bg-[#2555c7] text-white font-bold flex items-center justify-center mx-auto mb-3">P</div>
-      <h1 class="text-lg font-bold text-[#0f2f4f]">PRIME Investment Group Plc</h1>
-      <p class="text-xs text-slate-500 mt-1">Select your workspace to continue</p>
+      <div class="w-12 h-12 rounded bg-[#2CA01C] text-white font-bold text-xl flex items-center justify-center mx-auto mb-3">P</div>
+      <h1 class="text-lg font-bold text-[#393A3D]">PRIME Investment Group Plc</h1>
+      <p class="text-xs text-[#6B6C72] mt-1">Select your workspace to continue</p>
     </div>
     <div id="landing-grid" class="grid grid-cols-1 md:grid-cols-2 gap-4"></div>
     <div class="text-center mt-10">
-      <button onclick="signOut()" class="text-xs text-slate-400 hover:text-slate-600 underline">Sign Out</button>
+      <button onclick="signOut()" class="text-xs text-[#8D9096] hover:text-[#393A3D] underline">Sign Out</button>
     </div>
   </div>
 </div>
@@ -91,7 +92,7 @@
 <div id="app-view" class="hidden md:flex min-h-screen">
 
   <!-- Mobile topbar -->
-  <div class="md:hidden fixed top-0 inset-x-0 bg-[#0b1220] text-white z-30 flex items-center justify-between px-4 py-3 no-print">
+  <div class="md:hidden fixed top-0 inset-x-0 bg-[#1C252C] text-white z-30 flex items-center justify-between px-4 py-3 no-print">
     <button onclick="toggleSidebar()" class="text-lg leading-none">☰</button>
     <div class="font-bold text-xs">PRIME GROUP PLC</div>
     <div style="width:22px"></div>
@@ -99,20 +100,20 @@
   <div id="sidebar-overlay" onclick="toggleSidebar()" class="hidden fixed inset-0 bg-black/40 z-30 md:hidden"></div>
 
   <!-- Sidebar -->
-  <aside id="sidebar" class="bg-[#0b1220] text-white flex-shrink-0 flex flex-col no-print z-40">
+  <aside id="sidebar" class="bg-[#1C252C] text-white flex-shrink-0 flex flex-col no-print z-40">
     <div class="p-5 border-b border-white/10 flex items-center gap-2">
-      <div class="w-8 h-8 rounded bg-[#2555c7] flex items-center justify-center font-bold text-xs">P</div>
+      <div class="w-8 h-8 rounded bg-[#2CA01C] flex items-center justify-center font-bold text-xs text-white">P</div>
       <div>
         <div class="font-bold text-xs leading-tight tracking-wide">PRIME GROUP PLC</div>
-        <div class="text-[10px] text-slate-400">Operations Portal</div>
+        <div class="text-[10px] text-[#BABEC5]">Operations Portal</div>
       </div>
     </div>
     <nav id="sidebar-nav" class="flex-1 overflow-y-auto p-3 space-y-1"></nav>
     <div class="p-4 border-t border-white/10">
-      <div class="text-[10px] uppercase tracking-wide text-slate-400 mb-1">Workspace</div>
+      <div class="text-[10px] uppercase tracking-wide text-[#8D9096] mb-1">Workspace</div>
       <div id="current-dept-label" class="text-xs font-semibold mb-2 truncate">—</div>
       <button id="switch-dept-btn" onclick="switchDepartment()" class="hidden w-full text-xs bg-white/10 hover:bg-white/20 px-3 py-1.5 rounded font-semibold mb-3">Switch Department</button>
-      <div class="text-[10px] uppercase tracking-wide text-slate-400 mb-1">Active Profile</div>
+      <div class="text-[10px] uppercase tracking-wide text-[#8D9096] mb-1">Active Profile</div>
       <div id="user-badge" class="text-xs font-semibold mb-3 truncate"></div>
       <button onclick="signOut()" class="w-full text-xs bg-red-600/90 hover:bg-red-600 px-3 py-2 rounded font-semibold">Sign Out</button>
     </div>
@@ -121,61 +122,61 @@
   <main class="flex-1 min-w-0 pt-14 md:pt-0">
     <div class="max-w-6xl mx-auto p-4">
 
-    <!-- ---------- DATA ENTRY LOG ---------- -->
+    <!-- ---------- STOCK / PURCHASE / SALE ENTRY ---------- -->
     <section id="tab-dataentry" class="tab-panel hidden">
       <div class="mb-4 no-print">
         <div class="page-eyebrow">Data Entry</div>
-        <h2 class="font-bold text-lg text-[#0f2f4f]">Data Entry Log</h2>
-        <p class="text-xs text-slate-500">Log stock movements and expenses here. This page only shows what you personally entered recently — full ledgers and financial reports live on separate report pages.</p>
+        <h2 class="font-bold text-lg text-[#393A3D]">Data Entry Log</h2>
+        <p class="text-xs text-[#6B6C72]">Log stock movements and expenses here. This page only shows what you personally entered recently — full ledgers and financial reports live on separate report pages.</p>
       </div>
 
       <div class="grid grid-cols-1 lg:grid-cols-2 gap-4 mb-4">
         <!-- 1. Stock Movement & Swap Form -->
-        <div class="bg-white rounded-lg border border-slate-200 shadow-sm p-5 no-print">
-          <h3 class="font-bold text-sm mb-1 text-[#0f2f4f]">1. Stock Movement &amp; Swap Form</h3>
-          <p class="text-xs text-slate-500 mb-3">One row per day. Enter only the columns that had movement — leave the rest at 0.</p>
+        <div class="bg-white rounded-lg border border-[#D4D7DC] shadow-sm p-5 no-print">
+          <h3 class="font-bold text-sm mb-1 text-[#393A3D]">1. Stock Movement &amp; Swap Form</h3>
+          <p class="text-xs text-[#6B6C72] mb-3">One row per day. Enter only the columns that had movement — leave the rest at 0.</p>
           <form id="ledger-form" class="grid grid-cols-1 md:grid-cols-3 gap-2">
             <div>
-              <label class="text-xs text-slate-500">Transaction Date</label>
-              <input id="lg-date" type="date" class="border p-1.5 rounded w-full text-xs" required>
+              <label class="text-xs text-[#6B6C72]">Transaction Date</label>
+              <input id="lg-date" type="date" class="border border-[#D4D7DC] p-1.5 rounded w-full text-xs focus:border-[#2CA01C]" required>
             </div>
             <div>
-              <label class="text-xs text-slate-500">Purchased By / Funder</label>
-              <select id="lg-purchased-by" class="border p-1.5 rounded w-full text-xs">
+              <label class="text-xs text-[#6B6C72]">Purchased By / Funder</label>
+              <select id="lg-purchased-by" class="border border-[#D4D7DC] p-1.5 rounded w-full text-xs focus:border-[#2CA01C]">
                 <option value="none">— None —</option>
                 <option value="PRIME">PRIME</option>
                 <option value="BR">BR</option>
               </select>
             </div>
             <div>
-              <label class="text-xs text-slate-500">Factory Purchase Qty</label>
-              <input id="lg-factory-qty" type="number" step="0.01" value="0" class="border p-1.5 rounded w-full text-xs">
+              <label class="text-xs text-[#6B6C72]">Factory Purchase Qty</label>
+              <input id="lg-factory-qty" type="number" step="0.01" value="0" class="border border-[#D4D7DC] p-1.5 rounded w-full text-xs focus:border-[#2CA01C]">
             </div>
 
             <div>
-              <label class="text-xs text-slate-500">Unit Purchase Price (ETB)</label>
-              <input id="lg-purchase-price" type="number" step="0.01" value="0" class="border p-1.5 rounded w-full text-xs">
+              <label class="text-xs text-[#6B6C72]">Unit Purchase Price (ETB)</label>
+              <input id="lg-purchase-price" type="number" step="0.01" value="0" class="border border-[#D4D7DC] p-1.5 rounded w-full text-xs focus:border-[#2CA01C]">
             </div>
             <div>
-              <label class="text-xs text-slate-500">Shipped to Kolfe Qty</label>
-              <input id="lg-shipped-kolfe" type="number" step="0.01" value="0" class="border p-1.5 rounded w-full text-xs">
+              <label class="text-xs text-[#6B6C72]">Shipped to Kolfe Qty</label>
+              <input id="lg-shipped-kolfe" type="number" step="0.01" value="0" class="border border-[#D4D7DC] p-1.5 rounded w-full text-xs focus:border-[#2CA01C]">
             </div>
             <div>
-              <label class="text-xs text-slate-500">Kolfe → Mes. Transfer Qty</label>
-              <input id="lg-kolfe-mes" type="number" step="0.01" value="0" class="border p-1.5 rounded w-full text-xs">
+              <label class="text-xs text-[#6B6C72]">Kolfe → Mes. Transfer Qty</label>
+              <input id="lg-kolfe-mes" type="number" step="0.01" value="0" class="border border-[#D4D7DC] p-1.5 rounded w-full text-xs focus:border-[#2CA01C]">
             </div>
 
             <div>
-              <label class="text-xs text-slate-500">Sales @ Kolfe Qty</label>
-              <input id="lg-sales-kolfe" type="number" step="0.01" value="0" class="border p-1.5 rounded w-full text-xs">
+              <label class="text-xs text-[#6B6C72]">Sales @ Kolfe Qty</label>
+              <input id="lg-sales-kolfe" type="number" step="0.01" value="0" class="border border-[#D4D7DC] p-1.5 rounded w-full text-xs focus:border-[#2CA01C]">
             </div>
             <div>
-              <label class="text-xs text-slate-500">Sales @ Mesalemya Qty</label>
-              <input id="lg-sales-mes" type="number" step="0.01" value="0" class="border p-1.5 rounded w-full text-xs">
+              <label class="text-xs text-[#6B6C72]">Sales @ Mesalemya Qty</label>
+              <input id="lg-sales-mes" type="number" step="0.01" value="0" class="border border-[#D4D7DC] p-1.5 rounded w-full text-xs focus:border-[#2CA01C]">
             </div>
             <div>
-              <label class="text-xs text-slate-500">Sold By (Company)</label>
-              <select id="lg-sold-by" class="border p-1.5 rounded w-full text-xs">
+              <label class="text-xs text-[#6B6C72]">Sold By (Company)</label>
+              <select id="lg-sold-by" class="border border-[#D4D7DC] p-1.5 rounded w-full text-xs focus:border-[#2CA01C]">
                 <option value="-">—</option>
                 <option value="PRIME">PRIME</option>
                 <option value="BR">BR</option>
@@ -183,49 +184,49 @@
             </div>
 
             <div>
-              <label class="text-xs text-slate-500">Unit Sales Price (ETB)</label>
-              <input id="lg-sale-price" type="number" step="0.01" value="0" class="border p-1.5 rounded w-full text-xs">
+              <label class="text-xs text-[#6B6C72]">Unit Sales Price (ETB)</label>
+              <input id="lg-sale-price" type="number" step="0.01" value="0" class="border border-[#D4D7DC] p-1.5 rounded w-full text-xs focus:border-[#2CA01C]">
             </div>
             <div class="md:col-span-2">
-              <label class="text-xs text-slate-500">Item / Notes</label>
-              <input id="lg-notes" placeholder="e.g. Plywood 18mm" class="border p-1.5 rounded w-full text-xs">
+              <label class="text-xs text-[#6B6C72]">Item / Notes</label>
+              <input id="lg-notes" placeholder="e.g. Plywood 18mm" class="border border-[#D4D7DC] p-1.5 rounded w-full text-xs focus:border-[#2CA01C]">
             </div>
 
-            <div class="md:col-span-3 border-t pt-2 mt-1">
-              <div class="text-xs font-bold uppercase tracking-wide text-slate-500 mb-2">Trip / Delivery Details (optional)</div>
+            <div class="md:col-span-3 border-t border-[#ECEEF1] pt-2 mt-1">
+              <div class="text-xs font-bold uppercase tracking-wide text-[#6B6C72] mb-2">Trip / Delivery Details (optional)</div>
             </div>
-            <input id="lg-driver-name" placeholder="Driver Name" class="border p-1.5 rounded text-xs">
-            <input id="lg-driver-license" placeholder="Driver License #" class="border p-1.5 rounded text-xs">
-            <input id="lg-vehicle-plate" placeholder="Vehicle Plate #" class="border p-1.5 rounded text-xs">
+            <input id="lg-driver-name" placeholder="Driver Name" class="border border-[#D4D7DC] p-1.5 rounded text-xs">
+            <input id="lg-driver-license" placeholder="Driver License #" class="border border-[#D4D7DC] p-1.5 rounded text-xs">
+            <input id="lg-vehicle-plate" placeholder="Vehicle Plate #" class="border border-[#D4D7DC] p-1.5 rounded text-xs">
             <div>
-              <label class="text-xs text-slate-500">Driver License Photo</label>
-              <input id="lg-file-license" type="file" class="border p-1.5 rounded w-full text-xs">
+              <label class="text-xs text-[#6B6C72]">Driver License Photo</label>
+              <input id="lg-file-license" type="file" class="border border-[#D4D7DC] p-1.5 rounded w-full text-xs">
             </div>
             <div>
-              <label class="text-xs text-slate-500">Plate / Vehicle Photo</label>
-              <input id="lg-file-vehicle" type="file" class="border p-1.5 rounded w-full text-xs">
+              <label class="text-xs text-[#6B6C72]">Plate / Vehicle Photo</label>
+              <input id="lg-file-vehicle" type="file" class="border border-[#D4D7DC] p-1.5 rounded w-full text-xs">
             </div>
             <div></div>
 
             <div class="md:col-span-3 flex gap-2 mt-1">
-              <button class="flex-1 bg-[#2555c7] hover:bg-[#1e46a8] text-white rounded py-2 font-semibold text-xs" id="ledger-submit-btn">Submit Stock Entry</button>
-              <button type="button" onclick="cancelLedgerEdit()" id="ledger-cancel-btn" class="hidden px-4 rounded border font-semibold text-slate-600 text-xs">Cancel</button>
+              <button class="flex-1 bg-[#2CA01C] hover:bg-[#238016] text-white rounded py-2 font-semibold text-xs" id="ledger-submit-btn">Submit Stock Entry</button>
+              <button type="button" onclick="cancelLedgerEdit()" id="ledger-cancel-btn" class="hidden px-4 rounded border border-[#D4D7DC] font-semibold text-[#393A3D] text-xs">Cancel</button>
             </div>
           </form>
-          <div id="ledger-doc-status" class="text-xs text-slate-500 mt-1"></div>
-          <div class="mt-3 pt-3 border-t">
-            <h4 class="text-xs font-bold uppercase tracking-wide text-slate-500 mb-2">Your Recent Swap Entries</h4>
+          <div id="ledger-doc-status" class="text-xs text-[#6B6C72] mt-1"></div>
+          <div class="mt-3 pt-3 border-t border-[#ECEEF1]">
+            <h4 class="text-xs font-bold uppercase tracking-wide text-[#6B6C72] mb-2">Your Recent Swap Entries</h4>
             <div id="my-ledger-list" class="space-y-2 text-xs"></div>
           </div>
         </div>
 
         <!-- 2. Standard Expenses Form -->
-        <div class="bg-white rounded-lg border border-slate-200 shadow-sm p-5 no-print">
-          <h3 class="font-bold text-sm mb-3 text-[#0f2f4f]" id="expense-form-title">2. Standard Expenses Form</h3>
+        <div class="bg-white rounded-lg border border-[#D4D7DC] shadow-sm p-5 no-print">
+          <h3 class="font-bold text-sm mb-3 text-[#393A3D]" id="expense-form-title">2. Standard Expenses Form</h3>
           <form id="expense-form" class="grid grid-cols-1 md:grid-cols-3 gap-2">
-            <select id="exp-category" class="border p-1.5 rounded md:col-span-3 text-xs" required></select>
-            <input id="exp-amount" type="number" step="0.01" placeholder="Amount (ETB)" class="border p-1.5 rounded text-xs" required>
-            <select id="exp-location" class="border p-1.5 rounded text-xs">
+            <select id="exp-category" class="border border-[#D4D7DC] p-1.5 rounded md:col-span-3 text-xs focus:border-[#2CA01C]" required></select>
+            <input id="exp-amount" type="number" step="0.01" placeholder="Amount (ETB)" class="border border-[#D4D7DC] p-1.5 rounded text-xs focus:border-[#2CA01C]" required>
+            <select id="exp-location" class="border border-[#D4D7DC] p-1.5 rounded text-xs focus:border-[#2CA01C]">
               <optgroup label="Warehouse">
                 <option>Lebu</option>
                 <option>Kolfe</option>
@@ -239,36 +240,36 @@
                 <option>Head Office / Merkato Africa Building</option>
               </optgroup>
             </select>
-            <select id="exp-paidby" class="border p-1.5 rounded text-xs">
+            <select id="exp-paidby" class="border border-[#D4D7DC] p-1.5 rounded text-xs focus:border-[#2CA01C]">
               <option>PRIME</option>
               <option>BR</option>
               <option>Other</option>
             </select>
-            <textarea id="exp-desc" placeholder="Description (add detail here, especially for 'Other')" class="border p-1.5 rounded md:col-span-3 text-xs"></textarea>
+            <textarea id="exp-desc" placeholder="Description (add detail here, especially for 'Other')" class="border border-[#D4D7DC] p-1.5 rounded md:col-span-3 text-xs focus:border-[#2CA01C]"></textarea>
             <div class="md:col-span-3 flex gap-2 mt-1">
-              <button class="flex-1 bg-[#c2650f] hover:bg-[#a5560c] text-white rounded py-2 font-semibold text-xs" id="expense-submit-btn">Save Expense</button>
-              <button type="button" onclick="cancelExpenseEdit()" id="expense-cancel-btn" class="hidden px-4 rounded border font-semibold text-slate-600 text-xs">Cancel</button>
+              <button class="flex-1 bg-[#D97706] hover:bg-[#B45309] text-white rounded py-2 font-semibold text-xs" id="expense-submit-btn">Save Expense</button>
+              <button type="button" onclick="cancelExpenseEdit()" id="expense-cancel-btn" class="hidden px-4 rounded border border-[#D4D7DC] font-semibold text-[#393A3D] text-xs">Cancel</button>
             </div>
           </form>
-          <div class="mt-3 pt-3 border-t">
-            <h4 class="text-xs font-bold uppercase tracking-wide text-slate-500 mb-2">Your Recent Expense Entries</h4>
+          <div class="mt-3 pt-3 border-t border-[#ECEEF1]">
+            <h4 class="text-xs font-bold uppercase tracking-wide text-[#6B6C72] mb-2">Your Recent Expense Entries</h4>
             <div id="my-expense-list" class="space-y-2 text-xs"></div>
           </div>
         </div>
       </div>
 
       <!-- 3. General Stock Purchase / Sale Form -->
-      <div class="bg-white rounded-lg border border-slate-200 shadow-sm p-5 mb-4 no-print">
-        <h3 class="font-bold text-sm mb-3 text-[#0f2f4f]" id="stock-form-title">3. General Stock Purchase / Sale Form</h3>
+      <div class="bg-white rounded-lg border border-[#D4D7DC] shadow-sm p-5 mb-4 no-print">
+        <h3 class="font-bold text-sm mb-3 text-[#393A3D]" id="stock-form-title">3. General Stock Purchase / Sale Form</h3>
         <form id="stock-form" class="grid grid-cols-1 md:grid-cols-3 gap-2">
-          <select id="stock-type" class="border p-1.5 rounded text-xs" required>
+          <select id="stock-type" class="border border-[#D4D7DC] p-1.5 rounded text-xs focus:border-[#2CA01C]" required>
             <option value="purchase">Purchase</option>
             <option value="sale">Sale</option>
           </select>
-          <input id="stock-item" placeholder="Item (e.g. Plywood 18mm)" class="border p-1.5 rounded md:col-span-2 text-xs" required>
-          <input id="stock-qty" type="number" step="0.01" placeholder="Quantity" class="border p-1.5 rounded text-xs" required>
-          <input id="stock-price" type="number" step="0.01" placeholder="Unit Price (ETB)" class="border p-1.5 rounded text-xs" required>
-          <select id="stock-location" class="border p-1.5 rounded text-xs">
+          <input id="stock-item" placeholder="Item (e.g. Plywood 18mm)" class="border border-[#D4D7DC] p-1.5 rounded md:col-span-2 text-xs focus:border-[#2CA01C]" required>
+          <input id="stock-qty" type="number" step="0.01" placeholder="Quantity" class="border border-[#D4D7DC] p-1.5 rounded text-xs focus:border-[#2CA01C]" required>
+          <input id="stock-price" type="number" step="0.01" placeholder="Unit Price (ETB)" class="border border-[#D4D7DC] p-1.5 rounded text-xs focus:border-[#2CA01C]" required>
+          <select id="stock-location" class="border border-[#D4D7DC] p-1.5 rounded text-xs focus:border-[#2CA01C]">
             <optgroup label="Warehouse">
               <option>Lebu</option>
               <option>Kolfe</option>
@@ -282,49 +283,49 @@
               <option>Head Office / Merkato Africa Building</option>
             </optgroup>
           </select>
-          <textarea id="stock-notes" placeholder="Notes" class="border p-1.5 rounded md:col-span-3 text-xs"></textarea>
-          <div class="md:col-span-3 border-t pt-2 mt-1">
-            <div class="text-xs font-bold uppercase tracking-wide text-slate-500 mb-2">Trip / Delivery Details (optional)</div>
+          <textarea id="stock-notes" placeholder="Notes" class="border border-[#D4D7DC] p-1.5 rounded md:col-span-3 text-xs focus:border-[#2CA01C]"></textarea>
+          <div class="md:col-span-3 border-t border-[#ECEEF1] pt-2 mt-1">
+            <div class="text-xs font-bold uppercase tracking-wide text-[#6B6C72] mb-2">Trip / Delivery Details (optional)</div>
           </div>
-          <input id="stock-driver-name" placeholder="Driver Name" class="border p-1.5 rounded text-xs">
-          <input id="stock-driver-license" placeholder="Driver License #" class="border p-1.5 rounded text-xs">
-          <input id="stock-vehicle-plate" placeholder="Vehicle Plate #" class="border p-1.5 rounded text-xs">
+          <input id="stock-driver-name" placeholder="Driver Name" class="border border-[#D4D7DC] p-1.5 rounded text-xs">
+          <input id="stock-driver-license" placeholder="Driver License #" class="border border-[#D4D7DC] p-1.5 rounded text-xs">
+          <input id="stock-vehicle-plate" placeholder="Vehicle Plate #" class="border border-[#D4D7DC] p-1.5 rounded text-xs">
           <div>
-            <label class="text-xs text-slate-500">Driver License Photo</label>
-            <input id="stock-file-license" type="file" class="border p-1.5 rounded w-full text-xs">
+            <label class="text-xs text-[#6B6C72]">Driver License Photo</label>
+            <input id="stock-file-license" type="file" class="border border-[#D4D7DC] p-1.5 rounded w-full text-xs">
           </div>
           <div>
-            <label class="text-xs text-slate-500">Plate / Vehicle Photo</label>
-            <input id="stock-file-vehicle" type="file" class="border p-1.5 rounded w-full text-xs">
+            <label class="text-xs text-[#6B6C72]">Plate / Vehicle Photo</label>
+            <input id="stock-file-vehicle" type="file" class="border border-[#D4D7DC] p-1.5 rounded w-full text-xs">
           </div>
           <div></div>
           <div class="md:col-span-3 flex gap-2 mt-1">
-            <button class="flex-1 bg-[#2555c7] hover:bg-[#1e46a8] text-white rounded py-2 font-semibold text-xs" id="stock-submit-btn">Save Entry</button>
-            <button type="button" onclick="cancelStockEdit()" id="stock-cancel-btn" class="hidden px-4 rounded border font-semibold text-slate-600 text-xs">Cancel</button>
+            <button class="flex-1 bg-[#2CA01C] hover:bg-[#238016] text-white rounded py-2 font-semibold text-xs" id="stock-submit-btn">Save Entry</button>
+            <button type="button" onclick="cancelStockEdit()" id="stock-cancel-btn" class="hidden px-4 rounded border border-[#D4D7DC] font-semibold text-[#393A3D] text-xs">Cancel</button>
           </div>
         </form>
-        <div id="stock-doc-status" class="text-xs text-slate-500 mt-1"></div>
-        <div class="mt-3 pt-3 border-t">
-          <h4 class="text-xs font-bold uppercase tracking-wide text-slate-500 mb-2">Your Recent Stock Entries</h4>
+        <div id="stock-doc-status" class="text-xs text-[#6B6C72] mt-1"></div>
+        <div class="mt-3 pt-3 border-t border-[#ECEEF1]">
+          <h4 class="text-xs font-bold uppercase tracking-wide text-[#6B6C72] mb-2">Your Recent Stock Entries</h4>
           <div id="my-stock-list" class="space-y-2 text-xs"></div>
         </div>
       </div>
     </section>
 
-    <!-- ---------- EXPENSE LEDGER ---------- -->
+    <!-- ---------- EXPENSE LEDGER (view-only report) ---------- -->
     <section id="tab-expenseledger" class="tab-panel hidden">
-      <div class="bg-white rounded-lg shadow-sm p-6">
+      <div class="bg-white rounded-lg border border-[#D4D7DC] shadow-sm p-6">
         <div class="flex flex-wrap justify-between items-center gap-2 mb-3">
           <div>
             <div class="page-eyebrow">Reports</div>
-            <h2 class="font-bold text-base">Expense Ledger</h2>
+            <h2 class="font-bold text-base text-[#393A3D]">Expense Ledger</h2>
           </div>
-          <button onclick="downloadExpenseCSV()" class="text-[#0f2f4f] font-semibold underline text-xs no-print">Download CSV</button>
+          <button onclick="downloadExpenseCSV()" class="text-[#2CA01C] font-semibold underline text-xs no-print">Download CSV</button>
         </div>
         <div class="overflow-x-auto">
           <table class="w-full text-xs border-collapse">
             <thead>
-              <tr class="text-left bg-[#111827] text-white">
+              <tr class="text-left bg-[#1C252C] text-white">
                 <th class="py-2 px-3 whitespace-nowrap">Date</th>
                 <th class="py-2 px-3 whitespace-nowrap">Category</th>
                 <th class="py-2 px-3 whitespace-nowrap">Description / Payee</th>
@@ -339,190 +340,390 @@
       </div>
     </section>
 
-    <!-- ---------- DASHBOARD SUMMARY ---------- -->
-    <section id="tab-overview" class="tab-panel hidden">
-      <div class="flex justify-between items-center mb-1 no-print">
-        <div>
-          <div class="page-eyebrow">Dashboard</div>
-          <h2 class="font-bold text-lg text-[#0f2f4f]">Dashboard Summary</h2>
-        </div>
-        <span class="text-xs text-slate-400">Period: last 30 days</span>
-      </div>
-      <div id="overview-summary-callout" class="summary-callout p-5 mb-4 mt-3"></div>
-
-      <!-- Stock Information | Financial P&L -->
-      <div class="grid grid-cols-1 lg:grid-cols-2 gap-4 mb-4">
-        <div class="bg-white rounded-lg border border-slate-200 shadow-sm p-5">
-          <div class="corp-card-title">Stock Information</div>
-          <div class="stat-line"><span class="label">Stock entries (30d)</span><span class="value" id="kpi-stock">—</span></div>
-          <div class="stat-line"><span class="label">Purchases vs Sales (30d)</span><span class="value" id="kpi-stock-ratio">—</span></div>
-          <div class="stat-line"><span class="label">Factory Balance (purchased, not yet shipped)</span><span class="value" id="kpi-factory-bal">—</span></div>
-          <div class="stat-line"><span class="label">Kolfe Warehouse Balance</span><span class="value" id="kpi-kolfe-bal">—</span></div>
-          <div class="stat-line"><span class="label">Mesalemya Shop Balance</span><span class="value" id="kpi-mes-bal">—</span></div>
-        </div>
-        <div class="bg-white rounded-lg border border-slate-200 shadow-sm p-5">
-          <div class="corp-card-title">Financial — Profit &amp; Loss</div>
-          <div class="stat-line"><span class="label">Revenue (Sales)</span><span class="value" id="kpi-revenue">—</span></div>
-          <div class="stat-line"><span class="label">Direct / COGS</span><span class="value" id="kpi-direct">—</span></div>
-          <div class="stat-line"><span class="label">Operating Expenses</span><span class="value" id="kpi-opex">—</span></div>
-          <div class="stat-line"><span class="label">Net Margin (est.)</span><span class="value" id="kpi-net">—</span></div>
-        </div>
-      </div>
-
-      <!-- Tax | Expenses by Type -->
-      <div class="grid grid-cols-1 lg:grid-cols-2 gap-4 mb-4">
-        <div class="bg-white rounded-lg border border-slate-200 shadow-sm p-5">
-          <div class="corp-card-title">Tax — VAT, Withholding &amp; Income Tax</div>
-          <div class="stat-line"><span class="label">Output VAT (15%)</span><span class="value" id="kpi-output-vat">—</span></div>
-          <div class="stat-line"><span class="label">Input VAT (15%)</span><span class="value" id="kpi-input-vat">—</span></div>
-          <div class="stat-line"><span class="label">Net VAT Payable / (Refundable)</span><span class="value" id="kpi-net-vat">—</span></div>
-          <div class="stat-line"><span class="label">Est. Corporate Income Tax (30%)</span><span class="value" id="kpi-cit">—</span></div>
-          <p class="text-xs text-slate-400 mt-2">Internal estimate only — confirm with your accountant before filing.</p>
-        </div>
-        <div class="bg-white rounded-lg border border-slate-200 shadow-sm p-5">
-          <div class="corp-card-title">Expenses by Type — Where We're Bleeding</div>
-          <div id="overview-expense-groups" class="space-y-2 text-xs"></div>
-        </div>
-      </div>
-
-      <!-- Stock count by location -->
-      <div class="bg-white rounded-lg border border-slate-200 shadow-sm p-5 mb-4">
-        <div class="corp-card-title">Stock Count by Location</div>
-        <div id="overview-warehouse" class="text-xs"></div>
-      </div>
-
-      <!-- Sales pipeline + recent activity -->
-      <div class="grid grid-cols-1 lg:grid-cols-2 gap-4 mb-4">
-        <div class="bg-white rounded-lg border border-slate-200 shadow-sm p-5">
-          <div class="corp-card-title">Sales Pipeline</div>
-          <div class="text-xs mb-2">Open leads: <span class="font-bold" id="kpi-leads">—</span></div>
-          <div id="overview-pipeline" class="text-xs"></div>
-        </div>
-        <div class="bg-white rounded-lg border border-slate-200 shadow-sm p-5">
-          <div class="corp-card-title">Recent Stock Activity (view only)</div>
-          <div id="overview-list" class="text-xs max-h-72 overflow-y-auto"></div>
-        </div>
-      </div>
-
-      <!-- Conclusion / Recommendations / Alerts -->
-      <div class="bg-white rounded-lg border border-slate-200 shadow-sm p-5 mb-4">
-        <div class="corp-card-title">Conclusion, Recommendations &amp; Alerts</div>
-        <div id="overview-alerts" class="space-y-2"></div>
-      </div>
-
-      <!-- ============ MERGED: MANAGEMENT REPORT ============ -->
-      <div class="border-t-2 border-slate-200 pt-4 mb-2">
-        <div class="flex flex-wrap justify-between items-center gap-2 mb-1 no-print">
-          <div class="corp-card-title mb-0">Management Report</div>
-          <div class="flex items-center gap-2 text-xs">
-            <label>Period:</label>
-            <select id="report-period" onchange="loadBoardReport()" class="border p-2 rounded">
-              <option value="7">Last 7 days</option>
-              <option value="30" selected>Last 30 days</option>
-              <option value="90">Last 90 days</option>
+    <!-- ---------- SALES CRM ---------- -->
+    <section id="tab-sales" class="tab-panel hidden">
+      <div class="bg-white rounded-lg border border-[#D4D7DC] shadow-sm p-6 mb-4 no-print">
+        <div class="page-eyebrow">Sales</div>
+        <h2 class="font-bold text-base mb-4 text-[#393A3D]">Log Interaction / New Customer</h2>
+        <form id="sales-form" class="space-y-3">
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-3">
+            <input id="cust-name" list="customer-list" placeholder="Customer / Company Name" class="border border-[#D4D7DC] p-2 rounded text-xs focus:border-[#2CA01C]" required onchange="loadCustomerHistory(this.value); loadCustomerIntoForm(this.value)">
+            <datalist id="customer-list"></datalist>
+            <input id="cust-contact-person" placeholder="Contact Person Name" class="border border-[#D4D7DC] p-2 rounded text-xs focus:border-[#2CA01C]">
+          </div>
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-3">
+            <input id="cust-location" placeholder="Location / Address" class="border border-[#D4D7DC] p-2 rounded text-xs focus:border-[#2CA01C]">
+            <select id="cust-source" class="border border-[#D4D7DC] p-2 rounded text-xs focus:border-[#2CA01C]">
+              <option>Cold Call</option><option>Social Media</option><option>Direct Visit</option>
+              <option>Referral</option><option>Previous Contact</option>
             </select>
-            <button onclick="window.print()" class="no-print bg-[#0f2f4f] text-white rounded py-2 px-4 font-semibold text-xs">Print / Save as PDF</button>
           </div>
-        </div>
-        <p class="text-xs text-slate-500 mb-3">A board-ready summary — revenue, costs, tax position and stock, with a plain-English read of what it means.</p>
-
-        <div id="board-report" class="printable-doc bg-white rounded-lg border border-slate-200 shadow-sm p-6 mb-4">
-          <div class="border-b pb-4 mb-6">
-            <h1 class="text-lg font-bold text-[#0f2f4f]">PRIME Investment Group Plc — Management Report</h1>
-            <p class="text-xs text-slate-500" id="board-report-period-label">Period: —</p>
-          </div>
-
-          <div class="mb-6">
-            <h3 class="text-xs font-bold uppercase tracking-wide text-slate-500 mb-2">Executive Summary</h3>
-            <p class="text-xs text-slate-700 leading-relaxed" id="board-report-narrative">—</p>
-          </div>
-
-          <div class="grid grid-cols-2 md:grid-cols-4 gap-3 mb-6">
-            <div class="border rounded-lg p-3"><div class="text-xs text-slate-500">Revenue</div><div class="text-base font-bold text-[#0f2f4f]" id="br-revenue">—</div></div>
-            <div class="border rounded-lg p-3"><div class="text-xs text-slate-500">Total Costs (COGS+OpEx)</div><div class="text-base font-bold" style="color:#b45309" id="br-costs">—</div></div>
-            <div class="border rounded-lg p-3"><div class="text-xs text-slate-500">Net Margin</div><div class="text-base font-bold" style="color:#15803d" id="br-net">—</div></div>
-            <div class="border rounded-lg p-3"><div class="text-xs text-slate-500">Margin %</div><div class="text-base font-bold text-[#0f2f4f]" id="br-margin-pct">—</div></div>
-          </div>
-
-          <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
-            <div>
-              <h3 class="text-xs font-bold uppercase tracking-wide text-slate-500 mb-2">Tax Position</h3>
-              <table class="w-full text-xs border-collapse">
-                <tr class="border-b"><td class="py-1.5">Output VAT</td><td class="py-1.5 text-right" id="br-output-vat">—</td></tr>
-                <tr class="border-b"><td class="py-1.5">Input VAT</td><td class="py-1.5 text-right" id="br-input-vat">—</td></tr>
-                <tr class="border-b font-semibold"><td class="py-1.5">Net VAT Payable/(Refundable)</td><td class="py-1.5 text-right" id="br-net-vat">—</td></tr>
-                <tr class="font-semibold"><td class="py-1.5">Est. Corporate Income Tax (30%)</td><td class="py-1.5 text-right" id="br-cit">—</td></tr>
-              </table>
-            </div>
-            <div>
-              <h3 class="text-xs font-bold uppercase tracking-wide text-slate-500 mb-2">Stock Position</h3>
-              <table class="w-full text-xs border-collapse">
-                <tr class="border-b"><td class="py-1.5">Factory Balance</td><td class="py-1.5 text-right" id="br-factory-bal">—</td></tr>
-                <tr class="border-b"><td class="py-1.5">Kolfe Warehouse Balance</td><td class="py-1.5 text-right" id="br-kolfe-bal">—</td></tr>
-                <tr class="border-b"><td class="py-1.5">Mesalemya Shop Balance</td><td class="py-1.5 text-right" id="br-mes-bal">—</td></tr>
-                <tr class="border-b"><td class="py-1.5">Stock Entries This Period</td><td class="py-1.5 text-right" id="br-stock-entries">—</td></tr>
-                <tr><td class="py-1.5">Open Sales Leads</td><td class="py-1.5 text-right" id="br-leads">—</td></tr>
-              </table>
+          <div>
+            <label class="text-xs text-[#6B6C72]">Phone Number(s)</label>
+            <div id="cust-phones" class="space-y-2 mt-1">
+              <div class="flex gap-2">
+                <input placeholder="Phone (+251...)" class="cust-phone-input border border-[#D4D7DC] p-2 rounded text-xs flex-1 focus:border-[#2CA01C]">
+                <button type="button" onclick="addPhoneField()" class="px-3 rounded border border-[#D4D7DC] font-semibold text-[#393A3D] text-xs">+ Add</button>
+              </div>
             </div>
           </div>
-
-          <div class="mb-2">
-            <h3 class="text-xs font-bold uppercase tracking-wide text-slate-500 mb-2">Top Expense Categories</h3>
-            <div id="br-top-expenses" class="space-y-2 text-xs"></div>
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-3">
+            <input id="cust-email" type="email" placeholder="Email" class="border border-[#D4D7DC] p-2 rounded text-xs focus:border-[#2CA01C]">
           </div>
-
-          <div class="flex justify-between text-xs text-slate-400 pt-6 mt-6 border-t">
-            <span>Generated <span id="br-generated-date"></span></span>
-            <span>Internal management report — not a statutory filing</span>
+          <select id="cust-status" class="w-full border border-[#D4D7DC] p-2 rounded text-xs focus:border-[#2CA01C]" required onchange="toggleDealValueField()">
+            <option>New Lead</option><option>Proforma Sent</option><option>Meeting Scheduled</option>
+            <option>Account Info Sent</option><option>Payment Pending</option>
+            <option>Closed / Won</option><option>Closed / Lost</option>
+          </select>
+          <div id="deal-value-wrap" class="hidden grid grid-cols-1 md:grid-cols-2 gap-3">
+            <div>
+              <label class="text-xs text-[#6B6C72]">Deal Value (ETB) — counts toward your sales target</label>
+              <input id="cust-deal-value" type="number" step="0.01" placeholder="e.g. 150000" class="w-full border border-[#D4D7DC] p-2 rounded text-xs focus:border-[#2CA01C]">
+            </div>
+            <div>
+              <label class="text-xs text-[#6B6C72]">Units Sold (for flat-rate commission, if applicable)</label>
+              <input id="cust-units-sold" type="number" step="0.01" placeholder="e.g. 200 sheets" class="w-full border border-[#D4D7DC] p-2 rounded text-xs focus:border-[#2CA01C]">
+            </div>
           </div>
-        </div>
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-3">
+            <div>
+              <label class="text-xs text-[#6B6C72]">Product Type</label>
+              <input id="cust-product-type" list="product-type-list" placeholder="e.g. Plywood, Sewing Thread, Morale" class="w-full border border-[#D4D7DC] p-2 rounded text-xs focus:border-[#2CA01C]">
+              <datalist id="product-type-list">
+                <option value="Plywood"></option>
+                <option value="Sewing Thread"></option>
+                <option value="Morale"></option>
+              </datalist>
+            </div>
+            <div></div>
+          </div>
+          <div class="border-t border-[#ECEEF1] pt-3">
+            <div class="text-xs font-bold uppercase tracking-wide text-[#6B6C72] mb-2">Schedule Next Action (optional)</div>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-3">
+              <select id="cust-next-action-type" class="border border-[#D4D7DC] p-2 rounded text-xs focus:border-[#2CA01C]">
+                <option value="">— None —</option>
+                <option>Meeting</option>
+                <option>Sample Drop</option>
+                <option>Phone Call Follow-up</option>
+                <option>Proforma Follow-up</option>
+                <option>Other</option>
+              </select>
+              <input id="cust-next-action-date" type="date" class="border border-[#D4D7DC] p-2 rounded text-xs focus:border-[#2CA01C]">
+            </div>
+          </div>
+          <textarea id="cust-notes" rows="3" placeholder="Notes" class="w-full border border-[#D4D7DC] p-2 rounded text-xs focus:border-[#2CA01C]" required></textarea>
+          <button class="w-full bg-[#2CA01C] hover:bg-[#238016] text-white rounded py-2 font-semibold text-xs">Save Interaction</button>
+        </form>
       </div>
 
-      <!-- ============ MERGED: TAX OBLIGATIONS ============ -->
-      <div class="border-t-2 border-slate-200 pt-4 mb-4">
-        <div class="flex flex-wrap justify-between items-center gap-2 mb-1 no-print">
-          <div class="corp-card-title mb-0">Tax Obligations</div>
-          <div class="flex items-center gap-2 text-xs">
+      <div class="bg-white rounded-lg border border-[#D4D7DC] shadow-sm p-6 mb-4">
+        <h3 class="font-semibold mb-1 text-[#393A3D]">This Week's Scheduled Actions</h3>
+        <p class="text-xs text-[#6B6C72] mb-3">Meetings, sample drops, and follow-up calls due in the next 7 days.</p>
+        <div id="weekly-actions-list" class="space-y-2 text-xs"></div>
+      </div>
+
+      <div id="timeline-container" class="bg-white rounded-lg border border-[#D4D7DC] shadow-sm p-6 hidden">
+        <h3 class="font-semibold mb-1 text-[#393A3D]" id="timeline-title">History</h3>
+        <div id="timeline-contact-summary" class="text-xs text-[#6B6C72] mb-3"></div>
+        <div id="timeline-logs" class="space-y-2 text-xs"></div>
+      </div>
+    </section>
+
+    <!-- ---------- SALES REPORT ---------- -->
+    <section id="tab-report" class="tab-panel hidden">
+      <div class="bg-white rounded-lg border border-[#D4D7DC] shadow-sm p-6">
+        <div class="flex flex-wrap justify-between items-center gap-2 mb-4">
+          <div>
+            <div class="page-eyebrow">Sales</div>
+            <h2 class="font-bold text-base text-[#393A3D]">Sales Report</h2>
+          </div>
+          <select id="report-status-filter" onchange="loadReport()" class="border border-[#D4D7DC] p-2 rounded text-xs no-print focus:border-[#2CA01C]">
+            <option value="">All statuses</option>
+            <option>New Lead</option><option>Proforma Sent</option><option>Meeting Scheduled</option>
+            <option>Account Info Sent</option><option>Payment Pending</option>
+            <option>Closed / Won</option><option>Closed / Lost</option>
+          </select>
+        </div>
+        <div class="overflow-x-auto">
+          <table class="w-full text-xs border-collapse">
+            <thead>
+              <tr class="text-left border-b-2 border-[#393A3D] text-[#6B6C72]">
+                <th class="py-2 pr-3">Date</th>
+                <th class="py-2 pr-3">Customer</th>
+                <th class="py-2 pr-3">Status</th>
+                <th class="py-2">Notes</th>
+                <th class="py-2 no-print"></th>
+              </tr>
+            </thead>
+            <tbody id="report-list"></tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+
+    <!-- ---------- SALES TARGETS & COMMISSION ---------- -->
+    <section id="tab-salestargets" class="tab-panel hidden">
+      <div class="mb-3 no-print">
+        <div class="page-eyebrow">Sales</div>
+        <h2 class="font-bold text-lg text-[#393A3D]">Sales Targets &amp; Commission</h2>
+        <p class="text-xs text-[#6B6C72]">Actuals are calculated automatically from Sales CRM interactions marked "Closed / Won" with a deal value.</p>
+      </div>
+
+      <div id="target-form-wrap" class="bg-white rounded-lg border border-[#D4D7DC] shadow-sm p-5 mb-4 no-print hidden">
+        <div class="corp-card-title">Set a Target</div>
+        <form id="target-form" class="grid grid-cols-1 md:grid-cols-4 gap-2">
+          <input id="tg-employee" list="employee-namelist" placeholder="Sales Rep Name" class="border border-[#D4D7DC] p-1.5 rounded text-xs focus:border-[#2CA01C]" required>
+          <div>
+            <label class="text-xs text-[#6B6C72]">Period (month)</label>
+            <input id="tg-period" type="month" class="border border-[#D4D7DC] p-1.5 rounded w-full text-xs focus:border-[#2CA01C]" required>
+          </div>
+          <div>
+            <label class="text-xs text-[#6B6C72]">Target Quantity (units)</label>
+            <input id="tg-amount" type="number" step="1" placeholder="e.g. 5000 sheets" class="border border-[#D4D7DC] p-1.5 rounded w-full text-xs focus:border-[#2CA01C]" required>
+          </div>
+          <div>
+            <label class="text-xs text-[#6B6C72]">Rep Level</label>
+            <select id="tg-rep-level" class="border border-[#D4D7DC] p-1.5 rounded w-full text-xs focus:border-[#2CA01C]" onchange="updateTargetHierarchyVisibility()">
+              <option value="Independent">Independent (no override)</option>
+              <option value="Junior">Junior Rep</option>
+              <option value="Senior">Senior Rep</option>
+              <option value="Manager">Manager</option>
+            </select>
+          </div>
+
+          <div id="tg-manager-wrap" class="hidden">
+            <label class="text-xs text-[#6B6C72]">Manager Name (gets override)</label>
+            <input id="tg-manager-name" list="employee-namelist" class="border border-[#D4D7DC] p-1.5 rounded w-full text-xs focus:border-[#2CA01C]">
+          </div>
+          <div id="tg-senior-wrap" class="hidden">
+            <label class="text-xs text-[#6B6C72]">Senior Rep Name (gets override)</label>
+            <input id="tg-senior-name" list="employee-namelist" class="border border-[#D4D7DC] p-1.5 rounded w-full text-xs focus:border-[#2CA01C]">
+          </div>
+          <div>
+            <label class="text-xs text-[#6B6C72]">Commission Type</label>
+            <select id="tg-commission-type" class="border border-[#D4D7DC] p-1.5 rounded w-full text-xs focus:border-[#2CA01C]" onchange="updateTargetHierarchyVisibility()">
+              <option value="percent">Percent of Deal Value</option>
+              <option value="flat_per_unit">Flat Rate per Unit</option>
+            </select>
+          </div>
+          <div id="tg-percent-wrap">
+            <label class="text-xs text-[#6B6C72]">Commission Rate (%)</label>
+            <input id="tg-commission" type="number" step="0.1" value="2" class="border border-[#D4D7DC] p-1.5 rounded w-full text-xs focus:border-[#2CA01C]">
+          </div>
+
+          <div id="tg-flat-wrap" class="hidden md:col-span-4 grid grid-cols-1 md:grid-cols-3 gap-2 border border-[#D4D7DC] rounded-lg p-3 bg-[#F4F5F8]">
+            <input id="tg-flat-product-type" list="product-type-list" placeholder="Product Type (e.g. Plywood)" class="border border-[#D4D7DC] p-1.5 rounded text-xs focus:border-[#2CA01C]">
+            <input id="tg-flat-rate" type="number" step="0.01" placeholder="Flat Rate (ETB per unit)" class="border border-[#D4D7DC] p-1.5 rounded text-xs focus:border-[#2CA01C]">
+            <input id="tg-flat-unit-label" placeholder="Unit Label (e.g. per sheet, per carton of 100)" class="border border-[#D4D7DC] p-1.5 rounded text-xs focus:border-[#2CA01C]">
+          </div>
+
+          <div class="md:col-span-4 flex gap-2 mt-1">
+            <button class="flex-1 bg-[#2CA01C] hover:bg-[#238016] text-white rounded py-2 font-semibold text-xs" id="target-submit-btn">Save Target</button>
+            <button type="button" onclick="cancelTargetEdit()" id="target-cancel-btn" class="hidden px-4 rounded border border-[#D4D7DC] font-semibold text-[#393A3D] text-xs">Cancel</button>
+          </div>
+        </form>
+      </div>
+
+      <div class="bg-white rounded-lg border border-[#D4D7DC] shadow-sm p-5 mb-4">
+        <div class="corp-card-title">How commission overrides work</div>
+        <p class="text-xs text-[#6B6C72]">A Senior Rep's manager automatically earns a <strong>10% override</strong> on that rep's earned commission. A Junior Rep's manager earns a <strong>25% override</strong>, and their assigned Senior Rep earns a <strong>15% override</strong> — both calculated from the Junior's own earned commission, across all product lines. Overrides are computed automatically below; nothing needs to be entered twice.</p>
+      </div>
+
+      <div class="bg-white rounded-lg border border-[#D4D7DC] shadow-sm p-5">
+        <div class="flex justify-between items-center mb-1">
+          <div class="corp-card-title mb-0" id="target-list-title">Target vs Actual</div>
+          <div class="flex items-center gap-2 text-xs no-print">
             <label>Period:</label>
-            <input type="month" id="tax-month" class="border p-1.5 rounded text-xs" onchange="loadIncomeTax()">
+            <input type="month" id="target-period-filter" onchange="loadSalesTargets()" class="border border-[#D4D7DC] p-1.5 rounded text-xs">
           </div>
         </div>
-        <p class="text-xs text-slate-500 mb-3">VAT, withholding tax and 30% corporate income tax — computed from logged Stock (Purchases/Sales) and Expense entries. Internal working sheet only — verify against source documents before submission to the Ministry of Revenue.</p>
+        <div id="target-list" class="text-xs mt-2"></div>
+      </div>
+    </section>
 
-        <div class="grid grid-cols-1 lg:grid-cols-2 gap-4">
-          <div class="bg-white rounded-lg border border-slate-200 shadow-sm p-5">
-            <div class="corp-card-title">Sales, Costs &amp; Taxable Income</div>
-            <table class="w-full text-xs border-collapse">
-              <tbody id="tax-table-pl"></tbody>
-            </table>
+    <!-- ---------- COST / PER DIEM REQUEST FORM ---------- -->
+    <section id="tab-tripcost" class="tab-panel hidden">
+      <div class="mb-4 no-print">
+        <div class="page-eyebrow">Sales</div>
+        <h2 class="font-bold text-lg text-[#393A3D]">Trip Plan &amp; Cost Request</h2>
+        <p class="text-xs text-[#6B6C72]">Complete the Trip Plan first — a Cost / Per Diem Request will not be approved without a matching trip plan on file.</p>
+      </div>
+
+      <div class="grid grid-cols-1 lg:grid-cols-2 gap-4 mb-4">
+        <!-- Trip Plan -->
+        <div class="bg-white rounded-lg border border-[#D4D7DC] shadow-sm p-5 no-print">
+          <h3 class="font-bold text-sm mb-1 text-[#393A3D]">1. Trip Plan</h3>
+          <p class="text-xs text-[#6B6C72] mb-3">Who you're visiting, where, and why — before the trip happens.</p>
+          <form id="tripplan-form" class="grid grid-cols-1 md:grid-cols-2 gap-2">
+            <input id="tp-employee" placeholder="Employee Name" class="border border-[#D4D7DC] p-1.5 rounded text-xs md:col-span-2 focus:border-[#2CA01C]" required>
+            <div>
+              <label class="text-xs text-[#6B6C72]">Planned Departure Date</label>
+              <input id="tp-departure" type="date" class="border border-[#D4D7DC] p-1.5 rounded w-full text-xs focus:border-[#2CA01C]" required>
+            </div>
+            <div>
+              <label class="text-xs text-[#6B6C72]">Planned Return Date</label>
+              <input id="tp-return" type="date" class="border border-[#D4D7DC] p-1.5 rounded w-full text-xs focus:border-[#2CA01C]">
+            </div>
+            <input id="tp-destination" placeholder="Destination(s)" class="border border-[#D4D7DC] p-1.5 rounded text-xs focus:border-[#2CA01C]" required>
+            <select id="tp-transport-mode" class="border border-[#D4D7DC] p-1.5 rounded text-xs focus:border-[#2CA01C]">
+              <option>Company Vehicle</option>
+              <option>Public Transport</option>
+              <option>Rideshare / Taxi</option>
+              <option>Other</option>
+            </select>
+            <input id="tp-product-type" list="product-type-list" placeholder="Product Type (e.g. Plywood, Sewing Thread)" class="border border-[#D4D7DC] p-1.5 rounded text-xs md:col-span-2 focus:border-[#2CA01C]">
+            <textarea id="tp-purpose" placeholder="Purpose / Objective of Trip" class="border border-[#D4D7DC] p-1.5 rounded md:col-span-2 text-xs focus:border-[#2CA01C]" required></textarea>
+
+            <div class="md:col-span-2 border-t border-[#ECEEF1] pt-2">
+              <div class="text-xs font-bold uppercase tracking-wide text-[#6B6C72] mb-2">Companies Planned to Visit</div>
+              <div id="tp-visits-list" class="space-y-2 mb-2"></div>
+              <button type="button" onclick="addPlannedVisitRow()" class="text-xs text-[#2CA01C] font-semibold">+ Add Company</button>
+            </div>
+
+            <textarea id="tp-notes" placeholder="Additional notes (optional)" class="border border-[#D4D7DC] p-1.5 rounded md:col-span-2 text-xs focus:border-[#2CA01C]"></textarea>
+            <div class="md:col-span-2 flex gap-2 mt-1">
+              <button class="flex-1 bg-[#2CA01C] hover:bg-[#238016] text-white rounded py-2 font-semibold text-xs" id="tripplan-submit-btn">Submit Trip Plan</button>
+              <button type="button" onclick="cancelTripPlanEdit()" id="tripplan-cancel-btn" class="hidden px-4 rounded border border-[#D4D7DC] font-semibold text-[#393A3D] text-xs">Cancel</button>
+            </div>
+          </form>
+          <div class="mt-3 pt-3 border-t border-[#ECEEF1]">
+            <h4 class="text-xs font-bold uppercase tracking-wide text-[#6B6C72] mb-2" id="tripplan-list-title">Your Recent Trip Plans</h4>
+            <div id="tripplan-list" class="space-y-2 text-xs"></div>
           </div>
-          <div class="bg-white rounded-lg border border-slate-200 shadow-sm p-5">
-            <div class="corp-card-title">VAT, Withholding &amp; Corporate Income Tax</div>
-            <table class="w-full text-xs border-collapse">
-              <tbody id="tax-table-vat"></tbody>
-            </table>
+        </div>
+
+        <!-- Cost / Per Diem Request -->
+        <div class="bg-white rounded-lg border border-[#D4D7DC] shadow-sm p-5 no-print">
+          <h3 class="font-bold text-sm mb-1 text-[#393A3D]">2. Cost / Per Diem Request</h3>
+          <p class="text-xs text-[#6B6C72] mb-2">Transportation only for trips ≤25km. Over 25km with an overnight stay adds meal + room allowance.</p>
+          <p class="text-xs bg-emerald-50 text-emerald-900 border border-emerald-100 rounded p-2 mb-3">Ethiopia's Labour Proclamation No. 1156/2019 does not fix specific per diem amounts — rates are set by company policy. Confirm your standing rate with your accountant.</p>
+          <form id="perdiem-form" class="grid grid-cols-1 md:grid-cols-2 gap-2">
+            <input id="pd-employee" placeholder="Employee Name" class="border border-[#D4D7DC] p-1.5 rounded text-xs focus:border-[#2CA01C]" required>
+            <input id="pd-position" placeholder="Position" class="border border-[#D4D7DC] p-1.5 rounded text-xs focus:border-[#2CA01C]">
+            <div>
+              <label class="text-xs text-[#6B6C72]">Date of Request</label>
+              <input id="pd-request-date" type="date" class="border border-[#D4D7DC] p-1.5 rounded w-full text-xs focus:border-[#2CA01C]" required>
+            </div>
+            <input id="pd-destination" placeholder="Destination City / Town" class="border border-[#D4D7DC] p-1.5 rounded text-xs focus:border-[#2CA01C]" required>
+            <div>
+              <label class="text-xs text-[#6B6C72]">Distance from Head Office (km)</label>
+              <input id="pd-distance" type="number" step="0.1" value="0" class="border border-[#D4D7DC] p-1.5 rounded w-full text-xs focus:border-[#2CA01C]" oninput="updatePerDiemVisibility()">
+            </div>
+            <div>
+              <label class="text-xs text-[#6B6C72]">Overnight Stay?</label>
+              <select id="pd-overnight" class="border border-[#D4D7DC] p-1.5 rounded w-full text-xs focus:border-[#2CA01C]" onchange="updatePerDiemVisibility()">
+                <option value="no">No</option>
+                <option value="yes">Yes</option>
+              </select>
+            </div>
+            <div>
+              <label class="text-xs text-[#6B6C72]">Departure Date</label>
+              <input id="pd-departure" type="date" class="border border-[#D4D7DC] p-1.5 rounded w-full text-xs focus:border-[#2CA01C]">
+            </div>
+            <div>
+              <label class="text-xs text-[#6B6C72]">Return Date</label>
+              <input id="pd-return" type="date" class="border border-[#D4D7DC] p-1.5 rounded w-full text-xs focus:border-[#2CA01C]">
+            </div>
+            <div class="md:col-span-2">
+              <label class="text-xs text-[#6B6C72]">Transportation Cost (ETB)</label>
+              <input id="pd-transport-cost" type="number" step="0.01" value="0" class="border border-[#D4D7DC] p-1.5 rounded w-full text-xs focus:border-[#2CA01C]" oninput="updatePerDiemTotal()">
+            </div>
+            <input id="pd-product-type" list="product-type-list" placeholder="Product Type (e.g. Plywood, Sewing Thread)" class="border border-[#D4D7DC] p-1.5 rounded text-xs md:col-span-2 focus:border-[#2CA01C]">
+            <textarea id="pd-purpose" placeholder="Purpose of Trip" class="border border-[#D4D7DC] p-1.5 rounded md:col-span-2 text-xs focus:border-[#2CA01C]"></textarea>
+
+            <div id="pd-extended-section" class="hidden md:col-span-2 border border-[#D4D7DC] rounded-lg p-3 bg-[#F4F5F8] grid grid-cols-1 md:grid-cols-3 gap-2">
+              <div class="md:col-span-3 text-xs font-bold uppercase tracking-wide text-[#6B6C72]">Out-of-Town / Overnight Allowance</div>
+              <div>
+                <label class="text-xs text-[#6B6C72]">Number of Nights</label>
+                <input id="pd-nights" type="number" value="0" class="border border-[#D4D7DC] p-1.5 rounded w-full text-xs focus:border-[#2CA01C]" oninput="updatePerDiemTotal()">
+              </div>
+              <div>
+                <label class="text-xs text-[#6B6C72]">Meal / day (ETB)</label>
+                <input id="pd-meal-rate" type="number" step="0.01" value="0" class="border border-[#D4D7DC] p-1.5 rounded w-full text-xs focus:border-[#2CA01C]" oninput="updatePerDiemTotal()">
+              </div>
+              <div>
+                <label class="text-xs text-[#6B6C72]">Room / night (ETB)</label>
+                <input id="pd-room-rate" type="number" step="0.01" value="0" class="border border-[#D4D7DC] p-1.5 rounded w-full text-xs focus:border-[#2CA01C]" oninput="updatePerDiemTotal()">
+              </div>
+            </div>
+
+            <textarea id="pd-notes" placeholder="Additional notes (optional)" class="border border-[#D4D7DC] p-1.5 rounded md:col-span-2 text-xs focus:border-[#2CA01C]"></textarea>
+            <div class="md:col-span-2 flex justify-between items-center bg-[#F4F5F8] border border-[#D4D7DC] rounded p-2">
+              <span class="text-xs font-semibold text-[#6B6C72]">Total Requested</span>
+              <span class="text-sm font-bold text-[#2CA01C]" id="pd-total-display">ETB 0.00</span>
+            </div>
+            <div class="md:col-span-2 flex gap-2 mt-1">
+              <button class="flex-1 bg-[#2CA01C] hover:bg-[#238016] text-white rounded py-2 font-semibold text-xs" id="perdiem-submit-btn">Submit Request</button>
+              <button type="button" onclick="cancelPerDiemEdit()" id="perdiem-cancel-btn" class="hidden px-4 rounded border border-[#D4D7DC] font-semibold text-[#393A3D] text-xs">Cancel</button>
+            </div>
+          </form>
+          <div class="mt-3 pt-3 border-t border-[#ECEEF1]">
+            <h4 class="text-xs font-bold uppercase tracking-wide text-[#6B6C72] mb-2" id="perdiem-list-title">Your Recent Requests</h4>
+            <div id="perdiem-list" class="space-y-2 text-xs"></div>
           </div>
         </div>
       </div>
     </section>
 
-    <!-- ---------- STOCK REPORT ---------- -->
+    <!-- ---------- VISIT ACTIVITY REPORT ---------- -->
+    <section id="tab-visitreport" class="tab-panel hidden">
+      <div class="mb-4 no-print">
+        <div class="page-eyebrow">Sales</div>
+        <h2 class="font-bold text-lg text-[#393A3D]">Visit Activity Report</h2>
+        <p class="text-xs text-[#6B6C72]">Complete this once a customer visit is finished — what happened, and what's next.</p>
+      </div>
+
+      <div class="bg-white rounded-lg border border-[#D4D7DC] shadow-sm p-6 mb-4 no-print">
+        <form id="visitreport-form" class="grid grid-cols-1 md:grid-cols-3 gap-3">
+          <input id="vr-employee" placeholder="Employee Name" class="border border-[#D4D7DC] p-2 rounded text-xs focus:border-[#2CA01C]" required>
+          <div>
+            <label class="text-xs text-[#6B6C72]">Date of Visit</label>
+            <input id="vr-date" type="date" class="border border-[#D4D7DC] p-2 rounded w-full text-xs focus:border-[#2CA01C]" required>
+          </div>
+          <input id="vr-customer" placeholder="Customer / Company Visited" class="border border-[#D4D7DC] p-2 rounded text-xs focus:border-[#2CA01C]" required>
+
+          <input id="vr-contact" placeholder="Contact Person" class="border border-[#D4D7DC] p-2 rounded text-xs focus:border-[#2CA01C]">
+          <input id="vr-location" placeholder="Location / Address" class="border border-[#D4D7DC] p-2 rounded text-xs md:col-span-2 focus:border-[#2CA01C]">
+
+          <input id="vr-product-type" list="product-type-list" placeholder="Product Type (e.g. Plywood, Sewing Thread)" class="border border-[#D4D7DC] p-2 rounded text-xs md:col-span-3 focus:border-[#2CA01C]">
+          <textarea id="vr-purpose" placeholder="Purpose of Visit" class="border border-[#D4D7DC] p-2 rounded text-xs md:col-span-3 focus:border-[#2CA01C]" required></textarea>
+          <textarea id="vr-outcome" placeholder="Outcome / Summary" class="border border-[#D4D7DC] p-2 rounded text-xs md:col-span-3 focus:border-[#2CA01C]" required></textarea>
+          <textarea id="vr-next-steps" placeholder="Next Steps" class="border border-[#D4D7DC] p-2 rounded text-xs md:col-span-2 focus:border-[#2CA01C]"></textarea>
+          <div>
+            <label class="text-xs text-[#6B6C72]">Follow-Up Date (optional)</label>
+            <input id="vr-followup" type="date" class="border border-[#D4D7DC] p-2 rounded w-full text-xs focus:border-[#2CA01C]">
+          </div>
+
+          <div class="md:col-span-3 flex gap-2">
+            <button class="flex-1 bg-[#2CA01C] hover:bg-[#238016] text-white rounded py-2 font-semibold text-xs" id="visitreport-submit-btn">Submit Visit Report</button>
+            <button type="button" onclick="cancelVisitReportEdit()" id="visitreport-cancel-btn" class="hidden px-4 rounded border border-[#D4D7DC] font-semibold text-[#393A3D] text-xs">Cancel</button>
+          </div>
+        </form>
+      </div>
+
+      <div class="bg-white rounded-lg border border-[#D4D7DC] shadow-sm p-6">
+        <h3 class="font-semibold mb-3 text-[#393A3D]" id="visitreport-list-title">Your Recent Visit Reports</h3>
+        <div id="visitreport-list" class="space-y-2 text-xs"></div>
+      </div>
+    </section>
+
+    <!-- ---------- STOCK REPORT (independent ledger page) ---------- -->
     <section id="tab-stockreport" class="tab-panel hidden">
       <div class="mb-4 no-print">
         <div class="page-eyebrow">Reports</div>
-        <h2 class="font-bold text-lg text-[#0f2f4f]">Stock Report &amp; Balances</h2>
-        <p class="text-xs text-slate-500">View-only. To log a new movement, go to Data Entry Log.</p>
+        <h2 class="font-bold text-lg text-[#393A3D]">Stock Report &amp; Balances</h2>
+        <p class="text-xs text-[#6B6C72]">View-only. To log a new movement, go to Data Entry Log.</p>
       </div>
 
-      <div class="bg-white rounded-lg shadow-sm p-6 mb-4">
+      <div class="bg-white rounded-lg border border-[#D4D7DC] shadow-sm p-6 mb-4">
         <div class="flex flex-wrap justify-between items-center gap-2 mb-3">
-          <h3 class="font-semibold">PRIME Plywood Stock Report Ledger</h3>
-          <button onclick="downloadLedgerCSV()" class="text-[#0f2f4f] font-semibold underline text-xs no-print">Download CSV</button>
+          <h3 class="font-semibold text-[#393A3D]">PRIME Plywood Stock Report Ledger</h3>
+          <button onclick="downloadLedgerCSV()" class="text-[#2CA01C] font-semibold underline text-xs no-print">Download CSV</button>
         </div>
         <div class="overflow-x-auto">
           <table class="w-full border-collapse" id="ledger-table" style="font-size:10.5px">
             <thead>
-              <tr class="text-left bg-[#111827] text-white">
+              <tr class="text-left bg-[#1C252C] text-white">
                 <th class="py-1.5 px-1.5 whitespace-nowrap">Date</th>
                 <th class="py-1.5 px-1.5 whitespace-nowrap">Opening Stock</th>
                 <th class="py-1.5 px-1.5 whitespace-nowrap">Prime Factory Purch.</th>
@@ -545,24 +746,698 @@
         </div>
       </div>
 
-      <div class="bg-white rounded-lg shadow-sm p-6">
+      <div class="bg-white rounded-lg border border-[#D4D7DC] shadow-sm p-6">
         <div class="flex flex-wrap justify-between items-center gap-2 mb-3 no-print">
-          <h3 class="font-semibold">General Stock Entries (all locations)</h3>
+          <h3 class="font-semibold text-[#393A3D]">General Stock Entries (all locations)</h3>
           <div class="flex items-center gap-3 text-xs">
             <label class="flex items-center gap-1"><input type="checkbox" id="stock-group-toggle" onchange="loadStock()"> Group by warehouse</label>
-            <button onclick="downloadStockCSV()" class="text-[#0f2f4f] font-semibold underline">Download CSV</button>
+            <button onclick="downloadStockCSV()" class="text-[#2CA01C] font-semibold underline">Download CSV</button>
           </div>
         </div>
         <div id="stock-list" class="space-y-2 text-xs"></div>
       </div>
     </section>
 
+    <!-- ---------- DASHBOARD SUMMARY ---------- -->
+    <section id="tab-overview" class="tab-panel hidden">
+      <div class="flex justify-between items-center mb-1 no-print">
+        <div>
+          <div class="page-eyebrow">Dashboard</div>
+          <h2 class="font-bold text-lg text-[#393A3D]">Dashboard Summary</h2>
+        </div>
+        <span class="text-xs text-[#8D9096]">Period: last 30 days</span>
+      </div>
+      <div id="overview-summary-callout" class="summary-callout p-5 mb-4 mt-3"></div>
+
+      <!-- Stock Information | Financial P&L -->
+      <div class="grid grid-cols-1 lg:grid-cols-2 gap-4 mb-4">
+        <div class="bg-white rounded-lg border border-[#D4D7DC] shadow-sm p-5">
+          <div class="corp-card-title">Stock Information</div>
+          <div class="stat-line"><span class="label">Stock entries (30d)</span><span class="value" id="kpi-stock">—</span></div>
+          <div class="stat-line"><span class="label">Purchases vs Sales (30d)</span><span class="value" id="kpi-stock-ratio">—</span></div>
+          <div class="stat-line"><span class="label">Factory Balance (purchased, not yet shipped)</span><span class="value" id="kpi-factory-bal">—</span></div>
+          <div class="stat-line"><span class="label">Kolfe Warehouse Balance</span><span class="value" id="kpi-kolfe-bal">—</span></div>
+          <div class="stat-line"><span class="label">Mesalemya Shop Balance</span><span class="value" id="kpi-mes-bal">—</span></div>
+        </div>
+        <div class="bg-white rounded-lg border border-[#D4D7DC] shadow-sm p-5">
+          <div class="corp-card-title">Financial — Profit &amp; Loss</div>
+          <div class="stat-line"><span class="label">Revenue (Sales)</span><span class="value" id="kpi-revenue">—</span></div>
+          <div class="stat-line"><span class="label">Direct / COGS</span><span class="value" id="kpi-direct">—</span></div>
+          <div class="stat-line"><span class="label">Operating Expenses</span><span class="value" id="kpi-opex">—</span></div>
+          <div class="stat-line"><span class="label">Net Margin (est.)</span><span class="value" id="kpi-net">—</span></div>
+        </div>
+      </div>
+
+      <!-- Tax | Expenses by Type -->
+      <div class="grid grid-cols-1 lg:grid-cols-2 gap-4 mb-4">
+        <div class="bg-white rounded-lg border border-[#D4D7DC] shadow-sm p-5">
+          <div class="corp-card-title">Tax — VAT, Withholding &amp; Income Tax</div>
+          <div class="stat-line"><span class="label">Output VAT (15%)</span><span class="value" id="kpi-output-vat">—</span></div>
+          <div class="stat-line"><span class="label">Input VAT (15%)</span><span class="value" id="kpi-input-vat">—</span></div>
+          <div class="stat-line"><span class="label">Net VAT Payable / (Refundable)</span><span class="value" id="kpi-net-vat">—</span></div>
+          <div class="stat-line"><span class="label">Est. Corporate Income Tax (30%)</span><span class="value" id="kpi-cit">—</span></div>
+          <p class="text-xs text-[#8D9096] mt-2">Internal estimate only — confirm with your accountant before filing.</p>
+        </div>
+        <div class="bg-white rounded-lg border border-[#D4D7DC] shadow-sm p-5">
+          <div class="corp-card-title">Expenses by Type — Where We're Bleeding</div>
+          <div id="overview-expense-groups" class="space-y-2 text-xs"></div>
+        </div>
+      </div>
+
+      <!-- Stock count by location -->
+      <div class="bg-white rounded-lg border border-[#D4D7DC] shadow-sm p-5 mb-4">
+        <div class="corp-card-title">Stock Count by Location</div>
+        <div id="overview-warehouse" class="text-xs"></div>
+      </div>
+
+      <!-- Sales pipeline + recent activity -->
+      <div class="grid grid-cols-1 lg:grid-cols-2 gap-4 mb-4">
+        <div class="bg-white rounded-lg border border-[#D4D7DC] shadow-sm p-5">
+          <div class="corp-card-title">Sales Pipeline</div>
+          <div class="text-xs mb-2">Open leads: <span class="font-bold" id="kpi-leads">—</span></div>
+          <div id="overview-pipeline" class="text-xs"></div>
+        </div>
+        <div class="bg-white rounded-lg border border-[#D4D7DC] shadow-sm p-5">
+          <div class="corp-card-title">Recent Stock Activity (view only)</div>
+          <div id="overview-list" class="text-xs max-h-72 overflow-y-auto"></div>
+        </div>
+      </div>
+
+      <!-- Conclusion / Recommendations / Alerts -->
+      <div class="bg-white rounded-lg border border-[#D4D7DC] shadow-sm p-5 mb-4">
+        <div class="corp-card-title">Conclusion, Recommendations &amp; Alerts</div>
+        <div id="overview-alerts" class="space-y-2"></div>
+      </div>
+
+      <!-- ============ MERGED: MANAGEMENT REPORT ============ -->
+      <div class="border-t-2 border-[#D4D7DC] pt-4 mb-2">
+        <div class="flex flex-wrap justify-between items-center gap-2 mb-1 no-print">
+          <div class="corp-card-title mb-0">Management Report</div>
+          <div class="flex items-center gap-2 text-xs">
+            <label>Period:</label>
+            <select id="report-period" onchange="loadBoardReport()" class="border border-[#D4D7DC] p-2 rounded">
+              <option value="7">Last 7 days</option>
+              <option value="30" selected>Last 30 days</option>
+              <option value="90">Last 90 days</option>
+            </select>
+            <button onclick="window.print()" class="no-print bg-[#2CA01C] text-white rounded py-2 px-4 font-semibold text-xs hover:bg-[#238016]">Print / Save as PDF</button>
+          </div>
+        </div>
+        <p class="text-xs text-[#6B6C72] mb-3">A board-ready summary — revenue, costs, tax position and stock, with a plain-English read of what it means.</p>
+
+        <div id="board-report" class="printable-doc bg-white rounded-lg border border-[#D4D7DC] shadow-sm p-6 mb-4">
+          <div class="border-b border-[#ECEEF1] pb-4 mb-6">
+            <h1 class="text-lg font-bold text-[#393A3D]">PRIME Investment Group Plc — Management Report</h1>
+            <p class="text-xs text-[#6B6C72]" id="board-report-period-label">Period: —</p>
+          </div>
+
+          <div class="mb-6">
+            <h3 class="text-xs font-bold uppercase tracking-wide text-[#6B6C72] mb-2">Executive Summary</h3>
+            <p class="text-xs text-[#393A3D] leading-relaxed" id="board-report-narrative">—</p>
+          </div>
+
+          <div class="grid grid-cols-2 md:grid-cols-4 gap-3 mb-6">
+            <div class="border border-[#D4D7DC] rounded-lg p-3"><div class="text-xs text-[#6B6C72]">Revenue</div><div class="text-base font-bold text-[#2CA01C]" id="br-revenue">—</div></div>
+            <div class="border border-[#D4D7DC] rounded-lg p-3"><div class="text-xs text-[#6B6C72]">Total Costs (COGS+OpEx)</div><div class="text-base font-bold text-[#D97706]" id="br-costs">—</div></div>
+            <div class="border border-[#D4D7DC] rounded-lg p-3"><div class="text-xs text-[#6B6C72]">Net Margin</div><div class="text-base font-bold text-[#2CA01C]" id="br-net">—</div></div>
+            <div class="border border-[#D4D7DC] rounded-lg p-3"><div class="text-xs text-[#6B6C72]">Margin %</div><div class="text-base font-bold text-[#393A3D]" id="br-margin-pct">—</div></div>
+          </div>
+
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+            <div>
+              <h3 class="text-xs font-bold uppercase tracking-wide text-[#6B6C72] mb-2">Tax Position</h3>
+              <table class="w-full text-xs border-collapse">
+                <tr class="border-b border-[#ECEEF1]"><td class="py-1.5">Output VAT</td><td class="py-1.5 text-right" id="br-output-vat">—</td></tr>
+                <tr class="border-b border-[#ECEEF1]"><td class="py-1.5">Input VAT</td><td class="py-1.5 text-right" id="br-input-vat">—</td></tr>
+                <tr class="border-b border-[#ECEEF1] font-semibold"><td class="py-1.5">Net VAT Payable/(Refundable)</td><td class="py-1.5 text-right" id="br-net-vat">—</td></tr>
+                <tr class="font-semibold"><td class="py-1.5">Est. Corporate Income Tax (30%)</td><td class="py-1.5 text-right" id="br-cit">—</td></tr>
+              </table>
+            </div>
+            <div>
+              <h3 class="text-xs font-bold uppercase tracking-wide text-[#6B6C72] mb-2">Stock Position</h3>
+              <table class="w-full text-xs border-collapse">
+                <tr class="border-b border-[#ECEEF1]"><td class="py-1.5">Factory Balance</td><td class="py-1.5 text-right" id="br-factory-bal">—</td></tr>
+                <tr class="border-b border-[#ECEEF1]"><td class="py-1.5">Kolfe Warehouse Balance</td><td class="py-1.5 text-right" id="br-kolfe-bal">—</td></tr>
+                <tr class="border-b border-[#ECEEF1]"><td class="py-1.5">Mesalemya Shop Balance</td><td class="py-1.5 text-right" id="br-mes-bal">—</td></tr>
+                <tr class="border-b border-[#ECEEF1]"><td class="py-1.5">Stock Entries This Period</td><td class="py-1.5 text-right" id="br-stock-entries">—</td></tr>
+                <tr><td class="py-1.5">Open Sales Leads</td><td class="py-1.5 text-right" id="br-leads">—</td></tr>
+              </table>
+            </div>
+          </div>
+
+          <div class="mb-2">
+            <h3 class="text-xs font-bold uppercase tracking-wide text-[#6B6C72] mb-2">Top Expense Categories</h3>
+            <div id="br-top-expenses" class="space-y-2 text-xs"></div>
+          </div>
+
+          <div class="flex justify-between text-xs text-[#8D9096] pt-6 mt-6 border-t border-[#ECEEF1]">
+            <span>Generated <span id="br-generated-date"></span></span>
+            <span>Internal management report — not a statutory filing</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- ============ MERGED: TAX OBLIGATIONS ============ -->
+      <div class="border-t-2 border-[#D4D7DC] pt-4 mb-4">
+        <div class="flex flex-wrap justify-between items-center gap-2 mb-1 no-print">
+          <div class="corp-card-title mb-0">Tax Obligations</div>
+          <div class="flex items-center gap-2 text-xs">
+            <label>Period:</label>
+            <input type="month" id="tax-month" class="border border-[#D4D7DC] p-1.5 rounded text-xs" onchange="loadIncomeTax()">
+          </div>
+        </div>
+        <p class="text-xs text-[#6B6C72] mb-3">VAT, withholding tax and 30% corporate income tax — computed from logged Stock (Purchases/Sales) and Expense entries. Internal working sheet only — verify against source documents before submission to the Ministry of Revenue.</p>
+
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-4">
+          <div class="bg-white rounded-lg border border-[#D4D7DC] shadow-sm p-5">
+            <div class="corp-card-title">Sales, Costs &amp; Taxable Income</div>
+            <table class="w-full text-xs border-collapse">
+              <tbody id="tax-table-pl"></tbody>
+            </table>
+          </div>
+          <div class="bg-white rounded-lg border border-[#D4D7DC] shadow-sm p-5">
+            <div class="corp-card-title">VAT, Withholding &amp; Corporate Income Tax</div>
+            <table class="w-full text-xs border-collapse">
+              <tbody id="tax-table-vat"></tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ---------- PROFORMA ---------- -->
+    <section id="tab-proforma" class="tab-panel hidden">
+      <div class="bg-white rounded-lg border border-[#D4D7DC] shadow-sm p-6 mb-4 no-print">
+        <div class="page-eyebrow">Data Entry</div>
+        <h2 class="font-bold text-base mb-4 text-[#393A3D]">Create Proforma Invoice</h2>
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-3 mb-3">
+          <input id="pf-customer" placeholder="Customer / Company Name" class="border border-[#D4D7DC] p-2 rounded text-xs focus:border-[#2CA01C]" required>
+          <input id="pf-address" placeholder="Customer Address / Phone" class="border border-[#D4D7DC] p-2 rounded text-xs focus:border-[#2CA01C]">
+        </div>
+        <div id="pf-items" class="space-y-2 mb-2"></div>
+        <button type="button" onclick="addProformaItem()" class="text-xs text-[#2CA01C] font-semibold mb-3">+ Add Line Item</button>
+        <div class="flex items-center gap-2 mb-3">
+          <label class="text-xs text-[#6B6C72]">VAT %</label>
+          <input id="pf-vat" type="number" value="15" class="border border-[#D4D7DC] p-2 rounded text-xs w-20 focus:border-[#2CA01C]">
+        </div>
+        <textarea id="pf-notes" placeholder="Terms / notes (validity, payment terms...)" class="w-full border border-[#D4D7DC] p-2 rounded text-xs mb-3 focus:border-[#2CA01C]"></textarea>
+        <button onclick="generateProforma()" class="bg-[#2CA01C] hover:bg-[#238016] text-white rounded py-2 px-6 font-semibold text-xs">Generate &amp; Preview</button>
+      </div>
+
+      <div id="proforma-print" class="printable-doc bg-white rounded-lg border border-[#D4D7DC] shadow-sm p-10 hidden">
+        <div class="flex justify-between items-start border-b border-[#ECEEF1] pb-4 mb-6">
+          <div>
+            <h1 class="text-xl font-bold text-[#393A3D]">PRIME Investment Group Plc</h1>
+            <p class="text-xs text-[#6B6C72]">Addis Ababa, Ethiopia</p>
+            <p class="text-xs text-[#6B6C72]">TIN: ______________ | Tel: 0911 220597</p>
+          </div>
+          <div class="text-right">
+            <div class="font-bold text-base text-[#2CA01C]">PROFORMA INVOICE</div>
+            <div class="text-xs">No: <span id="pf-no"></span></div>
+            <div class="text-xs">Date: <span id="pf-date"></span></div>
+          </div>
+        </div>
+        <div class="mb-4 text-xs">
+          <div><strong>Bill To:</strong> <span id="pf-out-customer"></span></div>
+          <div id="pf-out-address" class="text-[#6B6C72]"></div>
+        </div>
+        <table class="w-full text-xs border-collapse mb-4">
+          <thead><tr class="border-b-2 border-[#393A3D] text-left">
+            <th class="py-2">#</th><th>Description</th><th class="text-right">Qty</th>
+            <th class="text-right">Unit Price</th><th class="text-right">Total</th>
+          </tr></thead>
+          <tbody id="pf-out-items"></tbody>
+        </table>
+        <div class="flex justify-end mb-6">
+          <div class="w-56 text-xs">
+            <div class="flex justify-between py-1"><span>Subtotal</span><span id="pf-out-subtotal"></span></div>
+            <div class="flex justify-between py-1"><span>VAT (<span id="pf-out-vatpct"></span>%)</span><span id="pf-out-vat"></span></div>
+            <div class="flex justify-between py-2 border-t border-[#ECEEF1] font-bold"><span>Total</span><span id="pf-out-total"></span></div>
+          </div>
+        </div>
+        <div class="text-xs text-[#6B6C72] mb-8" id="pf-out-notes"></div>
+        <div class="flex justify-between text-xs pt-8">
+          <div>Prepared by: __________________</div>
+          <div>Authorized signature: __________________</div>
+        </div>
+        <button onclick="window.print()" class="no-print mt-6 bg-[#2CA01C] hover:bg-[#238016] text-white rounded py-2 px-6 font-semibold text-xs">Print / Save as PDF</button>
+      </div>
+    </section>
+
+    <!-- ---------- CUSTOMER BILLING ---------- -->
+    <section id="tab-billing" class="tab-panel hidden">
+      <div class="mb-3 no-print">
+        <div class="page-eyebrow">Data Entry</div>
+        <h2 class="font-bold text-lg text-[#393A3D]">Customer Billing</h2>
+        <p class="text-xs text-[#6B6C72]">Compile a bill from multiple deliveries — different products, quality, or destinations in one document. e.g. mixed Special &amp; Standard Morale across 2 trucks to one site and 1 truck to another.</p>
+      </div>
+
+      <div class="bg-white rounded-lg border border-[#D4D7DC] shadow-sm p-5 mb-4 no-print">
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-2 mb-3">
+          <input id="cb-customer" placeholder="Customer / Company Name" class="border border-[#D4D7DC] p-1.5 rounded text-xs focus:border-[#2CA01C]" required>
+          <input id="cb-address" placeholder="Customer Address / Phone" class="border border-[#D4D7DC] p-1.5 rounded text-xs focus:border-[#2CA01C]">
+        </div>
+        <div class="mb-3">
+          <label class="text-xs text-[#6B6C72]">Billing Date</label>
+          <input id="cb-date" type="date" class="border border-[#D4D7DC] p-1.5 rounded text-xs focus:border-[#2CA01C]">
+        </div>
+
+        <div id="cb-deliveries" class="space-y-3 mb-2"></div>
+        <button type="button" onclick="addBillingDelivery()" class="text-xs text-[#2CA01C] font-semibold mb-3">+ Add Delivery (truck / destination)</button>
+
+        <div class="flex items-center gap-2 mb-3">
+          <label class="text-xs text-[#6B6C72]">VAT %</label>
+          <input id="cb-vat" type="number" value="15" class="border border-[#D4D7DC] p-1.5 rounded w-20 text-xs focus:border-[#2CA01C]">
+        </div>
+        <textarea id="cb-notes" placeholder="Terms / notes (payment terms, etc.)" class="w-full border border-[#D4D7DC] p-1.5 rounded mb-3 text-xs focus:border-[#2CA01C]"></textarea>
+        <button onclick="generateCustomerBilling()" class="bg-[#2CA01C] hover:bg-[#238016] text-white rounded py-2 px-6 font-semibold text-xs">Generate &amp; Preview</button>
+      </div>
+
+      <div id="billing-print" class="printable-doc bg-white rounded-lg border border-[#D4D7DC] shadow-sm p-8 hidden">
+        <div class="flex justify-between items-start border-b border-[#ECEEF1] pb-4 mb-6">
+          <div>
+            <h1 class="text-lg font-bold text-[#393A3D]">PRIME Investment Group Plc</h1>
+            <p class="text-xs text-[#6B6C72]">Addis Ababa, Ethiopia</p>
+            <p class="text-xs text-[#6B6C72]">TIN: ______________ | Tel: 0911 220597</p>
+          </div>
+          <div class="text-right">
+            <div class="font-bold text-base text-[#2CA01C]">CUSTOMER BILLING</div>
+            <div class="text-xs">No: <span id="cb-out-no"></span></div>
+            <div class="text-xs">Date: <span id="cb-out-date"></span></div>
+          </div>
+        </div>
+        <div class="mb-4 text-xs">
+          <div><strong>Bill To:</strong> <span id="cb-out-customer"></span></div>
+          <div id="cb-out-address" class="text-[#6B6C72]"></div>
+        </div>
+        <div id="cb-out-deliveries"></div>
+        <div class="flex justify-end mb-6">
+          <div class="w-56 text-xs">
+            <div class="flex justify-between py-1"><span>Subtotal</span><span id="cb-out-subtotal"></span></div>
+            <div class="flex justify-between py-1"><span>VAT (<span id="cb-out-vatpct"></span>%)</span><span id="cb-out-vat"></span></div>
+            <div class="flex justify-between py-2 border-t border-[#ECEEF1] font-bold"><span>Total</span><span id="cb-out-total"></span></div>
+          </div>
+        </div>
+        <div class="text-xs text-[#6B6C72] mb-8" id="cb-out-notes"></div>
+        <div class="flex justify-between text-xs pt-8">
+          <div>Prepared by: __________________</div>
+          <div>Authorized signature: __________________</div>
+        </div>
+        <button onclick="window.print()" class="no-print mt-6 bg-[#2CA01C] hover:bg-[#238016] text-white rounded py-2 px-6 font-semibold text-xs">Print / Save as PDF</button>
+      </div>
+
+      <div class="bg-white rounded-lg border border-[#D4D7DC] shadow-sm p-5">
+        <div class="corp-card-title" id="billing-list-title">Your Recent Billings</div>
+        <div id="billing-list" class="space-y-2 text-xs"></div>
+      </div>
+    </section>
+
+    <!-- ---------- LETTERS / FORMS ---------- -->
+    <section id="tab-letters" class="tab-panel hidden">
+      <div class="bg-white rounded-lg border border-[#D4D7DC] shadow-sm p-6 mb-4 no-print">
+        <div class="page-eyebrow">Data Entry</div>
+        <h2 class="font-bold text-base mb-1 text-[#393A3D]">Letters &amp; Forms</h2>
+        <p class="text-xs text-[#6B6C72] mb-4">Choose a template to fill and print.</p>
+        <div class="flex gap-2">
+          <button onclick="showLetterTemplate('wht')" id="letter-tab-wht" class="letter-tab-btn text-xs px-3 py-1.5 rounded font-semibold border border-[#D4D7DC]">Withholding Tax Refund Request</button>
+          <button onclick="showLetterTemplate('generic')" id="letter-tab-generic" class="letter-tab-btn text-xs px-3 py-1.5 rounded font-semibold border border-[#D4D7DC]">General Letterhead Letter</button>
+        </div>
+      </div>
+
+      <!-- Withholding Tax Refund Request form -->
+      <div id="wht-form-wrap" class="bg-white rounded-lg border border-[#D4D7DC] shadow-sm p-6 mb-4 no-print hidden">
+        <h3 class="font-semibold mb-3 text-[#393A3D]">Withholding Tax Refund Request — Line Items</h3>
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-3 mb-3">
+          <input id="wht-vendor" placeholder="Vendor / Factory Name" class="border border-[#D4D7DC] p-2 rounded text-xs focus:border-[#2CA01C]" required>
+          <input id="wht-vendor-address" placeholder="Vendor Address" class="border border-[#D4D7DC] p-2 rounded text-xs focus:border-[#2CA01C]">
+          <input id="wht-vendor-tin" placeholder="Vendor TIN (optional)" class="border border-[#D4D7DC] p-2 rounded text-xs focus:border-[#2CA01C]">
+          <input id="wht-ref" placeholder="Our Reference No. (optional)" class="border border-[#D4D7DC] p-2 rounded text-xs focus:border-[#2CA01C]">
+        </div>
+        <div id="wht-items" class="space-y-2 mb-2"></div>
+        <button type="button" onclick="addWhtItem()" class="text-xs text-[#2CA01C] font-semibold mb-3">+ Add Line Item</button>
+        <textarea id="wht-notes" placeholder="Additional notes (optional)" class="w-full border border-[#D4D7DC] p-2 rounded text-xs mb-3 focus:border-[#2CA01C]"></textarea>
+        <button onclick="generateWhtLetter()" class="bg-[#2CA01C] hover:bg-[#238016] text-white rounded py-2 px-6 font-semibold text-xs">Generate &amp; Preview</button>
+      </div>
+
+      <div id="wht-print" class="printable-doc bg-white rounded-lg border border-[#D4D7DC] shadow-sm p-10 hidden">
+        <div class="mb-8">
+          <h1 class="text-lg font-bold text-[#393A3D]">PRIME Investment Group Plc</h1>
+          <p class="text-xs text-[#6B6C72]">Addis Ababa, Ethiopia</p>
+          <p class="text-xs text-[#6B6C72]">TIN: ______________ | Tel: 0911 220597</p>
+        </div>
+        <div class="text-xs mb-6">Date: <span id="wht-out-date"></span></div>
+        <div class="text-xs mb-6">
+          <div><strong>To:</strong> <span id="wht-out-vendor"></span></div>
+          <div id="wht-out-address" class="text-[#6B6C72]"></div>
+        </div>
+        <div class="text-xs mb-4">
+          <strong>Subject: Request for Refund of Withholding Tax Amount Deducted and Remitted to the Ministry of Revenue</strong>
+        </div>
+        <p class="text-xs mb-3">Dear Sir/Madam,</p>
+        <p class="text-xs mb-3">
+          This letter is to formally request a refund from your organization in respect of the amounts detailed below. In accordance with the Ethiopian Income Tax Proclamation No. 979/2016 and its withholding tax regulations, PRIME Investment Group Plc, as a withholding agent, is required to withhold the applicable percentage from payments made to suppliers of goods and remit the withheld amount directly to the Ministry of Revenue.
+        </p>
+        <p class="text-xs mb-3">
+          For the transactions listed below, your organization required full payment of the gross invoice amount without allowing the applicable withholding deduction at source. To remain compliant, PRIME Investment Group Plc has separately remitted the withholding tax due on these transactions to the Ministry of Revenue and holds the corresponding withholding tax certificate(s) as evidence. As a result, your organization has received an amount in excess of what was contractually due, and we kindly request a refund of the amounts shown below.
+        </p>
+        <table class="w-full text-xs border-collapse mb-4">
+          <thead><tr class="border-b-2 border-[#393A3D] text-left">
+            <th class="py-2">#</th><th>Date</th><th>Invoice / PO No.</th><th>Description</th>
+            <th class="text-right">Gross Amount (ETB)</th><th class="text-right">WHT %</th>
+            <th class="text-right">WHT Amount (ETB)</th><th>Certificate No.</th>
+          </tr></thead>
+          <tbody id="wht-out-items"></tbody>
+        </table>
+        <div class="flex justify-end mb-6">
+          <div class="w-64 text-xs">
+            <div class="flex justify-between py-2 border-t border-[#ECEEF1] font-bold"><span>Total Refund Requested</span><span id="wht-out-total"></span></div>
+          </div>
+        </div>
+        <p class="text-xs mb-3" id="wht-out-notes"></p>
+        <p class="text-xs mb-3">
+          We would appreciate your prompt attention to this matter and request that the refund be processed via bank transfer to our account on file, or offset against our next purchase, whichever is more convenient for your organization. Please do not hesitate to contact us should you require the supporting withholding tax certificates or further documentation.
+        </p>
+        <p class="text-xs mb-10">Thank you for your continued partnership.</p>
+        <div class="flex justify-between text-xs pt-8">
+          <div>Prepared by: __________________</div>
+          <div>Authorized signature &amp; stamp: __________________</div>
+        </div>
+        <button onclick="window.print()" class="no-print mt-6 bg-[#2CA01C] hover:bg-[#238016] text-white rounded py-2 px-6 font-semibold text-xs">Print / Save as PDF</button>
+      </div>
+
+      <!-- Generic letter form -->
+      <div id="generic-form-wrap" class="bg-white rounded-lg border border-[#D4D7DC] shadow-sm p-6 mb-4 no-print hidden">
+        <h3 class="font-semibold mb-3 text-[#393A3D]">General Letterhead Letter</h3>
+        <div class="mb-3">
+          <label class="text-xs text-[#6B6C72]">Template</label>
+          <select id="gen-template" onchange="applyLetterTemplate()" class="border border-[#D4D7DC] p-2 rounded w-full text-xs focus:border-[#2CA01C]">
+            <option value="blank">— Blank / Custom —</option>
+            <option value="offer">Employment Offer Letter</option>
+            <option value="warning">Written Warning Letter</option>
+            <option value="termination">Employment Termination Letter</option>
+            <option value="increment">Salary Increment / Promotion Letter</option>
+            <option value="employment_verification">Employment Verification Letter</option>
+            <option value="bank_reference">Bank Reference Letter</option>
+            <option value="vendor_intro">Vendor / Supplier Introduction Letter</option>
+            <option value="contract_renewal">Contract Renewal Notice</option>
+            <option value="collection">Payment Reminder / Collection Letter</option>
+          </select>
+          <p class="text-xs text-[#8D9096] mt-1">Fill in the bracketed [placeholders] in the subject/body before generating.</p>
+        </div>
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-3 mb-3">
+          <input id="gen-to" placeholder="To (Name / Organization)" class="border border-[#D4D7DC] p-2 rounded text-xs focus:border-[#2CA01C]" required>
+          <input id="gen-address" placeholder="Address (optional)" class="border border-[#D4D7DC] p-2 rounded text-xs focus:border-[#2CA01C]">
+        </div>
+        <input id="gen-subject" placeholder="Subject" class="border border-[#D4D7DC] p-2 rounded w-full mb-3 text-xs focus:border-[#2CA01C]" required>
+        <textarea id="gen-body" rows="10" placeholder="Letter body..." class="border border-[#D4D7DC] p-2 rounded w-full mb-3 text-xs focus:border-[#2CA01C]" required></textarea>
+        <button onclick="generateGenericLetter()" class="bg-[#2CA01C] hover:bg-[#238016] text-white rounded py-2 px-6 font-semibold text-xs">Generate &amp; Preview</button>
+      </div>
+
+      <div id="generic-print" class="printable-doc bg-white rounded-lg border border-[#D4D7DC] shadow-sm p-10 hidden">
+        <div class="mb-8">
+          <h1 class="text-lg font-bold text-[#393A3D]">PRIME Investment Group Plc</h1>
+          <p class="text-xs text-[#6B6C72]">Addis Ababa, Ethiopia</p>
+          <p class="text-xs text-[#6B6C72]">TIN: ______________ | Tel: 0911 220597</p>
+        </div>
+        <div class="text-xs mb-6">Date: <span id="gen-out-date"></span></div>
+        <div class="text-xs mb-6">
+          <div><strong>To:</strong> <span id="gen-out-to"></span></div>
+          <div id="gen-out-address" class="text-[#6B6C72]"></div>
+        </div>
+        <div class="text-xs mb-4"><strong>Subject: </strong><span id="gen-out-subject"></span></div>
+        <div class="text-xs mb-10 whitespace-pre-line" id="gen-out-body"></div>
+        <div class="flex justify-between text-xs pt-8">
+          <div>Prepared by: __________________</div>
+          <div>Authorized signature &amp; stamp: __________________</div>
+        </div>
+        <button onclick="window.print()" class="no-print mt-6 bg-[#2CA01C] hover:bg-[#238016] text-white rounded py-2 px-6 font-semibold text-xs">Print / Save as PDF</button>
+      </div>
+    </section>
+
+    <!-- ---------- REPOSITORY ---------- -->
+    <section id="tab-repository" class="tab-panel hidden">
+      <div class="mb-3 no-print">
+        <div class="page-eyebrow" id="repo-eyebrow">Documents</div>
+        <h2 class="font-bold text-base text-[#393A3D]">Repository</h2>
+        <p class="text-xs text-[#6B6C72] mt-1">Policies, procedures, training materials, signed contracts, and letters/proformas. Driver &amp; vehicle photos are now attached directly to the relevant trip in the Data Entry Log.</p>
+      </div>
+      <div class="bg-white rounded-lg border border-[#D4D7DC] shadow-sm p-4 mb-4 no-print">
+        <div class="flex gap-2 flex-wrap">
+          <button onclick="showRepoSubtab('letters')" id="repo-tab-letters" class="subtab-btn text-xs px-3 py-1.5 rounded font-semibold border border-[#D4D7DC]">Letters &amp; Proformas</button>
+          <button onclick="showRepoSubtab('policies')" id="repo-tab-policies" class="subtab-btn text-xs px-3 py-1.5 rounded font-semibold border border-[#D4D7DC]">Policies, Procedures &amp; Contracts</button>
+        </div>
+      </div>
+
+      <!-- Letters & Proformas subtab -->
+      <div id="repo-panel-letters" class="repo-panel hidden">
+        <div class="bg-white rounded-lg border border-[#D4D7DC] shadow-sm p-6">
+          <h3 class="font-semibold mb-3 text-[#393A3D]">Saved Proformas</h3>
+          <div id="repo-proformas" class="space-y-2 text-xs mb-6"></div>
+          <p class="text-xs text-[#6B6C72]">Withholding tax and general letters are generated fresh in the <strong>Letters</strong> tab; use "Print / Save as PDF" there, then upload the signed copy below if you want it archived here.</p>
+          <div class="mt-4 border-t border-[#ECEEF1] pt-4">
+            <h4 class="font-semibold text-xs mb-2 text-[#393A3D]">Upload a signed letter / proforma</h4>
+            <form id="repo-letters-form" class="grid grid-cols-1 md:grid-cols-3 gap-2">
+              <input id="repo-letters-title" placeholder="Title (e.g. Proforma - Acme PLC)" class="border border-[#D4D7DC] p-2 rounded text-xs md:col-span-2 focus:border-[#2CA01C]" required>
+              <input id="repo-letters-file" type="file" class="border border-[#D4D7DC] p-2 rounded text-xs focus:border-[#2CA01C]" required>
+              <button class="md:col-span-3 bg-[#2CA01C] hover:bg-[#238016] text-white rounded py-2 font-semibold text-xs">Upload</button>
+            </form>
+            <div id="repo-letters-files" class="space-y-2 text-xs mt-3"></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Policies, Procedures & Contracts subtab -->
+      <div id="repo-panel-policies" class="repo-panel hidden">
+        <div class="bg-white rounded-lg border border-[#D4D7DC] shadow-sm p-6">
+          <h3 class="font-semibold mb-3 text-[#393A3D]">Policies, Procedures, Training &amp; Signed Contracts</h3>
+          <form id="repo-policies-form" class="grid grid-cols-1 md:grid-cols-3 gap-2 mb-4 no-print">
+            <input id="repo-policies-title" placeholder="Title (e.g. Sales Policy v1.0, Warehouse Lease Contract)" class="border border-[#D4D7DC] p-2 rounded text-xs md:col-span-2 focus:border-[#2CA01C]" required>
+            <input id="repo-policies-file" type="file" class="border border-[#D4D7DC] p-2 rounded text-xs focus:border-[#2CA01C]" required>
+            <button class="md:col-span-3 bg-[#2CA01C] hover:bg-[#238016] text-white rounded py-2 font-semibold text-xs">Upload</button>
+          </form>
+          <p id="repo-policies-upload-confirm" class="hidden text-xs bg-emerald-50 text-emerald-800 border border-emerald-200 rounded p-3 mb-2"></p>
+          <div id="repo-policies-files-wrap">
+            <div id="repo-policies-files" class="space-y-2 text-xs"></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ---------- HR: EMPLOYEE DIRECTORY ---------- -->
+    <section id="tab-hremployees" class="tab-panel hidden">
+      <div class="mb-3 no-print">
+        <div class="page-eyebrow">Human Resources</div>
+        <h2 class="font-bold text-lg text-[#393A3D]">Employee Directory</h2>
+      </div>
+      <div class="bg-white rounded-lg border border-[#D4D7DC] shadow-sm p-5 mb-4 no-print">
+        <h3 class="font-bold text-sm mb-3 text-[#393A3D]" id="emp-form-title">Add / Update Employee</h3>
+        <form id="employee-form" class="grid grid-cols-1 md:grid-cols-3 gap-2">
+          <input id="emp-name" placeholder="Full Name" class="border border-[#D4D7DC] p-1.5 rounded text-xs focus:border-[#2CA01C]" required>
+          <input id="emp-position" placeholder="Position" class="border border-[#D4D7DC] p-1.5 rounded text-xs focus:border-[#2CA01C]" required>
+          <select id="emp-department" class="border border-[#D4D7DC] p-1.5 rounded text-xs focus:border-[#2CA01C]">
+            <option>Sales</option><option>Data Entry</option><option>Finance &amp; Accounting</option>
+            <option>Human Resources</option><option>Management</option><option>Warehouse / Operations</option><option>Other</option>
+          </select>
+          <select id="emp-type" class="border border-[#D4D7DC] p-1.5 rounded text-xs focus:border-[#2CA01C]">
+            <option>Full-Time</option><option>Part-Time</option><option>Contract</option><option>Intern</option>
+          </select>
+          <div>
+            <label class="text-xs text-[#6B6C72]">Hire Date</label>
+            <input id="emp-hire-date" type="date" class="border border-[#D4D7DC] p-1.5 rounded w-full text-xs focus:border-[#2CA01C]">
+          </div>
+          <select id="emp-status" class="border border-[#D4D7DC] p-1.5 rounded text-xs focus:border-[#2CA01C]">
+            <option>Active</option><option>On Leave</option><option>Terminated</option>
+          </select>
+          <input id="emp-phone" placeholder="Phone" class="border border-[#D4D7DC] p-1.5 rounded text-xs focus:border-[#2CA01C]">
+          <input id="emp-email" type="email" placeholder="Email" class="border border-[#D4D7DC] p-1.5 rounded text-xs focus:border-[#2CA01C]">
+          <input id="emp-emergency" placeholder="Emergency Contact (name & phone)" class="border border-[#D4D7DC] p-1.5 rounded text-xs focus:border-[#2CA01C]">
+          <input id="emp-driver-license" placeholder="Driver License # (if applicable)" class="border border-[#D4D7DC] p-1.5 rounded text-xs focus:border-[#2CA01C]">
+          <select id="emp-education" class="border border-[#D4D7DC] p-1.5 rounded text-xs focus:border-[#2CA01C]">
+            <option value="">Education Level (optional)</option>
+            <option>Below Grade 10</option>
+            <option>Grade 10 Complete</option>
+            <option>Grade 12 / Preparatory Complete</option>
+            <option>TVET / Diploma</option>
+            <option>Bachelor's Degree</option>
+            <option>Master's Degree</option>
+            <option>PhD</option>
+            <option>Other</option>
+          </select>
+          <div></div>
+          <textarea id="emp-notes" placeholder="Notes (optional)" class="border border-[#D4D7DC] p-1.5 rounded md:col-span-3 text-xs focus:border-[#2CA01C]"></textarea>
+          <div class="md:col-span-3 border-t border-[#ECEEF1] pt-2 mt-1">
+            <div class="text-xs font-bold uppercase tracking-wide text-[#6B6C72] mb-2">Documents (optional — uploaded on save)</div>
+          </div>
+          <div>
+            <label class="text-xs text-[#6B6C72]">Driver License Photo</label>
+            <input id="emp-file-license" type="file" class="border border-[#D4D7DC] p-1.5 rounded w-full text-xs">
+          </div>
+          <div>
+            <label class="text-xs text-[#6B6C72]">CV / Resume</label>
+            <input id="emp-file-cv" type="file" class="border border-[#D4D7DC] p-1.5 rounded w-full text-xs">
+          </div>
+          <div>
+            <label class="text-xs text-[#6B6C72]">Other HR / Legal Document</label>
+            <input id="emp-file-other" type="file" class="border border-[#D4D7DC] p-1.5 rounded w-full text-xs">
+          </div>
+          <div class="md:col-span-3 flex gap-2 mt-1">
+            <button class="flex-1 bg-[#2CA01C] hover:bg-[#238016] text-white rounded py-2 font-semibold text-xs" id="employee-submit-btn">Save Employee</button>
+            <button type="button" onclick="cancelEmployeeEdit()" id="employee-cancel-btn" class="hidden px-4 rounded border border-[#D4D7DC] font-semibold text-[#393A3D] text-xs">Cancel</button>
+          </div>
+        </form>
+        <div id="emp-doc-status" class="text-xs text-[#6B6C72] mt-2"></div>
+      </div>
+      <div class="bg-white rounded-lg border border-[#D4D7DC] shadow-sm p-5">
+        <div class="flex justify-between items-center mb-3">
+          <div class="corp-card-title mb-0">All Employees</div>
+          <button onclick="downloadEmployeesCSV()" class="text-xs text-[#2CA01C] font-semibold underline no-print">Download CSV</button>
+        </div>
+        <div id="employee-list" class="text-xs"></div>
+      </div>
+    </section>
+
+    <!-- ---------- HR: LEAVE REQUESTS ---------- -->
+    <section id="tab-hrleave" class="tab-panel hidden">
+      <div class="mb-3 no-print">
+        <div class="page-eyebrow">Human Resources</div>
+        <h2 class="font-bold text-lg text-[#393A3D]">Leave Requests</h2>
+      </div>
+      <div class="bg-white rounded-lg border border-[#D4D7DC] shadow-sm p-5 mb-4 no-print">
+        <form id="leave-form" class="grid grid-cols-1 md:grid-cols-3 gap-2">
+          <input id="lv-employee" list="employee-namelist" placeholder="Employee Name" class="border border-[#D4D7DC] p-1.5 rounded text-xs focus:border-[#2CA01C]" required>
+          <datalist id="employee-namelist"></datalist>
+          <select id="lv-type" class="border border-[#D4D7DC] p-1.5 rounded text-xs focus:border-[#2CA01C]">
+            <option>Annual</option><option>Sick</option><option>Maternity</option><option>Paternity</option><option>Unpaid</option><option>Other</option>
+          </select>
+          <div>
+            <label class="text-xs text-[#6B6C72]">Days Requested</label>
+            <input id="lv-days" type="number" step="0.5" class="border border-[#D4D7DC] p-1.5 rounded w-full text-xs bg-[#F4F5F8]" readonly>
+          </div>
+          <div>
+            <label class="text-xs text-[#6B6C72]">Start Date</label>
+            <input id="lv-start" type="date" class="border border-[#D4D7DC] p-1.5 rounded w-full text-xs focus:border-[#2CA01C]" required onchange="updateLeaveDays()">
+          </div>
+          <div>
+            <label class="text-xs text-[#6B6C72]">End Date</label>
+            <input id="lv-end" type="date" class="border border-[#D4D7DC] p-1.5 rounded w-full text-xs focus:border-[#2CA01C]" required onchange="updateLeaveDays()">
+          </div>
+          <div></div>
+          <textarea id="lv-reason" placeholder="Reason" class="border border-[#D4D7DC] p-1.5 rounded md:col-span-3 text-xs focus:border-[#2CA01C]"></textarea>
+          <div class="md:col-span-3 flex gap-2 mt-1">
+            <button class="flex-1 bg-[#2CA01C] hover:bg-[#238016] text-white rounded py-2 font-semibold text-xs" id="leave-submit-btn">Submit Leave Request</button>
+            <button type="button" onclick="cancelLeaveEdit()" id="leave-cancel-btn" class="hidden px-4 rounded border border-[#D4D7DC] font-semibold text-[#393A3D] text-xs">Cancel</button>
+          </div>
+        </form>
+      </div>
+      <div class="bg-white rounded-lg border border-[#D4D7DC] shadow-sm p-5">
+        <div class="corp-card-title">All Leave Requests</div>
+        <div id="leave-list" class="text-xs"></div>
+      </div>
+    </section>
+
+    <!-- ---------- HR: PERFORMANCE REVIEWS ---------- -->
+    <section id="tab-hrperformance" class="tab-panel hidden">
+      <div class="mb-3 no-print">
+        <div class="page-eyebrow">Human Resources</div>
+        <h2 class="font-bold text-lg text-[#393A3D]">Performance Reviews</h2>
+      </div>
+      <div class="bg-white rounded-lg border border-[#D4D7DC] shadow-sm p-5 mb-4 no-print">
+        <form id="perf-form" class="grid grid-cols-1 md:grid-cols-3 gap-2">
+          <input id="perfv-employee" list="employee-namelist" placeholder="Employee Name" class="border border-[#D4D7DC] p-1.5 rounded text-xs focus:border-[#2CA01C]" required>
+          <input id="perfv-reviewer" placeholder="Reviewer Name" class="border border-[#D4D7DC] p-1.5 rounded text-xs focus:border-[#2CA01C]" required>
+          <div>
+            <label class="text-xs text-[#6B6C72]">Review Date</label>
+            <input id="perfv-date" type="date" class="border border-[#D4D7DC] p-1.5 rounded w-full text-xs focus:border-[#2CA01C]" required>
+          </div>
+          <input id="perfv-period" placeholder="Review Period (e.g. Q3 2026)" class="border border-[#D4D7DC] p-1.5 rounded text-xs focus:border-[#2CA01C]">
+          <select id="perfv-rating" class="border border-[#D4D7DC] p-1.5 rounded text-xs focus:border-[#2CA01C]">
+            <option>Exceeds Expectations</option><option>Meets Expectations</option><option>Needs Improvement</option><option>Unsatisfactory</option>
+          </select>
+          <div></div>
+          <textarea id="perfv-strengths" placeholder="Strengths" class="border border-[#D4D7DC] p-1.5 rounded md:col-span-3 text-xs focus:border-[#2CA01C]"></textarea>
+          <textarea id="perfv-improve" placeholder="Areas for Improvement" class="border border-[#D4D7DC] p-1.5 rounded md:col-span-3 text-xs focus:border-[#2CA01C]"></textarea>
+          <textarea id="perfv-goals" placeholder="Goals for Next Period" class="border border-[#D4D7DC] p-1.5 rounded md:col-span-3 text-xs focus:border-[#2CA01C]"></textarea>
+          <div class="md:col-span-3 flex gap-2 mt-1">
+            <button class="flex-1 bg-[#2CA01C] hover:bg-[#238016] text-white rounded py-2 font-semibold text-xs" id="perf-submit-btn">Save Review</button>
+            <button type="button" onclick="cancelPerfEdit()" id="perf-cancel-btn" class="hidden px-4 rounded border border-[#D4D7DC] font-semibold text-[#393A3D] text-xs">Cancel</button>
+          </div>
+        </form>
+      </div>
+      <div class="bg-white rounded-lg border border-[#D4D7DC] shadow-sm p-5">
+        <div class="corp-card-title">All Performance Reviews</div>
+        <div id="perf-list" class="text-xs"></div>
+      </div>
+    </section>
+
+    <!-- ---------- HR: DISCIPLINARY ACTIONS ---------- -->
+    <section id="tab-hrdisciplinary" class="tab-panel hidden">
+      <div class="mb-3 no-print">
+        <div class="page-eyebrow">Human Resources</div>
+        <h2 class="font-bold text-lg text-[#393A3D]">Disciplinary Actions</h2>
+      </div>
+      <div class="bg-white rounded-lg border border-[#D4D7DC] shadow-sm p-5 mb-4 no-print">
+        <form id="disc-form" class="grid grid-cols-1 md:grid-cols-3 gap-2">
+          <input id="dc-employee" list="employee-namelist" placeholder="Employee Name" class="border border-[#D4D7DC] p-1.5 rounded text-xs focus:border-[#2CA01C]" required>
+          <div>
+            <label class="text-xs text-[#6B6C72]">Date</label>
+            <input id="dc-date" type="date" class="border border-[#D4D7DC] p-1.5 rounded w-full text-xs focus:border-[#2CA01C]" required>
+          </div>
+          <select id="dc-issue" class="border border-[#D4D7DC] p-1.5 rounded text-xs focus:border-[#2CA01C]">
+            <option>Attendance</option><option>Conduct</option><option>Performance</option><option>Policy Violation</option><option>Other</option>
+          </select>
+          <select id="dc-action" class="border border-[#D4D7DC] p-1.5 rounded text-xs focus:border-[#2CA01C]">
+            <option>Verbal Warning</option><option>Written Warning</option><option>Suspension</option><option>Termination</option><option>Other</option>
+          </select>
+          <input id="dc-issued-by" placeholder="Issued By" class="border border-[#D4D7DC] p-1.5 rounded text-xs focus:border-[#2CA01C]" required>
+          <div></div>
+          <textarea id="dc-description" placeholder="Description of Issue" class="border border-[#D4D7DC] p-1.5 rounded md:col-span-3 text-xs focus:border-[#2CA01C]" required></textarea>
+          <div class="md:col-span-3 flex gap-2 mt-1">
+            <button class="flex-1 bg-[#2CA01C] hover:bg-[#238016] text-white rounded py-2 font-semibold text-xs" id="disc-submit-btn">Save Record</button>
+            <button type="button" onclick="cancelDiscEdit()" id="disc-cancel-btn" class="hidden px-4 rounded border border-[#D4D7DC] font-semibold text-[#393A3D] text-xs">Cancel</button>
+          </div>
+        </form>
+      </div>
+      <div class="bg-white rounded-lg border border-[#D4D7DC] shadow-sm p-5">
+        <div class="corp-card-title">All Disciplinary Records</div>
+        <div id="disc-list" class="text-xs"></div>
+      </div>
+    </section>
+
+    <!-- ---------- HR REPORTS (aggregate, view-only) ---------- -->
+    <section id="tab-hrreports" class="tab-panel hidden">
+      <div class="mb-3 no-print">
+        <div class="page-eyebrow">Reports</div>
+        <h2 class="font-bold text-lg text-[#393A3D]">HR Reports</h2>
+        <p class="text-xs text-[#6B6C72]">Aggregate workforce metrics. Individual disciplinary and performance records are only visible on the HR pages themselves.</p>
+      </div>
+      <div class="grid grid-cols-1 lg:grid-cols-2 gap-4">
+        <div class="bg-white rounded-lg border border-[#D4D7DC] shadow-sm p-5">
+          <div class="corp-card-title">Headcount</div>
+          <div class="stat-line"><span class="label">Total Employees</span><span class="value" id="hr-total-headcount">—</span></div>
+          <div class="stat-line"><span class="label">Active</span><span class="value" id="hr-active-count">—</span></div>
+          <div class="stat-line"><span class="label">On Leave</span><span class="value" id="hr-onleave-count">—</span></div>
+          <div class="stat-line"><span class="label">Terminated (all-time)</span><span class="value" id="hr-terminated-count">—</span></div>
+          <div class="mt-3 pt-2 border-t border-[#ECEEF1]">
+            <div class="text-xs font-semibold text-[#6B6C72] mb-1">By Department</div>
+            <div id="hr-dept-breakdown" class="text-xs"></div>
+          </div>
+        </div>
+        <div class="bg-white rounded-lg border border-[#D4D7DC] shadow-sm p-5">
+          <div class="corp-card-title">Leave &amp; Compliance</div>
+          <div class="stat-line"><span class="label">Pending Leave Requests</span><span class="value" id="hr-pending-leave">—</span></div>
+          <div class="stat-line"><span class="label">Approved Leave (this period)</span><span class="value" id="hr-approved-leave">—</span></div>
+          <div class="stat-line"><span class="label">Disciplinary Actions (this period)</span><span class="value" id="hr-disc-count">—</span></div>
+          <div class="stat-line"><span class="label">Performance Reviews (this period)</span><span class="value" id="hr-perf-count">—</span></div>
+        </div>
+      </div>
+    </section>
+
     <!-- ---------- USERS (admin only) ---------- -->
     <section id="tab-users" class="tab-panel hidden">
-      <div class="bg-white rounded-lg shadow-sm p-6">
+      <div class="bg-white rounded-lg border border-[#D4D7DC] shadow-sm p-6">
         <div class="page-eyebrow">Administration</div>
-        <h2 class="font-bold text-base mb-4">Users &amp; Roles</h2>
-        <p class="text-xs text-slate-500 mb-4">Create new logins in Supabase Dashboard → Authentication → Users. New accounts default to "data_entry" — change their role below.</p>
+        <h2 class="font-bold text-base mb-4 text-[#393A3D]">Users &amp; Roles</h2>
+        <p class="text-xs text-[#6B6C72] mb-4">Create new logins in Supabase Dashboard → Authentication → Users. New accounts default to "data_entry" — change their role below.</p>
         <div id="user-list" class="space-y-2 text-xs"></div>
       </div>
     </section>
@@ -570,7 +1445,6 @@
   </div>
   </main>
 </div>
-
 <script>
 // ---- Supabase project connection ----
 const SUPABASE_URL = 'https://jqdsgtbkyxbjgeqtdsdy.supabase.co';
@@ -581,17 +1455,18 @@ let currentUser = null;
 let currentRole = null;
 
 const ROLE_TABS = {
-  admin:         ['overview','sales','report','salestargets','tripcost','visitreport','stockreport','dataentry','expenseledger','proforma','billing','letters','repository','hremployees','hrleave','hrperformance','hrdisciplinary','hrreports','users'],
+  admin:         ['overview','mqreport','sales','report','salestargets','tripcost','visitreport','stockreport','dataentry','expenseledger','proforma','billing','letters','repository','hremployees','hrleave','hrperformance','hrdisciplinary','hrreports','users'],
   data_entry:    ['dataentry','repository'],
-  accounting:    ['overview','stockreport','dataentry','expenseledger','letters','billing','repository'],
+  accounting:    ['overview','mqreport','stockreport','dataentry','expenseledger','letters','billing','repository'],
   sales:         ['sales','salestargets','tripcost','visitreport','proforma'],
   sales_manager: ['report','salestargets'],
-  management:    ['overview','stockreport','expenseledger','hrreports'],
+  management:    ['overview','mqreport','stockreport','expenseledger','hrreports'],
   hr:            ['hremployees','hrleave','hrperformance','hrdisciplinary','hrreports']
 };
 
 const NAV_TREE = [
   { id: 'overview',      label: 'Dashboard Summary' },
+  { id: 'mqreport',      label: 'Monthly / Quarterly Report' },
   { id: 'stockreport',   label: 'Stock Report & Balances' },
   { id: 'expenseledger', label: 'Expense Ledger' },
   { type: 'label', text: 'Sales' },
@@ -617,12 +1492,13 @@ const NAV_TREE = [
 const DEPARTMENTS = [
   { id: 'sales',      label: 'Sales Department',        desc: 'CRM, trip planning, cost requests & proforma',     tabs: ['sales','report','salestargets','tripcost','visitreport','proforma'] },
   { id: 'dataentry',  label: 'Data Entry',               desc: 'Log stock movements, expenses & upload documents', tabs: ['dataentry','repository'] },
-  { id: 'finance',    label: 'Finance & Accounting',     desc: 'Stock report, expense ledger, billing, letters',   tabs: ['overview','stockreport','expenseledger','dataentry','letters','billing','repository'] },
+  { id: 'finance',    label: 'Finance & Accounting',     desc: 'Stock report, expense ledger, billing, letters',   tabs: ['overview','mqreport','stockreport','expenseledger','dataentry','letters','billing','repository'] },
   { id: 'hr',         label: 'Human Resources',          desc: 'Employee records, leave, performance, discipline', tabs: ['hremployees','hrleave','hrperformance','hrdisciplinary','hrreports'] },
-  { id: 'management', label: 'Management / Executive',   desc: 'Dashboards, reports & company-wide oversight',     tabs: ['overview','stockreport','expenseledger','hrreports'] },
+  { id: 'management', label: 'Management / Executive',   desc: 'Dashboards, reports & company-wide oversight',     tabs: ['overview','mqreport','stockreport','expenseledger','hrreports'] },
   { id: 'admin',      label: 'Administration',           desc: 'Full system access & user management',            tabs: NAV_TREE.filter(e => e.id).map(e => e.id) }
 ];
 
+// ---- Chart of Accounts ----
 const CHART_OF_ACCOUNTS = {
   'Direct Cost / COGS': [
     'Raw Material Purchases','Direct Labor / Production Wages','Freight-In / Inbound Transport',
@@ -636,588 +1512,41 @@ const CHART_OF_ACCOUNTS = {
     'Customer Entertainment','Samples & Promotional Materials','Trade Show / Exhibition Costs'
   ],
   'Administrative / G&A': [
-    'Office Rent','Leasehold Improvements (Renovations)','Utilities (Electricity & Water)',
-    'Telephone & Internet','Office Supplies & Stationery','Professional Fees (Legal & Audit)',
-    'Bank Charges & Transfer Fees','Licenses, Permits & Registration','Property Insurance',
-    'Vehicle Fuel & Oil (Admin)','Vehicle Repair & Maintenance','Depreciation Expense',
-    'Amortization Expense','Other Administrative Expenses'
+    'Office Rent','Leasehold Improvements (Renovation)','Utilities – Electricity','Utilities – Water','Utilities (Electricity & Water)','Utilities – Internet & Telephone',
+    'Office Supplies & Stationery','Professional Fees (Legal, Audit, Tax)','Bank Charges & Service Fees',
+    'Insurance (Property, Vehicle, Liability)','Repair & Maintenance – Office','Janitorial & Cleaning Supplies',
+    'Security Services','Subscriptions & Software Licenses','Licenses, Permits & Registration Fees',
+    'Depreciation & Amortization','Miscellaneous Expense'
+  ],
+  'Personnel / Payroll': [
+    'Salaries & Wages – Admin','Salaries & Wages – Sales','Pension Expense (Employer 11%)',
+    'Staff Per Diem & Allowance','Staff Training & Development','Employee Medical & Welfare',
+    'Severance & Compensation'
   ]
 };
 
-// UI and Navigation Logic Initialization
-document.addEventListener('DOMContentLoaded', () => {
-  populateExpenseCategorySelect();
-  checkSession();
-});
-
-function populateExpenseCategorySelect() {
-  const sel = document.getElementById('exp-category');
-  if (!sel) return;
-  sel.innerHTML = '';
-  Object.entries(CHART_OF_ACCOUNTS).forEach(([grp, cats]) => {
-    const og = document.createElement('optgroup');
-    og.label = grp;
-    cats.forEach(c => {
+function populateExpenseCategoryDropdown() {
+  const select = document.getElementById('exp-category');
+  if (!select) return;
+  select.innerHTML = '';
+  for (const [group, categories] of Object.entries(CHART_OF_ACCOUNTS)) {
+    const optgroup = document.createElement('optgroup');
+    optgroup.label = group;
+    categories.forEach(cat => {
       const opt = document.createElement('option');
-      opt.value = c;
-      opt.textContent = c;
-      og.appendChild(opt);
+      opt.value = cat;
+      opt.textContent = cat;
+      optgroup.appendChild(opt);
     });
-    sel.appendChild(og);
-  });
-}
-
-async function checkSession() {
-  const { data: { session } } = await sb.auth.getSession();
-  if (session) {
-    currentUser = session.user;
-    await fetchRole();
-    showLandingView();
-  } else {
-    document.getElementById('login-view').classList.remove('hidden');
-    document.getElementById('app-view').classList.add('hidden');
-    document.getElementById('landing-view').classList.add('hidden');
+    select.appendChild(optgroup);
   }
 }
 
-async function fetchRole() {
-  const { data } = await sb.from('user_roles').select('role').eq('user_id', currentUser.id).single();
-  currentRole = data ? data.role : 'data_entry';
-}
-
-function showLandingView() {
-  document.getElementById('login-view').classList.add('hidden');
-  document.getElementById('app-view').classList.add('hidden');
-  const landing = document.getElementById('landing-view');
-  landing.classList.remove('hidden');
-
-  const grid = document.getElementById('landing-grid');
-  grid.innerHTML = '';
-
-  const allowedTabs = ROLE_TABS[currentRole] || [];
-  DEPARTMENTS.forEach(dept => {
-    const hasAccess = dept.tabs.some(t => allowedTabs.includes(t));
-    if (!hasAccess) return;
-
-    const card = document.createElement('div');
-    card.className = 'bg-white p-6 rounded-lg border border-slate-200 shadow-sm cursor-pointer hover:border-[#2555c7] transition';
-    card.innerHTML = `
-      <h3 class="font-bold text-sm text-[#0f2f4f] mb-1">${dept.label}</h3>
-      <p class="text-xs text-slate-500 mb-4">${dept.desc}</p>
-      <span class="text-xs font-semibold text-[#2555c7]">Enter Workspace &rarr;</span>
-    `;
-    card.onclick = () => openDepartment(dept);
-    grid.appendChild(card);
-  });
-}
-
-function openDepartment(dept) {
-  document.getElementById('landing-view').classList.add('hidden');
-  document.getElementById('app-view').classList.remove('hidden');
-  document.getElementById('app-view').classList.add('flex');
-  document.getElementById('current-dept-label').textContent = dept.label;
-
-  buildSidebarNav(dept.tabs);
-  const firstTab = dept.tabs.find(t => (ROLE_TABS[currentRole] || []).includes(t));
-  if (firstTab) switchTab(firstTab);
-}
-
-function buildSidebarNav(activeDeptTabs) {
-  const nav = document.getElementById('sidebar-nav');
-  nav.innerHTML = '';
-
-  const allowedTabs = ROLE_TABS[currentRole] || [];
-
-  NAV_TREE.forEach(item => {
-    if (item.type === 'label') {
-      const lbl = document.createElement('div');
-      lbl.className = 'text-[10px] uppercase font-bold text-slate-500 tracking-wider pt-3 pb-1 px-3';
-      lbl.textContent = item.text;
-      nav.appendChild(lbl);
-      return;
-    }
-
-    if (!allowedTabs.includes(item.id) || !activeDeptTabs.includes(item.id)) return;
-
-    const btn = document.createElement('button');
-    btn.className = `nav-link ${item.indent ? 'nav-link-indent' : ''}`;
-    btn.dataset.tab = item.id;
-    btn.textContent = item.label;
-    btn.onclick = () => switchTab(item.id);
-    nav.appendChild(btn);
-  });
-}
-
-function switchTab(tabId) {
-  document.querySelectorAll('.tab-panel').forEach(p => p.classList.add('hidden'));
-  document.querySelectorAll('.nav-link').forEach(l => l.classList.remove('active'));
-
-  const targetPanel = document.getElementById(`tab-${tabId}`);
-  if (targetPanel) targetPanel.classList.remove('hidden');
-
-  const activeNav = document.querySelector(`.nav-link[data-tab="${tabId}"]`);
-  if (activeNav) activeNav.classList.add('active');
-
-  // Load section-specific data
-  if (tabId === 'overview') { loadOverview(); loadBoardReport(); loadIncomeTax(); }
-  else if (tabId === 'expenseledger') { loadExpenseLedger(); }
-  else if (tabId === 'stockreport') { loadStockReport(); }
-}
-
-async function loadIncomeTax() {
-  const plTable = document.getElementById('tax-table-pl');
-  const vatTable = document.getElementById('tax-table-vat');
-  if (!plTable || !vatTable) return;
-
-  plTable.innerHTML = `<tr><td class="py-2 text-slate-400">Loading tax calculations...</td></tr>`;
-  vatTable.innerHTML = `<tr><td class="py-2 text-slate-400">Loading tax calculations...</td></tr>`;
-
-  // Standard output rendering logic for tax obligations
-  plTable.innerHTML = `
-    <tr class="border-b"><td class="py-1.5">Gross Revenue (Sales)</td><td class="py-1.5 text-right font-semibold">ETB 0.00</td></tr>
-    <tr class="border-b"><td class="py-1.5">Cost of Goods Sold (COGS)</td><td class="py-1.5 text-right text-amber-700">(ETB 0.00)</td></tr>
-    <tr class="border-b font-semibold"><td class="py-1.5">Gross Operating Income</td><td class="py-1.5 text-right">ETB 0.00</td></tr>
-    <tr class="border-b"><td class="py-1.5">Deductible Operating Expenses</td><td class="py-1.5 text-right text-amber-700">(ETB 0.00)</td></tr>
-    <tr class="font-bold text-sm"><td class="py-2">Taxable Net Income</td><td class="py-2 text-right text-[#0f2f4f]">ETB 0.00</td></tr>
-  `;
-
-  vatTable.innerHTML = `
-    <tr class="border-b"><td class="py-1.5">Output VAT Collected (15%)</td><td class="py-1.5 text-right">ETB 0.00</td></tr>
-    <tr class="border-b"><td class="py-1.5">Input VAT Paid (15%)</td><td class="py-1.5 text-right">(ETB 0.00)</td></tr>
-    <tr class="border-b font-semibold"><td class="py-1.5">Net VAT Obligation / (Credit)</td><td class="py-1.5 text-right text-blue-700">ETB 0.00</td></tr>
-    <tr class="font-bold text-sm"><td class="py-2">Est. Corporate Income Tax (30%)</td><td class="py-2 text-right text-emerald-700">ETB 0.00</td></tr>
-  `;
-}
-
-async function loadOverview() {
-  document.getElementById('overview-summary-callout').innerHTML = `
-    <div class="metric-label">Executive Health Check</div>
-    <div class="text-xl font-bold mt-1">PRIME Group Operations Normal</div>
-    <div class="text-xs text-slate-300 mt-1">All core databases are synced and operating without error.</div>
-  `;
-}
-
-async function loadBoardReport() {
-  const narrative = document.getElementById('board-report-narrative');
-  if (narrative) {
-    narrative.textContent = 'Operational performance metrics remain stable across the primary branches (Kolfe and Mesalemya). Stock tracking is active and expense ledger lines are fully accessible for auditing.';
-  }
-}
-
-async function loadExpenseLedger() {
-  const tbody = document.getElementById('expense-list');
-  if (!tbody) return;
-  tbody.innerHTML = `<tr><td colspan="6" class="py-3 text-center text-slate-400">No recent ledger records retrieved. Logged entries will render here.</td></tr>`;
-}
-
-async function loadStockReport() {
-  const tbody = document.getElementById('ledger-list');
-  if (!tbody) return;
-  tbody.innerHTML = `<tr><td colspan="14" class="py-3 text-center text-slate-400">Stock log initialized. Stock transfers and store balances will populate upon record creation.</td></tr>`;
-}
-
-function switchDepartment() {
-  showLandingView();
-}
-
-function toggleSidebar() {
-  const sb = document.getElementById('sidebar');
-  const ov = document.getElementById('sidebar-overlay');
-  sb.classList.toggle('open');
-  ov.classList.toggle('hidden');
-}
-
-async function signOut() {
-  await sb.auth.signOut();
-  window.location.reload();
-}
-</script>
-  <script>
-// ============================================================================
-// CORE APPLICATION LOGIC & SUPABASE INTEGRATION
-// ============================================================================
-
-// --- Global Form Controls & State ---
-let editingExpenseId = null;
-let editingStockId = null;
-let editingLedgerId = null;
-
-// --- Event Listeners for Forms ---
-document.getElementById('login-form')?.addEventListener('submit', async (e) => {
-  e.preventDefault();
-  const email = document.getElementById('login-email').value;
-  const password = document.getElementById('login-password').value;
-  const errEl = document.getElementById('login-error');
-  errEl.classList.add('hidden');
-
-  const { data, error } = await sb.auth.signInWithPassword({ email, password });
-  if (error) {
-    errEl.textContent = error.message;
-    errEl.classList.remove('hidden');
-    return;
-  }
-  currentUser = data.user;
-  await fetchRole();
-  showLandingView();
+// Initializer
+document.addEventListener('DOMContentLoaded', () => {
+  populateExpenseCategoryDropdown();
+  // Application authentication & session binding state initialized here
 });
-
-document.getElementById('ledger-form')?.addEventListener('submit', async (e) => {
-  e.preventDefault();
-  const btn = document.getElementById('ledger-submit-btn');
-  btn.disabled = true;
-  btn.textContent = 'Saving...';
-
-  const payload = {
-    date: document.getElementById('lg-date').value,
-    purchased_by: document.getElementById('lg-purchased-by').value,
-    factory_purchase_qty: parseFloat(document.getElementById('lg-factory-qty').value) || 0,
-    unit_purchase_price: parseFloat(document.getElementById('lg-purchase-price').value) || 0,
-    shipped_to_kolfe_qty: parseFloat(document.getElementById('lg-shipped-kolfe').value) || 0,
-    kolfe_to_mesalemya_qty: parseFloat(document.getElementById('lg-kolfe-mes').value) || 0,
-    sales_kolfe_qty: parseFloat(document.getElementById('lg-sales-kolfe').value) || 0,
-    sales_mesalemya_qty: parseFloat(document.getElementById('lg-sales-mes').value) || 0,
-    sold_by: document.getElementById('lg-sold-by').value,
-    unit_sale_price: parseFloat(document.getElementById('lg-sale-price').value) || 0,
-    item_notes: document.getElementById('lg-notes').value,
-    driver_name: document.getElementById('lg-driver-name').value,
-    driver_license: document.getElementById('lg-driver-license').value,
-    vehicle_plate: document.getElementById('lg-vehicle-plate').value,
-    created_by: currentUser.id
-  };
-
-  try {
-    if (editingLedgerId) {
-      await sb.from('plywood_ledger').update(payload).eq('id', editingLedgerId);
-    } else {
-      await sb.from('plywood_ledger').insert([payload]);
-    }
-    cancelLedgerEdit();
-    loadMyLedgerEntries();
-    alert('Stock movement logged successfully!');
-  } catch (err) {
-    alert('Error saving record: ' + err.message);
-  } finally {
-    btn.disabled = false;
-    btn.textContent = 'Submit Stock Entry';
-  }
-});
-
-document.getElementById('expense-form')?.addEventListener('submit', async (e) => {
-  e.preventDefault();
-  const btn = document.getElementById('expense-submit-btn');
-  btn.disabled = true;
-  btn.textContent = 'Saving...';
-
-  const payload = {
-    category: document.getElementById('exp-category').value,
-    amount: parseFloat(document.getElementById('exp-amount').value) || 0,
-    location: document.getElementById('exp-location').value,
-    paid_by: document.getElementById('exp-paidby').value,
-    description: document.getElementById('exp-desc').value,
-    created_by: currentUser.id
-  };
-
-  try {
-    if (editingExpenseId) {
-      await sb.from('expenses').update(payload).eq('id', editingExpenseId);
-    } else {
-      await sb.from('expenses').insert([payload]);
-    }
-    cancelExpenseEdit();
-    loadMyExpenseEntries();
-    alert('Expense saved successfully!');
-  } catch (err) {
-    alert('Error saving expense: ' + err.message);
-  } finally {
-    btn.disabled = false;
-    btn.textContent = 'Save Expense';
-  }
-});
-
-document.getElementById('stock-form')?.addEventListener('submit', async (e) => {
-  e.preventDefault();
-  const btn = document.getElementById('stock-submit-btn');
-  btn.disabled = true;
-  btn.textContent = 'Saving...';
-
-  const payload = {
-    type: document.getElementById('stock-type').value,
-    item: document.getElementById('stock-item').value,
-    quantity: parseFloat(document.getElementById('stock-qty').value) || 0,
-    unit_price: parseFloat(document.getElementById('stock-price').value) || 0,
-    location: document.getElementById('stock-location').value,
-    notes: document.getElementById('stock-notes').value,
-    driver_name: document.getElementById('stock-driver-name').value,
-    driver_license: document.getElementById('stock-driver-license').value,
-    vehicle_plate: document.getElementById('stock-vehicle-plate').value,
-    created_by: currentUser.id
-  };
-
-  try {
-    if (editingStockId) {
-      await sb.from('stock_movements').update(payload).eq('id', editingStockId);
-    } else {
-      await sb.from('stock_movements').insert([payload]);
-    }
-    cancelStockEdit();
-    loadMyStockEntries();
-    alert('Stock record saved!');
-  } catch (err) {
-    alert('Error saving stock: ' + err.message);
-  } finally {
-    btn.disabled = false;
-    btn.textContent = 'Save Entry';
-  }
-});
-
-// --- Edit & Cancel Handlers ---
-function cancelLedgerEdit() {
-  editingLedgerId = null;
-  document.getElementById('ledger-form').reset();
-  document.getElementById('ledger-submit-btn').textContent = 'Submit Stock Entry';
-  document.getElementById('ledger-cancel-btn').classList.add('hidden');
-}
-
-function cancelExpenseEdit() {
-  editingExpenseId = null;
-  document.getElementById('expense-form').reset();
-  document.getElementById('expense-submit-btn').textContent = 'Save Expense';
-  document.getElementById('expense-cancel-btn').classList.add('hidden');
-}
-
-function cancelStockEdit() {
-  editingStockId = null;
-  document.getElementById('stock-form').reset();
-  document.getElementById('stock-submit-btn').textContent = 'Save Entry';
-  document.getElementById('stock-cancel-btn').classList.add('hidden');
-}
-
-// --- Personal Log Lists (Data Entry View) ---
-async function loadMyLedgerEntries() {
-  const container = document.getElementById('my-ledger-list');
-  if (!container) return;
-  const { data } = await sb.from('plywood_ledger').select('*').eq('created_by', currentUser.id).order('created_at', { ascending: false }).limit(5);
-  if (!data || data.length === 0) {
-    container.innerHTML = '<div class="text-slate-400 italic">No recent swap entries.</div>';
-    return;
-  }
-  container.innerHTML = data.map(item => `
-    <div class="border-b py-1.5 flex justify-between items-center">
-      <div>
-        <div class="font-semibold text-slate-700">${item.date} — ${item.item_notes || 'Swap Movement'}</div>
-        <div class="text-[11px] text-slate-500">Purchased: ${item.factory_purchase_qty} | Kolfe Sales: ${item.sales_kolfe_qty} | Mes Sales: ${item.sales_mesalemya_qty}</div>
-      </div>
-      <button onclick="editLedger('${item.id}')" class="text-xs text-blue-600 font-semibold underline">Edit</button>
-    </div>
-  `).join('');
-}
-
-async function loadMyExpenseEntries() {
-  const container = document.getElementById('my-expense-list');
-  if (!container) return;
-  const { data } = await sb.from('expenses').select('*').eq('created_by', currentUser.id).order('created_at', { ascending: false }).limit(5);
-  if (!data || data.length === 0) {
-    container.innerHTML = '<div class="text-slate-400 italic">No recent expense entries.</div>';
-    return;
-  }
-  container.innerHTML = data.map(item => `
-    <div class="border-b py-1.5 flex justify-between items-center">
-      <div>
-        <div class="font-semibold text-slate-700">${item.category} — ETB ${item.amount.toLocaleString()}</div>
-        <div class="text-[11px] text-slate-500">${item.location} | Paid by: ${item.paid_by}</div>
-      </div>
-      <button onclick="editExpense('${item.id}')" class="text-xs text-blue-600 font-semibold underline">Edit</button>
-    </div>
-  `).join('');
-}
-
-async function loadMyStockEntries() {
-  const container = document.getElementById('my-stock-list');
-  if (!container) return;
-  const { data } = await sb.from('stock_movements').select('*').eq('created_by', currentUser.id).order('created_at', { ascending: false }).limit(5);
-  if (!data || data.length === 0) {
-    container.innerHTML = '<div class="text-slate-400 italic">No recent stock entries.</div>';
-    return;
-  }
-  container.innerHTML = data.map(item => `
-    <div class="border-b py-1.5 flex justify-between items-center">
-      <div>
-        <div class="font-semibold text-slate-700">${item.type.toUpperCase()}: ${item.item} (${item.quantity} units)</div>
-        <div class="text-[11px] text-slate-500">${item.location} @ ETB ${item.unit_price} ea.</div>
-      </div>
-      <button onclick="editStock('${item.id}')" class="text-xs text-blue-600 font-semibold underline">Edit</button>
-    </div>
-  `).join('');
-}
-
-// --- Complete Ledgers & Reports ---
-async function loadExpenseLedger() {
-  const tbody = document.getElementById('expense-list');
-  if (!tbody) return;
-  const { data, error } = await sb.from('expenses').select('*').order('created_at', { ascending: false });
-  if (error || !data || data.length === 0) {
-    tbody.innerHTML = `<tr><td colspan="6" class="py-3 text-center text-slate-400">No expense records found.</td></tr>`;
-    return;
-  }
-  tbody.innerHTML = data.map(row => `
-    <tr class="border-b hover:bg-slate-50">
-      <td class="py-2 px-3 whitespace-nowrap">${new Date(row.created_at).toLocaleDateString()}</td>
-      <td class="py-2 px-3 font-semibold text-slate-700">${row.category}</td>
-      <td class="py-2 px-3">${row.description || '—'}</td>
-      <td class="py-2 px-3">${row.paid_by}</td>
-      <td class="py-2 px-3 text-right font-bold">ETB ${row.amount.toLocaleString(undefined, {minimumFractionDigits: 2})}</td>
-      <td class="py-2 px-3 text-right no-print">
-        <button onclick="deleteExpense('${row.id}')" class="text-red-600 hover:underline">Delete</button>
-      </td>
-    </tr>
-  `).join('');
-}
-
-async function loadStockReport() {
-  const tbody = document.getElementById('ledger-list');
-  const tfoot = document.getElementById('ledger-totals');
-  if (!tbody) return;
-
-  const { data, error } = await sb.from('plywood_ledger').select('*').order('date', { ascending: true });
-  if (error || !data || data.length === 0) {
-    tbody.innerHTML = `<tr><td colspan="14" class="py-3 text-center text-slate-400">No stock ledger data registered.</td></tr>`;
-    return;
-  }
-
-  let runningKolfeBal = 0;
-  let runningMesBal = 0;
-  let totPrimePurch = 0, totBrPurch = 0, totShipped = 0, totKolfeMes = 0, totSalesKolfe = 0, totSalesMes = 0;
-
-  tbody.innerHTML = data.map(row => {
-    const primeP = row.purchased_by === 'PRIME' ? row.factory_purchase_qty : 0;
-    const brP = row.purchased_by === 'BR' ? row.factory_purchase_qty : 0;
-    
-    totPrimePurch += primeP;
-    totBrPurch += brP;
-    totShipped += row.shipped_to_kolfe_qty;
-    totKolfeMes += row.kolfe_to_mesalemya_qty;
-    totSalesKolfe += row.sales_kolfe_qty;
-    totSalesMes += row.sales_mesalemya_qty;
-
-    runningKolfeBal += row.shipped_to_kolfe_qty - row.kolfe_to_mesalemya_qty - row.sales_kolfe_qty;
-    runningMesBal += row.kolfe_to_mesalemya_qty - row.sales_mesalemya_qty;
-
-    return `
-      <tr class="border-b hover:bg-slate-50 text-slate-700">
-        <td class="py-1.5 px-1.5 whitespace-nowrap">${row.date}</td>
-        <td class="py-1.5 px-1.5">—</td>
-        <td class="py-1.5 px-1.5 font-medium text-emerald-700">${primeP || '—'}</td>
-        <td class="py-1.5 px-1.5 font-medium text-amber-700">${brP || '—'}</td>
-        <td class="py-1.5 px-1.5">${row.shipped_to_kolfe_qty || '—'}</td>
-        <td class="py-1.5 px-1.5">—</td>
-        <td class="py-1.5 px-1.5">${row.kolfe_to_mesalemya_qty || '—'}</td>
-        <td class="py-1.5 px-1.5">${row.sales_kolfe_qty || '—'}</td>
-        <td class="py-1.5 px-1.5">${row.sold_by}</td>
-        <td class="py-1.5 px-1.5 font-bold text-slate-900">${runningKolfeBal}</td>
-        <td class="py-1.5 px-1.5">${row.sales_mesalemya_qty || '—'}</td>
-        <td class="py-1.5 px-1.5 font-bold text-slate-900">${runningMesBal}</td>
-        <td class="py-1.5 px-1.5">${row.sold_by}</td>
-        <td class="py-1.5 px-1.5 no-print text-right">
-          <button onclick="deleteLedger('${row.id}')" class="text-red-500 hover:underline">×</button>
-        </td>
-      </tr>
-    `;
-  }).join('');
-
-  if (tfoot) {
-    tfoot.innerHTML = `
-      <tr class="bg-slate-100 font-bold border-t-2 border-slate-300">
-        <td class="py-2 px-1.5">TOTALS</td>
-        <td class="py-2 px-1.5">—</td>
-        <td class="py-2 px-1.5 text-emerald-700">${totPrimePurch}</td>
-        <td class="py-2 px-1.5 text-amber-700">${totBrPurch}</td>
-        <td class="py-2 px-1.5">${totShipped}</td>
-        <td class="py-2 px-1.5">—</td>
-        <td class="py-2 px-1.5">${totKolfeMes}</td>
-        <td class="py-2 px-1.5">${totSalesKolfe}</td>
-        <td class="py-2 px-1.5">—</td>
-        <td class="py-2 px-1.5 text-blue-900">${runningKolfeBal}</td>
-        <td class="py-2 px-1.5">${totSalesMes}</td>
-        <td class="py-2 px-1.5 text-blue-900">${runningMesBal}</td>
-        <td class="py-2 px-1.5">—</td>
-        <td class="py-2 px-1.5 no-print"></td>
-      </tr>
-    `;
-  }
-}
-
-// --- Admin User Management ---
-async function loadUsers() {
-  const container = document.getElementById('user-list');
-  if (!container) return;
-  const { data: roles } = await sb.from('user_roles').select('*');
-  if (!roles || roles.length === 0) {
-    container.innerHTML = '<div class="text-slate-400">No users found.</div>';
-    return;
-  }
-  container.innerHTML = roles.map(r => `
-    <div class="p-3 border rounded flex justify-between items-center bg-white">
-      <div>
-        <div class="font-bold text-slate-800">${r.user_id}</div>
-        <div class="text-slate-500 text-xs">Role: <span class="uppercase text-blue-700 font-bold">${r.role}</span></div>
-      </div>
-      <select onchange="updateUserRole('${r.user_id}', this.value)" class="border p-1 rounded text-xs">
-        <option value="data_entry" ${r.role==='data_entry'?'selected':''}>Data Entry</option>
-        <option value="accounting" ${r.role==='accounting'?'selected':''}>Accounting</option>
-        <option value="sales" ${r.role==='sales'?'selected':''}>Sales</option>
-        <option value="management" ${r.role==='management'?'selected':''}>Management</option>
-        <option value="admin" ${r.role==='admin'?'selected':''}>Admin</option>
-      </select>
-    </div>
-  `).join('');
-}
-
-async function updateUserRole(userId, newRole) {
-  await sb.from('user_roles').upsert({ user_id: userId, role: newRole });
-  alert('User role updated successfully!');
-}
-
-// --- Export Functions ---
-function downloadCSV(filename, csvData) {
-  const blob = new Blob([csvData], { type: 'text/csv;charset=utf-8;' });
-  const link = document.createElement('a');
-  link.href = URL.createObjectURL(blob);
-  link.setAttribute('download', filename);
-  document.body.appendChild(link);
-  link.click();
-  document.body.removeChild(link);
-}
-
-async function downloadExpenseCSV() {
-  const { data } = await sb.from('expenses').select('*');
-  if (!data || !data.length) return alert('No data to export.');
-  const headers = ['Date', 'Category', 'Description', 'Paid By', 'Location', 'Amount'];
-  const rows = data.map(d => [d.created_at, `"${d.category}"`, `"${d.description||''}"`, d.paid_by, d.location, d.amount]);
-  const csv = [headers.join(','), ...rows.map(r => r.join(','))].join('\n');
-  downloadCSV('expenses_export.csv', csv);
-}
-
-async function downloadLedgerCSV() {
-  const { data } = await sb.from('plywood_ledger').select('*');
-  if (!data || !data.length) return alert('No data to export.');
-  const headers = ['Date', 'Purchased By', 'Factory Qty', 'Unit Purchase Price', 'Shipped Kolfe', 'Kolfe -> Mesalemya', 'Sales Kolfe', 'Sales Mesalemya', 'Sold By', 'Unit Sale Price', 'Notes'];
-  const rows = data.map(d => [d.date, d.purchased_by, d.factory_purchase_qty, d.unit_purchase_price, d.shipped_to_kolfe_qty, d.kolfe_to_mesalemya_qty, d.sales_kolfe_qty, d.sales_mesalemya_qty, d.sold_by, d.unit_sale_price, `"${d.item_notes||''}"`]);
-  const csv = [headers.join(','), ...rows.map(r => r.join(','))].join('\n');
-  downloadCSV('stock_ledger_export.csv', csv);
-}
-
-// --- Deletion Handlers ---
-async function deleteExpense(id) {
-  if (!confirm('Are you sure you want to delete this expense record?')) return;
-  await sb.from('expenses').delete().eq('id', id);
-  loadExpenseLedger();
-}
-
-async function deleteLedger(id) {
-  if (!confirm('Are you sure you want to delete this stock ledger entry?')) return;
-  await sb.from('plywood_ledger').delete().eq('id', id);
-  loadStockReport();
-}
 </script>
 </body>
 </html>
