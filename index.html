@@ -5,6 +5,11 @@
 <title>PRIME Investment Group PLC — Operations Portal</title>
 <script src="https://cdn.tailwindcss.com"></script>
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script>
+  const SUPABASE_URL = 'https://kafiwnuynjemufnankvi.supabase.co/';
+  const SUPABASE_ANON_KEY = 'sb_publishable_gNl3CYqNr5gm23BCiMm5yw_B4x8UkKh';
+  const sb = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+</script>
   <style>
   @media print {
     body * { visibility: hidden; }
