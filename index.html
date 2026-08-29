@@ -1571,12 +1571,10 @@ if (loginForm) {
                 errorElement.classList.remove('hidden');
             }
         } else {
-           // Successfully logged in, transition views and load menu
+        // Successfully logged in
         document.getElementById('login-view').classList.add('hidden');
         document.getElementById('app-view').classList.remove('hidden');
-        if (typeof renderSidebar === 'function') renderSidebar();
-        if (typeof switchTab === 'function') switchTab('overview');
-    });
-}
+        window.location.reload();
+    }
 </script>
 </html>
