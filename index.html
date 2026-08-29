@@ -1575,11 +1575,12 @@ if (loginForm) {
                 errorElement.textContent = error.message;
                 errorElement.classList.remove('hidden');
             }
-        } else {
+       } else {
         // Successfully logged in
         document.getElementById('login-view').classList.add('hidden');
         document.getElementById('app-view').classList.remove('hidden');
         window.location.reload();
     }
-</script>
+  }); // Closes addEventListener
+}   // Closes if (loginForm)
 </html>
