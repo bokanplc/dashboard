@@ -75,6 +75,7 @@
     <p id="login-error" class="text-red-600 text-xs hidden"></p>
 </form>
 <p class="text-xs text-[#8D9096] mt-4 text-center">Accounts are created by an administrator. Contact your admin if you don't have a login.</p>
+  <button type="button" onclick="bypassLogin()" class="w-full mt-2 bg-gray-200 hover:bg-gray-300 text-gray-700 font-semibold py-2 rounded text-xs">Bypass Login (View Mode)</button>
   </div>
 </div>
 
@@ -1578,9 +1579,14 @@ if (loginForm) {
        } else {
         // Successfully logged in
         document.getElementById('login-view').classList.add('hidden');
-        document.getElementById('app-view').classList.remove('hidden');
+        document.getElementById('landing-view').classList.remove('hidden');
         window.location.reload();
     }
   }); // Closes addEventListener
+function bypassLogin() {
+    document.getElementById('login-view').classList.add('hidden');
+    document.getElementById('landing-view').classList.remove('hidden');
+}
 </script>
+</body>
 </html>
