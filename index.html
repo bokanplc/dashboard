@@ -1553,7 +1553,10 @@ function populateExpenseCategoryDropdown() {
     select.appendChild(optgroup);
   }
 }
-
+function bypassLogin() {
+    document.getElementById('login-view').classList.add('hidden');
+    document.getElementById('landing-view').classList.remove('hidden');
+}
 // Initializer
 populateExpenseCategoryDropdown();
 
