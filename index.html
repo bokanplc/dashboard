@@ -59,6 +59,57 @@
   }
   #sidebar.open { transform: translateY(0) scale(1); opacity: 1; pointer-events: auto; }
 
+  /* Department view (Sales, HR, Finance, etc.): flat horizontal menu, always visible,
+     wraps instead of scrolling — applies at every screen width, no toggle needed. */
+  body.dept-mode #menu-trigger { display: none; }
+  body.dept-mode #body-row { flex-direction: column; }
+  body.dept-mode #sidebar {
+    position: static;
+    width: auto;
+    max-height: none;
+    background: #06180C !important;
+    border-radius: 0;
+    box-shadow: none;
+    border: none;
+    border-top: 1px solid rgba(255,255,255,.08);
+    border-bottom: 1px solid rgba(255,255,255,.08);
+    transform: none;
+    opacity: 1;
+    pointer-events: auto;
+    overflow: visible;
+    flex-direction: row;
+    align-items: center;
+    justify-content: flex-start;
+    flex-wrap: wrap;
+  }
+  body.dept-mode #sidebar-nav {
+    display: flex !important;
+    flex-direction: row;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 4px;
+    overflow: visible;
+    flex: 1;
+    padding: 8px 12px !important;
+  }
+  body.dept-mode #sidebar-nav > .nav-link { width: auto; white-space: nowrap; }
+  body.dept-mode #profile-block {
+    border-top: none !important;
+    border-left: 1px solid rgba(255,255,255,.1);
+    padding: 6px 16px !important;
+    display: flex !important;
+    flex-direction: column;
+    align-items: flex-end;
+    gap: 4px;
+    white-space: nowrap;
+    flex-shrink: 0;
+  }
+  body.dept-mode .profile-row { display: flex; align-items: center; gap: 10px; }
+  body.dept-mode #profile-block .p-label { display: none; }
+  body.dept-mode #profile-block > * { margin: 0 !important; }
+  body.dept-mode #profile-block .profile-row > * { margin: 0 !important; }
+  body.dept-mode #profile-block button { width: auto !important; padding: 5px 12px !important; }
+
   /* Desktop: two layouts depending on context */
   @media (min-width: 768px) {
     #menu-trigger { display: none; }
@@ -122,50 +173,6 @@
     body:not(.dept-mode) #profile-block .p-label { display:none; }
     body:not(.dept-mode) #profile-block > * { margin: 0 !important; }
     body:not(.dept-mode) #profile-block button { width: auto !important; padding: 6px 12px !important; }
-
-    /* --- Department view (Sales, HR, Finance, etc.): real left-hand side menu --- */
-    body.dept-mode #body-row { flex-direction: row; align-items: stretch; }
-    body.dept-mode #sidebar {
-      position: sticky;
-      top: 56px;
-      left: auto;
-      right: auto;
-      width: 240px;
-      flex-shrink: 0;
-      max-height: none;
-      height: calc(100vh - 56px);
-      background: #06180C !important;
-      border-radius: 0;
-      box-shadow: none;
-      border: none;
-      border-right: 1px solid rgba(255,255,255,.08);
-      transform: none;
-      opacity: 1;
-      pointer-events: auto;
-      overflow: hidden;
-      flex-direction: column;
-      align-items: stretch;
-    }
-    body.dept-mode #sidebar-nav {
-      display: block !important;
-      overflow-y: auto;
-      overflow-x: hidden;
-      padding: 14px !important;
-    }
-    body.dept-mode #sidebar-nav > .nav-link,
-    body.dept-mode #sidebar-nav > .nav-group-wrap > .nav-group-toggle { width: 100%; white-space: normal; }
-    body.dept-mode .nav-group-wrap { position: static; }
-    body.dept-mode .nav-group-children { position: static; width: auto; margin-top: 2px; box-shadow: none; border: none; background: transparent; padding: 0; }
-    body.dept-mode #profile-block {
-      flex-direction: column;
-      align-items: stretch;
-      border-left: none;
-      border-top: 1px solid rgba(255,255,255,.1) !important;
-      padding: 16px !important;
-      gap: 0;
-    }
-    body.dept-mode #profile-block .p-label { display: block; }
-    body.dept-mode #profile-block button { width: 100% !important; }
   }
 
   .nav-link { display:block; width:100%; text-align:left; padding:8px 14px; border-radius:6px; color:#9aa8ba; font-size:12px; font-weight:500; }
@@ -240,12 +247,16 @@
     <aside id="sidebar" class="bg-[#06180C] text-white flex flex-col no-print">
       <nav id="sidebar-nav" class="flex-1 overflow-y-auto p-3 space-y-1"></nav>
       <div id="profile-block" class="p-4 border-t border-white/10">
-        <div class="text-[10px] uppercase tracking-wide text-slate-400 mb-1 p-label">Workspace</div>
-        <div id="current-dept-label" class="text-xs font-semibold mb-2 truncate">—</div>
-        <button id="switch-dept-btn" onclick="switchDepartment()" class="hidden text-xs bg-white/10 hover:bg-white/20 px-3 py-1.5 rounded font-semibold mb-3">Switch Department</button>
-        <div class="text-[10px] uppercase tracking-wide text-slate-400 mb-1 p-label">Active Profile</div>
-        <div id="user-badge" class="text-xs font-semibold mb-3 truncate"></div>
-        <button onclick="signOut()" class="text-xs bg-red-600/90 hover:bg-red-600 px-3 py-2 rounded font-semibold">Sign Out</button>
+        <div class="profile-row profile-row-1">
+          <div class="text-[10px] uppercase tracking-wide text-slate-400 mb-1 p-label">Workspace</div>
+          <div id="current-dept-label" class="text-xs font-semibold mb-2 truncate">—</div>
+          <button id="switch-dept-btn" onclick="switchDepartment()" class="hidden text-xs bg-white/10 hover:bg-white/20 px-3 py-1.5 rounded font-semibold mb-3">Switch Department</button>
+        </div>
+        <div class="profile-row profile-row-2">
+          <div class="text-[10px] uppercase tracking-wide text-slate-400 mb-1 p-label">Active Profile</div>
+          <div id="user-badge" class="text-xs font-semibold mb-3 truncate"></div>
+          <button onclick="signOut()" class="text-xs bg-red-600/90 hover:bg-red-600 px-3 py-2 rounded font-semibold">Sign Out</button>
+        </div>
       </div>
     </aside>
 
@@ -399,7 +410,30 @@
             <option value="purchase">Purchase</option>
             <option value="sale">Sale</option>
           </select>
-          <input id="stock-item" placeholder="Item (e.g. Plywood 18mm)" class="border p-1.5 rounded md:col-span-2 text-xs" required>
+          <select id="stock-item-type" class="border p-1.5 rounded text-xs" onchange="toggleMoraleFields()">
+            <option value="">Item Type (optional)</option>
+            <option value="Plywood">Plywood</option>
+            <option value="Morale">Morale</option>
+            <option value="Cement">Cement</option>
+            <option value="Construction Nails">Construction Nails</option>
+            <option value="Plastic Formwork">Plastic Formwork</option>
+            <option value="Black Wire">Black Wire</option>
+            <option value="Construction Hardware">Construction Hardware</option>
+            <option value="MDF">MDF</option>
+            <option value="Other">Other</option>
+          </select>
+          <select id="stock-morale-size" class="hidden border p-1.5 rounded text-xs">
+            <option value="">Morale Size</option>
+            <option value="7*5">7*5</option>
+            <option value="4*5">4*5</option>
+          </select>
+          <select id="stock-morale-category" class="hidden border p-1.5 rounded text-xs">
+            <option value="">Morale Category</option>
+            <option value="Austria">Austria</option>
+            <option value="Shashemene">Shashemene</option>
+            <option value="Local">Local</option>
+          </select>
+          <input id="stock-item" placeholder="Item description (e.g. 18mm, or free text — auto-filled for Morale)" class="border p-1.5 rounded md:col-span-2 text-xs" required>
           <input id="stock-qty" type="number" step="0.01" placeholder="Quantity" class="border p-1.5 rounded text-xs" required>
           <input id="stock-price" type="number" step="0.01" placeholder="Unit Price (ETB)" class="border p-1.5 rounded text-xs" required>
           <select id="stock-location" class="border p-1.5 rounded text-xs">
@@ -851,7 +885,7 @@
 
       <div class="bg-white rounded-lg shadow-sm p-6 mb-4">
         <div class="flex flex-wrap justify-between items-center gap-2 mb-3">
-          <h3 class="font-semibold">PRIME Plywood Stock Report Ledger</h3>
+          <h3 class="font-semibold">PRIME Stock Report Ledger</h3>
           <button onclick="downloadLedgerCSV()" class="text-[#2CA01C] font-semibold underline text-xs no-print">Download CSV</button>
         </div>
         <div class="overflow-x-auto">
@@ -1059,14 +1093,24 @@
       </div>
     </section>
 
-    <!-- ---------- PROFORMA ---------- -->
+    <!-- ---------- PROFORMA (Admin only) ---------- -->
     <section id="tab-proforma" class="tab-panel hidden">
       <div class="bg-white rounded-lg shadow-sm p-6 mb-4 no-print">
         <div class="page-eyebrow">Data Entry</div>
-        <h2 class="font-bold text-base mb-4">Create Proforma Invoice</h2>
+        <h2 class="font-bold text-base mb-4" id="pf-form-title">Create Proforma Invoice</h2>
         <div class="grid grid-cols-1 md:grid-cols-2 gap-3 mb-3">
+          <div>
+            <label class="text-xs text-slate-500">Issuing Company</label>
+            <select id="pf-company" class="border p-2 rounded w-full">
+              <option>Prime Investment Group PLC</option>
+              <option>Blackrock Investment PLC</option>
+              <option>Union Trade and Investment</option>
+            </select>
+          </div>
+          <div></div>
           <input id="pf-customer" placeholder="Customer / Company Name" class="border p-2 rounded" required>
           <input id="pf-address" placeholder="Customer Address / Phone" class="border p-2 rounded">
+          <input id="pf-tin" placeholder="Customer TIN" class="border p-2 rounded">
         </div>
         <div id="pf-items" class="space-y-2 mb-2"></div>
         <button type="button" onclick="addProformaItem()" class="text-xs text-[#2CA01C] font-semibold mb-3">+ Add Line Item</button>
@@ -1074,16 +1118,20 @@
           <label class="text-xs">VAT %</label>
           <input id="pf-vat" type="number" value="15" class="border p-2 rounded w-20">
         </div>
-        <textarea id="pf-notes" placeholder="Terms / notes (validity, payment terms...)" class="w-full border p-2 rounded mb-3"></textarea>
-        <button onclick="generateProforma()" class="bg-[#2CA01C] text-white rounded py-2 px-6 font-semibold">Generate &amp; Preview</button>
+        <textarea id="pf-notes" placeholder="Additional notes (optional)" class="w-full border p-2 rounded mb-3"></textarea>
+        <div class="flex flex-wrap gap-2">
+          <button id="pf-generate-btn" onclick="generateProforma()" class="bg-[#2CA01C] text-white rounded py-2 px-6 font-semibold">Generate &amp; Preview</button>
+          <button id="pf-cancel-edit-btn" onclick="cancelProformaEdit()" class="hidden bg-slate-200 text-slate-700 rounded py-2 px-6 font-semibold">Cancel Edit</button>
+          <button type="button" onclick="sendProformaToTelegram()" class="bg-sky-600 text-white rounded py-2 px-6 font-semibold">Send via Telegram (no save)</button>
+        </div>
       </div>
 
       <div id="proforma-print" class="printable-doc bg-white rounded-lg shadow-sm p-10 hidden">
         <div class="flex justify-between items-start border-b pb-4 mb-6">
           <div>
-            <h1 class="text-xl font-bold text-[#2CA01C]">PRIME Investment Group Plc</h1>
-            <p class="text-xs text-slate-500">Addis Ababa, Ethiopia</p>
-            <p class="text-xs text-slate-500">TIN: ______________ | Tel: 0911 220597</p>
+            <h1 class="text-xl font-bold text-[#2CA01C]" id="pf-out-company-name">PRIME Investment Group Plc</h1>
+            <p class="text-xs text-slate-500" id="pf-out-company-address">Addis Ababa, Ethiopia</p>
+            <p class="text-xs text-slate-500"><span id="pf-out-company-phone"></span></p>
           </div>
           <div class="text-right">
             <div class="font-bold text-base">PROFORMA INVOICE</div>
@@ -1094,10 +1142,11 @@
         <div class="mb-4 text-xs">
           <div><strong>Bill To:</strong> <span id="pf-out-customer"></span></div>
           <div id="pf-out-address" class="text-slate-500"></div>
+          <div id="pf-out-tin" class="text-slate-500"></div>
         </div>
         <table class="w-full text-xs border-collapse mb-4">
           <thead><tr class="border-b-2 border-slate-800 text-left">
-            <th class="py-2">#</th><th>Description</th><th class="text-right">Qty</th>
+            <th class="py-2">#</th><th>Description</th><th>Size</th><th class="text-right">Qty</th>
             <th class="text-right">Unit Price</th><th class="text-right">Total</th>
           </tr></thead>
           <tbody id="pf-out-items"></tbody>
@@ -1109,7 +1158,18 @@
             <div class="flex justify-between py-2 border-t font-bold"><span>Total</span><span id="pf-out-total"></span></div>
           </div>
         </div>
-        <div class="text-xs text-slate-600 mb-8" id="pf-out-notes"></div>
+        <div class="text-xs text-slate-600 mb-4" id="pf-out-notes"></div>
+        <div class="text-[10px] text-slate-500 mb-8 border-t pt-3">
+          <div class="font-semibold mb-1">Terms &amp; Conditions</div>
+          <ol class="list-decimal ml-4 space-y-0.5">
+            <li>This proforma is valid for 15 days from the date of issue.</li>
+            <li>Prices are quoted in Ethiopian Birr (ETB) and are subject to change without notice after the validity period.</li>
+            <li>Full or partial advance payment may be required before order confirmation and dispatch.</li>
+            <li>Delivery timelines will be confirmed upon order confirmation and are subject to product availability.</li>
+            <li>Goods once sold are not returnable except in cases of verified defects, reported within 48 hours of delivery.</li>
+            <li>This document is a proforma invoice and does not constitute a tax invoice or receipt.</li>
+          </ol>
+        </div>
         <div class="flex justify-between text-xs pt-8">
           <div>Prepared by: __________________</div>
           <div>Authorized signature: __________________</div>
@@ -1117,6 +1177,35 @@
         <button onclick="window.print()" class="no-print mt-6 bg-[#2CA01C] text-white rounded py-2 px-6 font-semibold">Print / Save as PDF</button>
       </div>
     </section>
+
+    <!-- ---------- PROFORMA REPORT DASHBOARD (Admin only) ---------- -->
+    <section id="tab-proformareport" class="tab-panel hidden">
+      <div class="mb-3 no-print">
+        <div class="page-eyebrow">Report</div>
+        <h2 class="font-bold text-lg text-[#2CA01C]">Proforma Report</h2>
+        <p class="text-xs text-slate-500">All generated proformas — company, contact, and date. Sort and open any record below.</p>
+      </div>
+      <div class="bg-white rounded-lg border border-slate-200 shadow-sm p-5 no-print">
+        <div class="flex flex-wrap items-center gap-2 mb-4">
+          <label class="text-xs text-slate-500">Sort by</label>
+          <select id="pfr-sort" onchange="loadProformaReport()" class="border p-1.5 rounded text-xs">
+            <option value="date_desc">Date (newest first)</option>
+            <option value="date_asc">Date (oldest first)</option>
+            <option value="name_asc">Company Name (A–Z)</option>
+            <option value="name_desc">Company Name (Z–A)</option>
+          </select>
+        </div>
+        <div class="overflow-x-auto">
+          <table class="w-full text-xs">
+            <thead><tr class="border-b-2 border-slate-800 text-left">
+              <th class="py-2">Proforma No.</th><th>Company Name</th><th>Contact</th><th>Date</th><th></th>
+            </tr></thead>
+            <tbody id="pfr-list"></tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+
 
     <!-- ---------- CUSTOMER BILLING ---------- -->
     <section id="tab-billing" class="tab-panel hidden">
@@ -1566,6 +1655,47 @@
       </div>
     </section>
 
+    <!-- ---------- TIME & ATTENDANCE (every role) ---------- -->
+    <section id="tab-hrtimesheet" class="tab-panel hidden">
+      <div class="mb-3 no-print">
+        <div class="page-eyebrow">Human Resources</div>
+        <h2 class="font-bold text-lg text-[#2CA01C]">Time &amp; Attendance</h2>
+        <p class="text-xs text-slate-500">Clock in when you start work and clock out when you finish. Your recent history is below.</p>
+      </div>
+
+      <div class="bg-white rounded-lg border border-slate-200 shadow-sm p-5 mb-4 no-print">
+        <div class="flex flex-wrap items-center gap-3">
+          <div id="ts-status" class="text-sm font-semibold">—</div>
+          <button id="ts-clockin-btn" onclick="clockIn()" class="bg-[#2CA01C] text-white rounded py-2 px-6 font-semibold">Clock In</button>
+          <button id="ts-clockout-btn" onclick="clockOut()" class="hidden bg-red-600 text-white rounded py-2 px-6 font-semibold">Clock Out</button>
+        </div>
+      </div>
+
+      <div class="bg-white rounded-lg border border-slate-200 shadow-sm p-5 mb-4">
+        <h3 class="font-semibold mb-3 text-xs uppercase tracking-wide text-slate-500">My Recent Attendance</h3>
+        <div class="overflow-x-auto">
+          <table class="w-full text-xs">
+            <thead><tr class="border-b-2 border-slate-800 text-left">
+              <th class="py-2">Date</th><th>Clock In</th><th>Clock Out</th><th>Hours</th>
+            </tr></thead>
+            <tbody id="ts-my-list"></tbody>
+          </table>
+        </div>
+      </div>
+
+      <div id="ts-admin-panel" class="hidden bg-white rounded-lg border border-slate-200 shadow-sm p-5">
+        <h3 class="font-semibold mb-3 text-xs uppercase tracking-wide text-slate-500">Company-wide Attendance</h3>
+        <div class="overflow-x-auto">
+          <table class="w-full text-xs">
+            <thead><tr class="border-b-2 border-slate-800 text-left">
+              <th class="py-2">Employee</th><th>Date</th><th>Clock In</th><th>Clock Out</th><th>Hours</th>
+            </tr></thead>
+            <tbody id="ts-all-list"></tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+
     <!-- ---------- USERS (admin only) ---------- -->
     <section id="tab-users" class="tab-panel hidden">
       <div class="bg-white rounded-lg shadow-sm p-6">
@@ -1596,13 +1726,13 @@ let currentRole = null;
 // Data-entry roles get ONLY the Data Entry Log page (plus Repository, restricted to
 // upload-only there — see showRepoSubtab). They never see any report/ledger page.
 const ROLE_TABS = {
-  admin:         ['overview','mqreport','sales','report','salestargets','tripcost','visitreport','stockreport','dataentry','expenseledger','proforma','billing','letters','repository','hremployees','hrleave','hrperformance','hrdisciplinary','hrreports','users'],
-  data_entry:    ['dataentry','repository'],
-  accounting:    ['overview','mqreport','stockreport','dataentry','expenseledger','letters','billing','repository'],
-  sales:         ['sales','salestargets','tripcost','visitreport','proforma'],
-  sales_manager: ['report','salestargets'],
-  management:    ['overview','mqreport','stockreport','expenseledger','hrreports'],
-  hr:            ['hremployees','hrleave','hrperformance','hrdisciplinary','hrreports']
+  admin:         ['overview','mqreport','sales','report','salestargets','tripcost','visitreport','stockreport','dataentry','expenseledger','proforma','proformareport','billing','letters','repository','hremployees','hrleave','hrperformance','hrdisciplinary','hrreports','hrtimesheet','users'],
+  data_entry:    ['dataentry','repository','hrtimesheet'],
+  accounting:    ['overview','mqreport','stockreport','dataentry','expenseledger','letters','billing','repository','hrtimesheet'],
+  sales:         ['sales','salestargets','tripcost','visitreport','hrtimesheet'],
+  sales_manager: ['report','salestargets','hrtimesheet'],
+  management:    ['overview','mqreport','stockreport','expenseledger','hrreports','hrtimesheet'],
+  hr:            ['hremployees','hrleave','hrperformance','hrdisciplinary','hrreports','hrtimesheet']
 };
 
 // Left-sidebar navigation — a plain flat list, with subtle labeled sub-groups
@@ -1625,8 +1755,10 @@ const NAV_TREE = [
   { id: 'hrperformance',  label: 'Performance Reviews', indent: true },
   { id: 'hrdisciplinary', label: 'Disciplinary Actions', indent: true },
   { id: 'hrreports',      label: 'HR Reports', indent: true },
+  { id: 'hrtimesheet',    label: 'Time &amp; Attendance', indent: true },
   { id: 'dataentry',     label: 'Data Entry Log' },
   { id: 'proforma',      label: 'Proforma' },
+  { id: 'proformareport', label: 'Proforma Report' },
   { id: 'billing',       label: 'Customer Billing' },
   { id: 'letters',       label: 'Letters' },
   { id: 'repository',    label: 'Repository' },
@@ -1636,13 +1768,27 @@ const NAV_TREE = [
 // Department landing page — maps each business function to the tab ids it covers.
 // A user only sees a department card if their role has access to at least one tab in it.
 const DEPARTMENTS = [
-  { id: 'sales',      label: 'Sales Department',        desc: 'CRM, trip planning, cost requests & proforma',     tabs: ['sales','report','salestargets','tripcost','visitreport','proforma'] },
-  { id: 'dataentry',  label: 'Data Entry',               desc: 'Log stock movements, expenses & upload documents', tabs: ['dataentry','repository'] },
-  { id: 'finance',    label: 'Finance & Accounting',     desc: 'Stock report, expense ledger, billing, letters',   tabs: ['overview','mqreport','stockreport','expenseledger','dataentry','letters','billing','repository'] },
-  { id: 'hr',         label: 'Human Resources',          desc: 'Employee records, leave, performance, discipline', tabs: ['hremployees','hrleave','hrperformance','hrdisciplinary','hrreports'] },
-  { id: 'management', label: 'Management / Executive',   desc: 'Dashboards, reports & company-wide oversight',     tabs: ['overview','mqreport','stockreport','expenseledger','hrreports'] },
+  { id: 'sales',      label: 'Sales Department',        desc: 'CRM, trip planning & cost requests',               tabs: ['sales','report','salestargets','tripcost','visitreport','hrtimesheet'] },
+  { id: 'dataentry',  label: 'Data Entry',               desc: 'Log stock movements, expenses & upload documents', tabs: ['dataentry','repository','hrtimesheet'] },
+  { id: 'finance',    label: 'Finance & Accounting',     desc: 'Stock report, expense ledger, billing, letters',   tabs: ['overview','mqreport','stockreport','expenseledger','dataentry','letters','billing','repository','hrtimesheet'] },
+  { id: 'hr',         label: 'Human Resources',          desc: 'Employee records, leave, performance, discipline', tabs: ['hremployees','hrleave','hrperformance','hrdisciplinary','hrreports','hrtimesheet'] },
+  { id: 'management', label: 'Management / Executive',   desc: 'Dashboards, reports & company-wide oversight',     tabs: ['overview','mqreport','stockreport','expenseledger','hrreports','hrtimesheet'] },
   { id: 'admin',      label: 'Administration',           desc: 'Full system access & user management',            tabs: NAV_TREE.filter(e => e.id).map(e => e.id) }
 ];
+
+// Proforma issuing companies — used to populate the printed proforma header.
+const COMPANIES = {
+  'Prime Investment Group PLC': { address: 'Meskel Flower, Addis Ababa', phone: '0911 24 30 64' },
+  'Blackrock Investment PLC':   { address: 'Merkato (Tana Area), Addis Ababa', phone: '0978 234 820' },
+  'Union Trade and Investment': { address: 'Addis Ababa, Ethiopia', phone: '—' }
+};
+
+// ---- Telegram (optional direct-send from the Proforma page) ----
+// Fill these in with your own bot token and chat/channel id to enable "Send via Telegram".
+// Create a bot via @BotFather on Telegram to get a token, then message your bot (or add it to
+// a group/channel) and use https://api.telegram.org/bot<TOKEN>/getUpdates to find the chat id.
+const TELEGRAM_BOT_TOKEN = ''; // e.g. '123456789:AAExampleTokenHere'
+const TELEGRAM_CHAT_ID   = ''; // e.g. '-1001234567890' or '123456789'
 
 // ---- Chart of Accounts (GAAP-style groupings for expense categorization) ----
 const CHART_OF_ACCOUNTS = {
@@ -1791,7 +1937,7 @@ function switchDepartment() {
 let expandedGroups = new Set();
 
 function buildTabs() {
-  document.body.classList.toggle('dept-mode', currentRole !== 'admin');
+  document.body.classList.add('dept-mode');
   const roleAllowed = new Set(ROLE_TABS[currentRole] || []);
   const allowed = currentDeptTabs ? new Set(currentDeptTabs.filter(t => roleAllowed.has(t))) : roleAllowed;
 
@@ -1807,6 +1953,24 @@ function buildTabs() {
 
   const nav = document.getElementById('sidebar-nav');
   nav.innerHTML = '';
+  const deptMode = true;
+
+  if (deptMode) {
+    // Department views: every allowed item listed flat, horizontally, no dropdowns, no scrolling.
+    NAV_TREE.forEach(entry => {
+      if (entry.type === 'label') return;
+      if (!allowed.has(entry.id)) return;
+      const btn = document.createElement('button');
+      btn.className = 'nav-link';
+      btn.dataset.tabId = entry.id;
+      btn.textContent = entry.label;
+      btn.onclick = () => showTab(entry.id);
+      nav.appendChild(btn);
+    });
+    if (firstId) showTab(firstId);
+    return;
+  }
+
   let i = 0;
   while (i < NAV_TREE.length) {
     const entry = NAV_TREE[i];
@@ -1896,6 +2060,8 @@ function showTab(id) {
   if (id === 'hrperformance') { loadEmployees(); loadPerformanceReviews(); }
   if (id === 'hrdisciplinary') { loadEmployees(); loadDisciplinary(); }
   if (id === 'hrreports') loadHrReports();
+  if (id === 'proformareport') loadProformaReport();
+  if (id === 'hrtimesheet') { loadMyAttendance(); if (currentRole === 'admin' || currentRole === 'hr') loadAllAttendance(); }
 
   closeSidebar();
 }
@@ -1930,11 +2096,28 @@ function loadAllForRole() {
 let stockData = [];
 let editingStockId = null;
 
+function toggleMoraleFields() {
+  const isMorale = document.getElementById('stock-item-type').value === 'Morale';
+  document.getElementById('stock-morale-size').classList.toggle('hidden', !isMorale);
+  document.getElementById('stock-morale-category').classList.toggle('hidden', !isMorale);
+}
+
+function buildStockItemName() {
+  const itemType = document.getElementById('stock-item-type').value;
+  const freeText = document.getElementById('stock-item').value.trim();
+  if (itemType === 'Morale') {
+    const size = document.getElementById('stock-morale-size').value;
+    const category = document.getElementById('stock-morale-category').value;
+    return ['Morale', size, category, freeText].filter(Boolean).join(' ');
+  }
+  return [itemType, freeText].filter(Boolean).join(' ') || freeText;
+}
+
 document.getElementById('stock-form').addEventListener('submit', async (e) => {
   e.preventDefault();
   const payload = {
     entry_type: document.getElementById('stock-type').value,
-    item_name: document.getElementById('stock-item').value,
+    item_name: buildStockItemName(),
     quantity: parseFloat(document.getElementById('stock-qty').value),
     unit_price: parseFloat(document.getElementById('stock-price').value),
     location: document.getElementById('stock-location').value,
@@ -1955,6 +2138,7 @@ document.getElementById('stock-form').addEventListener('submit', async (e) => {
   if (error) { alert('Error: ' + error.message); return; }
   await uploadTripDocs(entryId, null, 'stock-file-license', 'stock-file-vehicle', 'stock-doc-status');
   e.target.reset();
+  toggleMoraleFields();
   cancelStockEdit();
   loadMyStock();
 });
@@ -3104,7 +3288,7 @@ function downloadLedgerCSV() {
   const blob = new Blob([csv], { type: 'text/csv' });
   const a = document.createElement('a');
   a.href = URL.createObjectURL(blob);
-  a.download = `plywood_stock_ledger_${new Date().toISOString().slice(0,10)}.csv`;
+  a.download = `stock_ledger_${new Date().toISOString().slice(0,10)}.csv`;
   a.click();
 }
 
@@ -3188,8 +3372,8 @@ async function loadOverview() {
   document.getElementById('overview-warehouse').innerHTML = Object.entries(byLoc).length
     ? Object.entries(byLoc).map(([loc,v]) => `<div class="flex justify-between border-b py-1"><span>${loc}</span><span class="text-slate-500">${v.count} entries · ETB ${v.total.toLocaleString()}</span></div>`).join('')
     + `<div class="flex justify-between border-b py-1 font-semibold text-[#2CA01C]"><span>Factory (not yet shipped)</span><span>${factoryBal.toLocaleString()} pcs</span></div>`
-    + `<div class="flex justify-between border-b py-1 font-semibold text-[#2CA01C]"><span>Kolfe (Plywood Ledger)</span><span>${kolfeBal.toLocaleString()} pcs</span></div>`
-    + `<div class="flex justify-between border-b py-1 font-semibold text-[#2CA01C]"><span>Mesalemya (Plywood Ledger)</span><span>${mesBal.toLocaleString()} pcs</span></div>`
+    + `<div class="flex justify-between border-b py-1 font-semibold text-[#2CA01C]"><span>Kolfe (Stock Ledger)</span><span>${kolfeBal.toLocaleString()} pcs</span></div>`
+    + `<div class="flex justify-between border-b py-1 font-semibold text-[#2CA01C]"><span>Mesalemya (Stock Ledger)</span><span>${mesBal.toLocaleString()} pcs</span></div>`
     : '<p class="text-slate-400">No stock activity in period.</p>';
 
   // ---- SECTION 2: FINANCIAL ----
@@ -3437,6 +3621,8 @@ async function updateRole(id, role) {
 
 // PROFORMA
 let pfItemCount = 0;
+let editingProformaId = null;
+
 function addProformaItem() {
   pfItemCount++;
   const id = 'pf-item-' + pfItemCount;
@@ -3444,7 +3630,8 @@ function addProformaItem() {
   row.className = 'grid grid-cols-12 gap-2';
   row.id = id;
   row.innerHTML = `
-    <input placeholder="Description" class="pf-desc border p-2 rounded col-span-6">
+    <input placeholder="Description" class="pf-desc border p-2 rounded col-span-4">
+    <input placeholder="Size (e.g. 7*5, 18mm)" class="pf-size border p-2 rounded col-span-2">
     <input type="number" placeholder="Qty" class="pf-qty border p-2 rounded col-span-2">
     <input type="number" placeholder="Unit Price" class="pf-price border p-2 rounded col-span-3">
     <button type="button" onclick="document.getElementById('${id}').remove()" class="col-span-1 text-red-600">✕</button>`;
@@ -3452,40 +3639,121 @@ function addProformaItem() {
 }
 addProformaItem();
 
-async function generateProforma() {
-  const customer = document.getElementById('pf-customer').value.trim();
-  const address = document.getElementById('pf-address').value.trim();
-  const vatPct = parseFloat(document.getElementById('pf-vat').value) || 0;
-  const notes = document.getElementById('pf-notes').value.trim();
+function resetProformaItems(items) {
+  document.getElementById('pf-items').innerHTML = '';
+  pfItemCount = 0;
+  if (!items || !items.length) { addProformaItem(); return; }
+  items.forEach(i => {
+    addProformaItem();
+    const row = document.getElementById('pf-items').lastElementChild;
+    row.querySelector('.pf-desc').value = i.description || '';
+    row.querySelector('.pf-size').value = i.size || '';
+    row.querySelector('.pf-qty').value = i.qty || '';
+    row.querySelector('.pf-price').value = i.unit_price || '';
+  });
+}
 
-  const items = [...document.querySelectorAll('#pf-items > div')].map(row => ({
+function cancelProformaEdit() {
+  editingProformaId = null;
+  document.getElementById('pf-form-title').textContent = 'Create Proforma Invoice';
+  document.getElementById('pf-generate-btn').textContent = 'Generate & Preview';
+  document.getElementById('pf-cancel-edit-btn').classList.add('hidden');
+  document.getElementById('pf-customer').value = '';
+  document.getElementById('pf-address').value = '';
+  document.getElementById('pf-tin').value = '';
+  document.getElementById('pf-vat').value = 15;
+  document.getElementById('pf-notes').value = '';
+  resetProformaItems(null);
+}
+
+async function editProforma(id) {
+  if (currentRole !== 'admin') { alert('Only Administrators can edit proformas.'); return; }
+  showTab('proforma');
+  const { data, error } = await sb.from('proformas').select('*').eq('id', id).single();
+  if (error || !data) { alert('Could not load that proforma.'); return; }
+  editingProformaId = id;
+  document.getElementById('pf-form-title').textContent = 'Edit Proforma — ' + data.proforma_no;
+  document.getElementById('pf-generate-btn').textContent = 'Update & Preview';
+  document.getElementById('pf-cancel-edit-btn').classList.remove('hidden');
+  document.getElementById('pf-customer').value = data.customer_name || '';
+  document.getElementById('pf-address').value = data.customer_address || '';
+  document.getElementById('pf-tin').value = data.customer_tin || '';
+  document.getElementById('pf-vat').value = data.vat_percent ?? 15;
+  document.getElementById('pf-notes').value = data.notes || '';
+  if (data.company_name) document.getElementById('pf-company').value = data.company_name;
+  resetProformaItems(data.items || []);
+  document.getElementById('proforma-print').classList.add('hidden');
+}
+
+function collectProformaItems() {
+  return [...document.querySelectorAll('#pf-items > div')].map(row => ({
     description: row.querySelector('.pf-desc').value,
+    size: row.querySelector('.pf-size').value,
     qty: parseFloat(row.querySelector('.pf-qty').value) || 0,
     unit_price: parseFloat(row.querySelector('.pf-price').value) || 0
   })).filter(i => i.description);
+}
+
+async function generateProforma() {
+  if (currentRole !== 'admin') { alert('Proforma generation is restricted to Administrators.'); return; }
+
+  const companyName = document.getElementById('pf-company').value;
+  const company = COMPANIES[companyName] || { address: '', phone: '' };
+  const customer = document.getElementById('pf-customer').value.trim();
+  const address = document.getElementById('pf-address').value.trim();
+  const tin = document.getElementById('pf-tin').value.trim();
+  const vatPct = parseFloat(document.getElementById('pf-vat').value) || 0;
+  const notes = document.getElementById('pf-notes').value.trim();
+  const items = collectProformaItems();
 
   if (!customer || !items.length) { alert('Add a customer name and at least one line item.'); return; }
 
-  const { data: noData } = await sb.rpc('next_proforma_no');
-  const proformaNo = noData || ('PRO-' + Date.now());
+  let proformaNo;
+  if (editingProformaId) {
+    const { data: existing } = await sb.from('proformas').select('proforma_no').eq('id', editingProformaId).single();
+    proformaNo = existing ? existing.proforma_no : ('PRO-' + Date.now());
+  } else {
+    const { data: noData } = await sb.rpc('next_proforma_no');
+    proformaNo = noData || ('PRO-' + Date.now());
+  }
 
-  const subtotal = items.reduce((s,i) => s + i.qty * i.unit_price, 0);
+  // Row-level totals: a "Total" only means something when the same item repeats (qty > 1).
+  // For a single (qty = 1) line among otherwise mixed/non-identical items, the unit price
+  // already IS the total, so we don't repeat it as a separate subtotal figure.
+  // The document's grand Subtotal/VAT/Total below still sums every row correctly, since a
+  // customer needs one payable figure regardless of how many different products are on it.
+  const rowTotal = (i) => i.qty > 1 ? i.qty * i.unit_price : null;
+  const subtotal = items.reduce((s, i) => s + i.qty * i.unit_price, 0);
   const vat = subtotal * vatPct / 100;
   const total = subtotal + vat;
 
-  await sb.from('proformas').insert([{
-    proforma_no: proformaNo, customer_name: customer, customer_address: address,
-    items, vat_percent: vatPct, notes, created_by: currentUser.id
-  }]);
+  const payload = {
+    proforma_no: proformaNo, company_name: companyName, customer_name: customer, customer_address: address,
+    customer_tin: tin, items, vat_percent: vatPct, notes
+  };
+  let error;
+  if (editingProformaId) {
+    ({ error } = await sb.from('proformas').update(payload).eq('id', editingProformaId));
+  } else {
+    payload.created_by = currentUser.id;
+    ({ error } = await sb.from('proformas').insert([payload]));
+  }
+  if (error) { alert('Error: ' + error.message); return; }
 
+  document.getElementById('pf-out-company-name').textContent = companyName;
+  document.getElementById('pf-out-company-address').textContent = company.address;
+  document.getElementById('pf-out-company-phone').textContent = company.phone ? ('Tel: ' + company.phone) : '';
   document.getElementById('pf-no').textContent = proformaNo;
   document.getElementById('pf-date').textContent = new Date().toLocaleDateString();
   document.getElementById('pf-out-customer').textContent = customer;
   document.getElementById('pf-out-address').textContent = address;
-  document.getElementById('pf-out-items').innerHTML = items.map((i,idx) => `
-    <tr class="border-b"><td class="py-1">${idx+1}</td><td>${i.description}</td>
+  document.getElementById('pf-out-tin').textContent = tin ? ('TIN: ' + tin) : '';
+  document.getElementById('pf-out-items').innerHTML = items.map((i,idx) => {
+    const t = rowTotal(i);
+    return `<tr class="border-b"><td class="py-1">${idx+1}</td><td>${i.description}</td><td>${i.size || ''}</td>
     <td class="text-right">${i.qty}</td><td class="text-right">${i.unit_price.toLocaleString()}</td>
-    <td class="text-right">${(i.qty*i.unit_price).toLocaleString()}</td></tr>`).join('');
+    <td class="text-right">${t === null ? '—' : t.toLocaleString()}</td></tr>`;
+  }).join('');
   document.getElementById('pf-out-subtotal').textContent = 'ETB ' + subtotal.toLocaleString();
   document.getElementById('pf-out-vatpct').textContent = vatPct;
   document.getElementById('pf-out-vat').textContent = 'ETB ' + vat.toLocaleString();
@@ -3493,6 +3761,101 @@ async function generateProforma() {
   document.getElementById('pf-out-notes').textContent = notes;
   document.getElementById('proforma-print').classList.remove('hidden');
   if (document.getElementById('tab-repository') && !document.getElementById('tab-repository').classList.contains('hidden')) loadRepoProformas();
+  if (document.getElementById('tab-proformareport') && !document.getElementById('tab-proformareport').classList.contains('hidden')) loadProformaReport();
+  cancelProformaEdit();
+}
+
+// Sends the current form's contents straight to Telegram as a formatted message —
+// does NOT touch Supabase / the proformas table at all (no local save).
+async function sendProformaToTelegram() {
+  if (currentRole !== 'admin') { alert('Only Administrators can send proformas.'); return; }
+  if (!TELEGRAM_BOT_TOKEN || !TELEGRAM_CHAT_ID) {
+    alert('Telegram is not configured yet. Set TELEGRAM_BOT_TOKEN and TELEGRAM_CHAT_ID near the top of the script.');
+    return;
+  }
+  const companyName = document.getElementById('pf-company').value;
+  const customer = document.getElementById('pf-customer').value.trim();
+  const address = document.getElementById('pf-address').value.trim();
+  const tin = document.getElementById('pf-tin').value.trim();
+  const vatPct = parseFloat(document.getElementById('pf-vat').value) || 0;
+  const notes = document.getElementById('pf-notes').value.trim();
+  const items = collectProformaItems();
+  if (!customer || !items.length) { alert('Add a customer name and at least one line item.'); return; }
+
+  const subtotal = items.reduce((s, i) => s + i.qty * i.unit_price, 0);
+  const vat = subtotal * vatPct / 100;
+  const total = subtotal + vat;
+
+  const lines = items.map(i => `• ${i.description}${i.size ? ' (' + i.size + ')' : ''} — Qty ${i.qty} x ETB ${i.unit_price.toLocaleString()}`).join('\n');
+  const message = `<b>PROFORMA — ${companyName}</b>\nBill To: ${customer}${address ? ' (' + address + ')' : ''}${tin ? '\nTIN: ' + tin : ''}\n\n${lines}\n\nSubtotal: ETB ${subtotal.toLocaleString()}\nVAT (${vatPct}%): ETB ${vat.toLocaleString()}\n<b>Total: ETB ${total.toLocaleString()}</b>${notes ? '\n\nNotes: ' + notes : ''}`;
+
+  try {
+    const resp = await fetch(`https://api.telegram.org/bot${TELEGRAM_BOT_TOKEN}/sendMessage`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ chat_id: TELEGRAM_CHAT_ID, text: message, parse_mode: 'HTML' })
+    });
+    const result = await resp.json();
+    if (!result.ok) { alert('Telegram error: ' + (result.description || 'unknown error')); return; }
+    alert('Sent to Telegram.');
+  } catch (err) {
+    alert('Telegram send failed: ' + err.message);
+  }
+}
+
+// ==================== PROFORMA REPORT DASHBOARD ====================
+async function loadProformaReport() {
+  const sort = document.getElementById('pfr-sort').value;
+  let query = sb.from('proformas').select('*');
+  if (sort === 'date_desc') query = query.order('created_at', { ascending: false });
+  else if (sort === 'date_asc') query = query.order('created_at', { ascending: true });
+  else if (sort === 'name_asc') query = query.order('customer_name', { ascending: true });
+  else if (sort === 'name_desc') query = query.order('customer_name', { ascending: false });
+
+  const { data, error } = await query;
+  const el = document.getElementById('pfr-list');
+  if (error || !data || !data.length) { el.innerHTML = '<tr><td colspan="5" class="text-slate-400 py-3">No proformas generated yet.</td></tr>'; return; }
+  el.innerHTML = data.map(p => `
+    <tr class="border-b">
+      <td class="py-1.5">${p.proforma_no}</td>
+      <td>${p.customer_name}</td>
+      <td>${p.customer_address || '—'}</td>
+      <td>${new Date(p.created_at).toLocaleDateString()}</td>
+      <td class="text-right"><button onclick="openProformaFromReport('${p.id}')" class="text-[#2CA01C] font-semibold text-xs no-print">Open / Print</button></td>
+    </tr>`).join('');
+}
+
+async function openProformaFromReport(id) {
+  const { data, error } = await sb.from('proformas').select('*').eq('id', id).single();
+  if (error || !data) { alert('Could not load that proforma.'); return; }
+  showTab('proforma');
+  const company = COMPANIES[data.company_name] || { address: '', phone: '' };
+  const items = data.items || [];
+  const rowTotal = (i) => i.qty > 1 ? i.qty * i.unit_price : null;
+  const subtotal = items.reduce((s, i) => s + i.qty * i.unit_price, 0);
+  const vat = subtotal * (data.vat_percent || 0) / 100;
+  const total = subtotal + vat;
+
+  document.getElementById('pf-out-company-name').textContent = data.company_name || 'Prime Investment Group PLC';
+  document.getElementById('pf-out-company-address').textContent = company.address;
+  document.getElementById('pf-out-company-phone').textContent = company.phone ? ('Tel: ' + company.phone) : '';
+  document.getElementById('pf-no').textContent = data.proforma_no;
+  document.getElementById('pf-date').textContent = new Date(data.created_at).toLocaleDateString();
+  document.getElementById('pf-out-customer').textContent = data.customer_name;
+  document.getElementById('pf-out-address').textContent = data.customer_address || '';
+  document.getElementById('pf-out-tin').textContent = data.customer_tin ? ('TIN: ' + data.customer_tin) : '';
+  document.getElementById('pf-out-items').innerHTML = items.map((i,idx) => {
+    const t = rowTotal(i);
+    return `<tr class="border-b"><td class="py-1">${idx+1}</td><td>${i.description}</td><td>${i.size || ''}</td>
+    <td class="text-right">${i.qty}</td><td class="text-right">${i.unit_price.toLocaleString()}</td>
+    <td class="text-right">${t === null ? '—' : t.toLocaleString()}</td></tr>`;
+  }).join('');
+  document.getElementById('pf-out-subtotal').textContent = 'ETB ' + subtotal.toLocaleString();
+  document.getElementById('pf-out-vatpct').textContent = data.vat_percent || 0;
+  document.getElementById('pf-out-vat').textContent = 'ETB ' + vat.toLocaleString();
+  document.getElementById('pf-out-total').textContent = 'ETB ' + total.toLocaleString();
+  document.getElementById('pf-out-notes').textContent = data.notes || '';
+  document.getElementById('proforma-print').classList.remove('hidden');
 }
 
 // ==================== CUSTOMER BILLING ====================
@@ -3852,6 +4215,8 @@ async function loadRepoProformas() {
       <div><span class="font-semibold">${p.proforma_no}</span> — ${p.customer_name}</div>
       <div class="flex items-center gap-3">
         <span class="text-xs text-slate-400">${new Date(p.created_at).toLocaleDateString()}</span>
+        <button onclick="openProformaFromReport('${p.id}')" class="text-[#2CA01C] text-xs no-print">Open</button>
+        ${currentRole === 'admin' ? `<button onclick="editProforma('${p.id}')" class="text-sky-600 text-xs no-print">Edit</button>` : ''}
         ${currentRole === 'admin' ? `<button onclick="deleteProforma('${p.id}')" class="text-red-600 text-xs no-print">Delete</button>` : ''}
       </div>
     </div>`).join('');
@@ -3869,13 +4234,27 @@ async function uploadRepoFile(category, titleInputId, fileInputId, extraCols) {
   const fileInput = document.getElementById(fileInputId);
   const file = fileInput.files[0];
   if (!title || !file) { alert('Add a title and choose a file.'); return; }
+  if (file.size === 0) { alert('That file appears to be empty (0 bytes) — please choose a valid file.'); return; }
 
   const path = `${category}/${Date.now()}_${file.name}`;
-  const { error: upErr } = await sb.storage.from(REPO_BUCKET).upload(path, file);
+  const { error: upErr } = await sb.storage.from(REPO_BUCKET).upload(path, file, {
+    contentType: file.type || 'application/octet-stream',
+    upsert: false
+  });
   if (upErr) { alert('Upload error: ' + upErr.message); return; }
 
-  const { data: pub } = sb.storage.from(REPO_BUCKET).getPublicUrl(path);
-  const payload = { category, title, file_path: path, file_url: pub.publicUrl, uploaded_by: currentUser.id, ...(extraCols || {}) };
+  // Use a long-lived signed URL so files open correctly regardless of whether the storage
+  // bucket is configured public or private (a public-URL on a private bucket was the likely
+  // cause of links that "opened" but showed nothing / an empty file).
+  let fileUrl = null;
+  const { data: signed, error: signErr } = await sb.storage.from(REPO_BUCKET).createSignedUrl(path, 60 * 60 * 24 * 365);
+  if (!signErr && signed) fileUrl = signed.signedUrl;
+  if (!fileUrl) {
+    const { data: pub } = sb.storage.from(REPO_BUCKET).getPublicUrl(path);
+    fileUrl = pub.publicUrl;
+  }
+
+  const payload = { category, title, file_path: path, file_url: fileUrl, uploaded_by: currentUser.id, ...(extraCols || {}) };
   const { error } = await sb.from('documents').insert([payload]);
   if (error) { alert('Error saving record: ' + error.message); return; }
 
@@ -4381,6 +4760,98 @@ async function loadHrReports() {
   const discCount = (discRows || []).length;
   document.getElementById('hr-disc-count').innerHTML = ragDot(discCount > 2 ? 'r' : discCount > 0 ? 'a' : 'g') + discCount;
   document.getElementById('hr-perf-count').textContent = (perfRows || []).length;
+}
+
+// ==================== TIME & ATTENDANCE ====================
+// Requires a Supabase table:
+//   create table attendance_logs (
+//     id uuid primary key default gen_random_uuid(),
+//     user_id uuid not null,
+//     user_email text,
+//     clock_in timestamptz not null default now(),
+//     clock_out timestamptz,
+//     created_at timestamptz not null default now()
+//   );
+let openAttendanceId = null;
+
+function hoursBetween(inTs, outTs) {
+  if (!inTs || !outTs) return '—';
+  const ms = new Date(outTs) - new Date(inTs);
+  return (ms / 3600000).toFixed(2);
+}
+
+async function refreshClockStatus() {
+  const { data } = await sb.from('attendance_logs')
+    .select('*').eq('user_id', currentUser.id).is('clock_out', null)
+    .order('clock_in', { ascending: false }).limit(1);
+  const open = data && data[0];
+  openAttendanceId = open ? open.id : null;
+  const statusEl = document.getElementById('ts-status');
+  const inBtn = document.getElementById('ts-clockin-btn');
+  const outBtn = document.getElementById('ts-clockout-btn');
+  if (!statusEl) return;
+  if (open) {
+    statusEl.textContent = 'Clocked in since ' + new Date(open.clock_in).toLocaleTimeString();
+    inBtn.classList.add('hidden');
+    outBtn.classList.remove('hidden');
+  } else {
+    statusEl.textContent = 'Not clocked in';
+    inBtn.classList.remove('hidden');
+    outBtn.classList.add('hidden');
+  }
+}
+
+async function clockIn() {
+  const { error } = await sb.from('attendance_logs').insert([{
+    user_id: currentUser.id, user_email: currentUser.email, clock_in: new Date().toISOString()
+  }]);
+  if (error) { alert('Error: ' + error.message); return; }
+  await refreshClockStatus();
+  loadMyAttendance();
+  if (currentRole === 'admin' || currentRole === 'hr') loadAllAttendance();
+}
+
+async function clockOut() {
+  if (!openAttendanceId) return;
+  const { error } = await sb.from('attendance_logs').update({ clock_out: new Date().toISOString() }).eq('id', openAttendanceId);
+  if (error) { alert('Error: ' + error.message); return; }
+  await refreshClockStatus();
+  loadMyAttendance();
+  if (currentRole === 'admin' || currentRole === 'hr') loadAllAttendance();
+}
+
+async function loadMyAttendance() {
+  await refreshClockStatus();
+  const { data, error } = await sb.from('attendance_logs')
+    .select('*').eq('user_id', currentUser.id).order('clock_in', { ascending: false }).limit(30);
+  const el = document.getElementById('ts-my-list');
+  if (!el) return;
+  if (error || !data || !data.length) { el.innerHTML = '<tr><td colspan="4" class="text-slate-400 py-3">No attendance logged yet.</td></tr>'; return; }
+  el.innerHTML = data.map(r => `
+    <tr class="border-b">
+      <td class="py-1.5">${new Date(r.clock_in).toLocaleDateString()}</td>
+      <td>${new Date(r.clock_in).toLocaleTimeString()}</td>
+      <td>${r.clock_out ? new Date(r.clock_out).toLocaleTimeString() : '—'}</td>
+      <td>${hoursBetween(r.clock_in, r.clock_out)}</td>
+    </tr>`).join('');
+}
+
+async function loadAllAttendance() {
+  const panel = document.getElementById('ts-admin-panel');
+  if (!panel) return;
+  panel.classList.remove('hidden');
+  const { data, error } = await sb.from('attendance_logs')
+    .select('*').order('clock_in', { ascending: false }).limit(100);
+  const el = document.getElementById('ts-all-list');
+  if (error || !data || !data.length) { el.innerHTML = '<tr><td colspan="5" class="text-slate-400 py-3">No attendance logged yet.</td></tr>'; return; }
+  el.innerHTML = data.map(r => `
+    <tr class="border-b">
+      <td class="py-1.5">${r.user_email || r.user_id}</td>
+      <td>${new Date(r.clock_in).toLocaleDateString()}</td>
+      <td>${new Date(r.clock_in).toLocaleTimeString()}</td>
+      <td>${r.clock_out ? new Date(r.clock_out).toLocaleTimeString() : '—'}</td>
+      <td>${hoursBetween(r.clock_in, r.clock_out)}</td>
+    </tr>`).join('');
 }
 
 sb.auth.getSession().then(({ data }) => { if (data.session) boot(); });
