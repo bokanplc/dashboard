@@ -3,75 +3,439 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>BlackRock Investment PLC | Structural Materials Supply</title>
-<meta name="description" content="BlackRock Investment PLC — dependable structural and construction material supply in Ethiopia, operating under the family brand BOKAN.">
+<title>BlackRock Investment PLC | BOKAN</title>
+<meta name="description" content="BlackRock Investment PLC — BOKAN Construction Trader / Wholesaler, supplying plywood, wire products and fasteners to construction and project markets in Ethiopia and the wider East African region.">
 <style>
-:root{--navy:#071b2e;--navy2:#0d2942;--gold:#d9a441;--light:#f5f7fa;--text:#17212b;--muted:#657382;--white:#fff}
-*{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;font-family:Arial,Helvetica,sans-serif;color:var(--text);background:#fff;line-height:1.6}
-a{text-decoration:none;color:inherit}.container{width:min(1180px,92%);margin:auto}
-header{position:sticky;top:0;z-index:10;background:rgba(7,27,46,.97);color:#fff;border-bottom:1px solid rgba(255,255,255,.1)}
-.nav{height:76px;display:flex;align-items:center;justify-content:space-between}.brand{display:flex;align-items:center;gap:12px}.mark{width:42px;height:42px;border:2px solid var(--gold);display:grid;place-items:center;font-weight:800;color:var(--gold);letter-spacing:-2px}.brand strong{font-size:18px;letter-spacing:.5px}.brand small{display:block;color:#b8c4cf;font-size:10px;letter-spacing:2px;text-transform:uppercase}
-nav{display:flex;gap:28px;font-size:13px;font-weight:700;text-transform:uppercase;letter-spacing:.7px}nav a:hover{color:var(--gold)}
-.hero{background:linear-gradient(110deg,rgba(7,27,46,.98),rgba(7,27,46,.83)),url('') center/cover;min-height:650px;display:flex;align-items:center;color:#fff;position:relative;overflow:hidden}.hero:after{content:"";position:absolute;right:-130px;top:-130px;width:520px;height:520px;border:70px solid rgba(217,164,65,.12);transform:rotate(25deg)}
-.hero-content{position:relative;z-index:1;max-width:760px;padding:90px 0}.eyebrow{color:var(--gold);font-weight:800;letter-spacing:3px;text-transform:uppercase;font-size:12px}.hero h1{font-size:clamp(42px,6vw,76px);line-height:1.02;margin:18px 0 24px;letter-spacing:-2px}.hero p{font-size:20px;color:#d7e0e8;max-width:650px}.buttons{display:flex;gap:14px;margin-top:34px;flex-wrap:wrap}.btn{padding:14px 22px;border:1px solid var(--gold);font-weight:800;font-size:13px}.primary{background:var(--gold);color:#071b2e}.secondary{color:#fff}
-.section{padding:88px 0}.section.alt{background:var(--light)}.heading{max-width:700px;margin-bottom:45px}.heading .eyebrow{color:#9b711f}.heading h2{font-size:42px;line-height:1.1;margin:10px 0 14px;color:var(--navy)}.heading p{color:var(--muted)}
-.grid{display:grid;grid-template-columns:repeat(3,1fr);gap:20px}.card{border:1px solid #e3e8ed;background:#fff;padding:30px;min-height:205px;transition:.2s}.card:hover{transform:translateY(-4px);box-shadow:0 14px 35px rgba(7,27,46,.08)}.icon{font-size:27px;color:var(--gold);font-weight:900}.card h3{margin:15px 0 7px;color:var(--navy)}.card p{color:var(--muted);font-size:14px}
-.products{display:grid;grid-template-columns:1.2fr .8fr;gap:25px}.product-list{display:grid;grid-template-columns:1fr 1fr;gap:14px}.product{padding:22px;background:var(--navy);color:#fff;border-left:4px solid var(--gold)}.product b{display:block}.product span{font-size:12px;color:#b9c6d1}
-.about{display:grid;grid-template-columns:1fr 1fr;gap:70px;align-items:center}.about-panel{background:var(--navy);color:#fff;padding:45px}.about-panel h3{font-size:28px;margin-top:0}.about-panel p{color:#c9d3dc}.facts{display:grid;grid-template-columns:1fr 1fr;gap:18px;margin-top:28px}.fact{border-top:1px solid rgba(255,255,255,.2);padding-top:14px}.fact strong{font-size:22px;color:var(--gold);display:block}.fact span{font-size:12px;color:#b9c6d1}
-.cta{background:var(--gold);padding:55px 0}.cta-row{display:flex;align-items:center;justify-content:space-between;gap:30px}.cta h2{margin:0;color:var(--navy);font-size:35px}.cta .btn{border-color:var(--navy);color:var(--navy)}
-footer{background:#04121f;color:#d3dce4;padding:50px 0 25px}.footer-grid{display:grid;grid-template-columns:1.4fr 1fr 1fr;gap:40px}.footer-title{color:#fff;font-weight:800;margin-bottom:12px}.footer small{color:#82909c}.bottom{border-top:1px solid rgba(255,255,255,.1);margin-top:35px;padding-top:20px;font-size:11px;color:#82909c}
-@media(max-width:800px){nav{display:none}.grid,.products,.about,.footer-grid{grid-template-columns:1fr}.product-list{grid-template-columns:1fr}.hero{min-height:580px}.section{padding:65px 0}.heading h2{font-size:34px}.cta-row{display:block}.cta .btn{display:inline-block;margin-top:20px}}
+:root{
+  --navy:#071b2e;--navy2:#0d2942;--gold:#d9a441;--gold2:#b98421;
+  --light:#f5f7fa;--text:#17212b;--muted:#657382;--white:#fff;
+  --line:#e2e8ee;--dark:#04121f;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;font-family:Arial,Helvetica,sans-serif;color:var(--text);background:#fff;line-height:1.6}
+a{text-decoration:none;color:inherit}
+button{font:inherit}
+.container{width:min(1180px,92%);margin:auto}
+header{position:sticky;top:0;z-index:100;background:rgba(7,27,46,.98);color:#fff;border-bottom:1px solid rgba(255,255,255,.12)}
+.nav{height:76px;display:flex;align-items:center;justify-content:space-between}
+.brand{display:flex;align-items:center;gap:12px;cursor:pointer}
+.mark{width:42px;height:42px;border:2px solid var(--gold);display:grid;place-items:center;font-weight:800;color:var(--gold);letter-spacing:-2px;flex:none}
+.brand strong{font-size:18px;letter-spacing:.5px;display:block}
+.brand small{display:block;color:#b8c4cf;font-size:10px;letter-spacing:2px;text-transform:uppercase}
+nav{display:flex;gap:24px;font-size:12px;font-weight:800;text-transform:uppercase;letter-spacing:.8px}
+nav a{padding:29px 0;position:relative;cursor:pointer}
+nav a:hover,nav a.active{color:var(--gold)}
+nav a.active:after{content:"";position:absolute;bottom:18px;left:0;right:0;height:2px;background:var(--gold)}
+.mobile-toggle{display:none;background:none;border:1px solid rgba(255,255,255,.25);color:#fff;padding:8px 11px;cursor:pointer}
+
+/* SPA page system */
+.page{display:none;min-height:calc(100vh - 76px)}
+.page.active{display:block}
+.hero{background:linear-gradient(110deg,rgba(7,27,46,.99),rgba(7,27,46,.88));min-height:650px;display:flex;align-items:center;color:#fff;position:relative;overflow:hidden}
+.hero:after{content:"";position:absolute;right:-150px;top:-150px;width:540px;height:540px;border:75px solid rgba(217,164,65,.11);transform:rotate(25deg)}
+.hero:before{content:"";position:absolute;right:100px;bottom:-250px;width:420px;height:420px;border:1px solid rgba(217,164,65,.18);transform:rotate(45deg)}
+.hero-content{position:relative;z-index:1;max-width:820px;padding:90px 0}
+.eyebrow{color:var(--gold);font-weight:800;letter-spacing:3px;text-transform:uppercase;font-size:11px}
+.hero h1{font-size:clamp(42px,6vw,76px);line-height:1.02;margin:18px 0 24px;letter-spacing:-2px}
+.hero p{font-size:19px;color:#d7e0e8;max-width:700px}
+.buttons{display:flex;gap:14px;margin-top:34px;flex-wrap:wrap}
+.btn{display:inline-block;padding:14px 22px;border:1px solid var(--gold);font-weight:800;font-size:12px;letter-spacing:.3px;cursor:pointer}
+.primary{background:var(--gold);color:var(--navy)}
+.secondary{color:#fff}
+.section{padding:88px 0}
+.section.alt{background:var(--light)}
+.heading{max-width:760px;margin-bottom:45px}
+.heading .eyebrow{color:#9b711f}
+.heading h2{font-size:42px;line-height:1.1;margin:10px 0 14px;color:var(--navy)}
+.heading p{color:var(--muted)}
+.grid{display:grid;grid-template-columns:repeat(3,1fr);gap:20px}
+.card{border:1px solid var(--line);background:#fff;padding:30px;min-height:205px;transition:.2s}
+.card:hover{transform:translateY(-4px);box-shadow:0 14px 35px rgba(7,27,46,.08)}
+.icon{font-size:25px;color:var(--gold);font-weight:900}
+.card h3{margin:13px 0 7px;color:var(--navy)}
+.card p{color:var(--muted);font-size:14px}
+.dark-panel{background:var(--navy);color:#fff;padding:45px}
+.dark-panel h2,.dark-panel h3{color:#fff}
+.dark-panel p{color:#c9d3dc}
+.split{display:grid;grid-template-columns:1fr 1fr;gap:60px;align-items:start}
+.stats{display:grid;grid-template-columns:repeat(4,1fr);gap:16px;margin-top:35px}
+.stat{border-top:2px solid var(--gold);padding-top:14px}
+.stat strong{font-size:22px;color:var(--gold);display:block}
+.stat span{font-size:11px;color:#b9c6d1;text-transform:uppercase;letter-spacing:1px}
+.breadcrumb{background:var(--navy2);color:#fff;padding:56px 0}
+.breadcrumb h1{font-size:48px;line-height:1.05;margin:10px 0 8px}
+.breadcrumb p{color:#c7d2dc;margin:0;max-width:680px}
+.product-list{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+.product{padding:25px;background:var(--navy);color:#fff;border-left:4px solid var(--gold);min-height:145px}
+.product b{display:block;font-size:18px;margin-bottom:5px}
+.product span{font-size:12px;color:#b9c6d1}
+.product small{display:block;margin-top:13px;color:var(--gold);font-weight:700;letter-spacing:.5px}
+.catalog-note{margin-top:20px;padding:18px 20px;border-left:3px solid var(--gold);background:#fff;color:var(--muted);font-size:13px}
+.network-map{background:var(--navy);padding:45px;color:#fff;min-height:360px;position:relative;overflow:hidden}
+.network-map:after{content:"";position:absolute;width:460px;height:460px;border:1px solid rgba(217,164,65,.18);border-radius:50%;right:-130px;top:-50px}
+.route{position:relative;z-index:1;display:flex;flex-wrap:wrap;gap:12px;margin-top:28px}
+.node{border:1px solid rgba(217,164,65,.6);padding:12px 17px;color:#fff;font-weight:700;font-size:13px}
+.node.primary-node{background:var(--gold);color:var(--navy)}
+.client-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
+.client{border:1px solid var(--line);padding:25px;background:#fff}
+.client .number{color:var(--gold);font-weight:900;font-size:12px}
+.client h3{color:var(--navy);margin:8px 0}
+.client p{color:var(--muted);font-size:13px;margin:0}
+.leaders{display:grid;grid-template-columns:1fr 1fr;gap:25px}
+.leader{background:var(--navy);color:#fff;padding:35px;min-height:250px;border-top:3px solid var(--gold)}
+.leader h3{margin:0 0 4px;color:#fff;font-size:25px}
+.role{color:var(--gold);font-size:11px;font-weight:800;letter-spacing:2px;text-transform:uppercase}
+.leader p{color:#c9d3dc;font-size:14px}
+.principles{display:grid;grid-template-columns:repeat(2,1fr);gap:15px;margin-top:25px}
+.principle{padding:18px;background:#f8fafc;border-left:3px solid var(--gold)}
+.principle strong{color:var(--navy)}
+.contact-box{display:grid;grid-template-columns:1.2fr .8fr;gap:25px}
+.contact-card{background:#fff;border:1px solid var(--line);padding:35px}
+.contact-card h3{color:var(--navy);margin-top:0}
+.contact-link{color:var(--navy);font-weight:800}
+.cta{background:var(--gold);padding:55px 0}
+.cta-row{display:flex;align-items:center;justify-content:space-between;gap:30px}
+.cta h2{margin:0;color:var(--navy);font-size:35px}
+.cta .btn{border-color:var(--navy);color:var(--navy)}
+footer{background:var(--dark);color:#d3dce4;padding:50px 0 25px}
+.footer-grid{display:grid;grid-template-columns:1.4fr 1fr 1fr;gap:40px}
+.footer-title{color:#fff;font-weight:800;margin-bottom:12px}
+footer small{color:#82909c}
+.bottom{border-top:1px solid rgba(255,255,255,.1);margin-top:35px;padding-top:20px;font-size:11px;color:#82909c}
+.hidden{display:none!important}
+
+@media(max-width:850px){
+  nav{display:none;position:absolute;top:76px;left:0;right:0;background:var(--navy);padding:10px 4%;flex-direction:column;gap:0}
+  nav.open{display:flex}
+  nav a{padding:13px 0}
+  nav a.active:after{display:none}
+  .mobile-toggle{display:block}
+  .grid,.split,.leaders,.contact-box{grid-template-columns:1fr}
+  .product-list,.client-grid{grid-template-columns:1fr}
+  .stats{grid-template-columns:1fr 1fr}
+  .hero{min-height:600px}
+  .section{padding:65px 0}
+  .heading h2{font-size:34px}
+  .breadcrumb h1{font-size:38px}
+  .cta-row{display:block}
+  .cta .btn{margin-top:20px}
+}
 </style>
 </head>
 <body>
-<header><div class="container nav">
-<a class="brand" href="#top"><span class="mark">BR</span><span><strong>BLACKROCK INVESTMENT</strong><small>PLC • Ethiopia</small></span></a>
-<nav><a href="#about">About</a><a href="#products">Products</a><a href="#capability">Capability</a><a href="#contact">Contact</a></nav>
-</div></header>
 
-<main id="top">
-<section class="hero"><div class="container hero-content">
+<header>
+<div class="container nav">
+  <a class="brand" data-page="overview">
+    <span class="mark">BR</span>
+    <span><strong>BLACKROCK INVESTMENT</strong><small>PLC • Ethiopia</small></span>
+  </a>
+  <button class="mobile-toggle" id="mobileToggle">MENU</button>
+  <nav id="mainNav">
+    <a data-page="overview" class="active">Overview</a>
+    <a data-page="capabilities">Capabilities</a>
+    <a data-page="products">Products</a>
+    <a data-page="network">Network</a>
+    <a data-page="clients">Clients</a>
+    <a data-page="leadership">Leadership</a>
+  </nav>
+</div>
+</header>
+
+<!-- OVERVIEW -->
+<main id="overview" class="page active">
+<section class="hero">
+<div class="container hero-content">
 <div class="eyebrow">BlackRock Investment PLC • BOKAN Family Brand</div>
 <h1>Structural materials. Built for serious projects.</h1>
-<p>Reliable supply of plywood, formwork, MDF, timber and essential construction materials for contractors, developers, wholesalers and project teams across Ethiopia.</p>
-<div class="buttons"><a class="btn primary" href="#products">Explore Products</a><a class="btn secondary" href="#contact">Talk to Our Team</a></div>
-</div></section>
-
-<section class="section" id="about"><div class="container about">
-<div><div class="heading"><div class="eyebrow">Who We Are</div><h2>A dependable supply partner for construction.</h2><p>BlackRock Investment PLC operates under the family brand ecosystem that includes BOKAN. We focus on making structural and construction material procurement straightforward, dependable and commercially practical.</p><p>Our approach is built around product availability, responsive sales service, competitive commercial terms and long-term customer relationships.</p></div></div>
-<div class="about-panel"><h3>One supplier. Multiple critical materials.</h3><p>From plywood and plastic formwork to MDF, Morale, timber, nails and cement, we help customers source core materials through one trusted commercial relationship.</p><div class="facts"><div class="fact"><strong>BOKAN</strong><span>Family brand</span></div><div class="fact"><strong>ETHIOPIA</strong><span>Primary market</span></div><div class="fact"><strong>STRUCTURAL</strong><span>Material focus</span></div><div class="fact"><strong>B2B</strong><span>Supply-led model</span></div></div></div>
-</div></section>
-
-<section class="section alt" id="products"><div class="container"><div class="heading"><div class="eyebrow">Our Product Range</div><h2>Core materials for the jobsite.</h2><p>A focused range of frequently required construction and structural materials.</p></div>
-<div class="products"><div class="product-list">
-<div class="product"><b>Yellow Plywood</b><span>Construction-grade plywood solutions</span></div>
-<div class="product"><b>Green Plywood</b><span>Durable plywood for structural applications</span></div>
-<div class="product"><b>Plastic Formwork</b><span>Reusable formwork for concrete works</span></div>
-<div class="product"><b>MDF</b><span>Board material for construction and finishing</span></div>
-<div class="product"><b>Morale</b><span>Construction timber / wood products</span></div>
-<div class="product"><b>Timber</b><span>Essential wood materials for projects</span></div>
-<div class="product"><b>Common Nails</b><span>Everyday fastening material</span></div>
-<div class="product"><b>Cement</b><span>Core construction material supply</span></div>
+<p>BlackRock Investment PLC, through the BOKAN Construction Trader / Wholesaler brand, provides a focused supply platform for plywood, wire products and fasteners serving contractors, developers, builders and hardware retailers.</p>
+<div class="buttons">
+<a class="btn primary" data-page="products">Explore Products</a>
+<a class="btn secondary" data-page="capabilities">Our Capabilities</a>
 </div>
-<div class="card"><div class="icon">01</div><h3>Built around availability</h3><p>We focus on maintaining practical access to high-demand construction materials so customers can keep projects moving.</p><div class="icon">02</div><h3>Built around relationships</h3><p>Our sales model is designed for repeat business, clear communication and dependable commercial support.</p></div></div>
-</div></section>
-
-<section class="section" id="capability"><div class="container"><div class="heading"><div class="eyebrow">Why BlackRock</div><h2>Commercially focused. Operationally ready.</h2></div>
+</div>
+</section>
+<section class="section">
+<div class="container">
+<div class="heading">
+<div class="eyebrow">Who We Are</div>
+<h2>A dependable commercial partner for construction.</h2>
+<p>BOKAN operates under BlackRock Investment PLC, a holding company based in Meskel Flower, Addis Ababa. The business is focused on making construction-material procurement straightforward, dependable and commercially practical.</p>
+</div>
 <div class="grid">
-<div class="card"><div class="icon">01</div><h3>Reliable Supply</h3><p>Focused sourcing and inventory management for materials that construction businesses need regularly.</p></div>
-<div class="card"><div class="icon">02</div><h3>Responsive Sales</h3><p>A hands-on sales team built around fast quotations, customer follow-up and practical solutions.</p></div>
-<div class="card"><div class="icon">03</div><h3>Long-Term Value</h3><p>We aim to become a dependable procurement partner rather than simply another materials seller.</p></div>
-</div></div></section>
-
-<section class="cta" id="contact"><div class="container cta-row"><div><h2>Need materials for your next project?</h2><p>Speak with BlackRock Investment and let us help you plan your supply.</p></div><a class="btn" href="tel:+251978234820">Call +251 978 23 48 20</a></div></section>
+<div class="card"><div class="icon">01</div><h3>Focused Range</h3><p>A concentrated portfolio covering plywood panels, wire products and construction fasteners.</p></div>
+<div class="card"><div class="icon">02</div><h3>Quality Focus</h3><p>Product sourcing is centered on established mills and certified manufacturers and on maintaining consistent specifications.</p></div>
+<div class="card"><div class="icon">03</div><h3>Commercial Service</h3><p>Responsive quotations, bulk-delivery planning and project-specific procurement support.</p></div>
+</div>
+</div>
+</section>
+<section class="section alt">
+<div class="container">
+<div class="dark-panel">
+<div class="eyebrow">BOKAN at a Glance</div>
+<h2>Construction supply with a clear operating purpose.</h2>
+<p>Our model is designed around availability, quality assurance, competitive pricing, on-time delivery and long-term customer relationships.</p>
+<div class="stats">
+<div class="stat"><strong>2025/26</strong><span>Catalog edition</span></div>
+<div class="stat"><strong>7</strong><span>Catalog SKUs</span></div>
+<div class="stat"><strong>B2B</strong><span>Primary market</span></div>
+<div class="stat"><strong>EA</strong><span>Regional ambition</span></div>
+</div>
+</div>
+</div>
+</section>
+<section class="cta">
+<div class="container cta-row">
+<div><h2>Ready to source your next order?</h2><p>Talk to the BOKAN commercial team about current stock, bulk delivery or project requirements.</p></div>
+<a class="btn" href="tel:+251978234820">Call +251 978 234 820</a>
+</div>
+</section>
 </main>
 
-<footer><div class="container"><div class="footer-grid">
-<div><div class="brand"><span class="mark">BR</span><span><strong>BLACKROCK INVESTMENT</strong><small>PLC • Ethiopia</small></span></div><p>Construction & structural material supply, operating under the family brand BOKAN.</p></div>
+<!-- CAPABILITIES -->
+<main id="capabilities" class="page">
+<section class="breadcrumb">
+<div class="container">
+<div class="eyebrow">02 • Capabilities</div>
+<h1>Supply capability that supports the project.</h1>
+<p>From sourcing and quality assurance to order preparation and delivery planning, BOKAN is structured around the practical requirements of construction buyers.</p>
+</div>
+</section>
+<section class="section">
+<div class="container">
+<div class="grid">
+<div class="card"><div class="icon">01</div><h3>Strategic Procurement</h3><p>Procurement relationships span established mills and certified manufacturers in Asia, Europe and the Middle East.</p></div>
+<div class="card"><div class="icon">02</div><h3>Quality Assurance</h3><p>We work with defined product specifications and supplier standards to support consistent quality across orders.</p></div>
+<div class="card"><div class="icon">03</div><h3>Bulk Supply</h3><p>Standard catalog products can be supplied immediately where available or planned for scheduled bulk delivery.</p></div>
+<div class="card"><div class="icon">04</div><h3>Project Procurement</h3><p>Custom sizes, alternative grades and project-specific procurement packages can be requested according to project needs.</p></div>
+<div class="card"><div class="icon">05</div><h3>Commercial Support</h3><p>Our commercial approach emphasizes clear communication, competitive pricing and practical order coordination.</p></div>
+<div class="card"><div class="icon">06</div><h3>Regional Reach</h3><p>The business is positioned to serve Ethiopia while developing supply relationships across the wider East African market.</p></div>
+</div>
+</div>
+</section>
+<section class="section alt">
+<div class="container split">
+<div class="heading">
+<div class="eyebrow">How We Work</div>
+<h2>A supply process built around certainty.</h2>
+<p>Customers can approach BOKAN for standard stock, bulk requirements or a tailored procurement package. The commercial team then works around specification, quantity, timing and delivery requirements.</p>
+</div>
+<div class="dark-panel">
+<h3>What customers can request</h3>
+<div class="principles">
+<div class="principle"><strong>Standard stock</strong><br><span>Catalog products and standard specifications.</span></div>
+<div class="principle"><strong>Custom sizes</strong><br><span>Alternative dimensions on request.</span></div>
+<div class="principle"><strong>Alternative grades</strong><br><span>Grade options matched to application.</span></div>
+<div class="principle"><strong>Bulk delivery</strong><br><span>Scheduled supply for larger requirements.</span></div>
+</div>
+</div>
+</div>
+</section>
+</main>
+
+<!-- PRODUCTS -->
+<main id="products" class="page">
+<section class="breadcrumb">
+<div class="container">
+<div class="eyebrow">03 • Products</div>
+<h1>Materials specified for real construction work.</h1>
+<p>The BOKAN 2025/2026 catalog identifies seven standard products across plywood, wire products and fasteners, with custom sizes and grades available on request.</p>
+</div>
+</section>
+<section class="section">
+<div class="container">
+<div class="heading"><div class="eyebrow">Plywood</div><h2>Four panel solutions.</h2><p>Formwork and structural panel options selected for demanding site applications.</p></div>
+<div class="product-list">
+<div class="product"><b>Black Film Faced Plywood</b><span>Construction-grade formwork panel with black phenolic film, WBP phenolic glue and waterproof edge sealing.</span><small>1220 × 2440 mm • 18 mm • 8–20+ reuse cycles</small></div>
+<div class="product"><b>Green Plastic Laminated Plywood</b><span>PP-laminated hardwood/poplar plywood designed for moisture, abrasion and concrete-forming applications.</span><small>1220 × 2440 mm • 18 mm • 6–15 reuse cycles</small></div>
+<div class="product"><b>Standard Waterproof Plywood</b><span>WBP structural plywood for roofing, flooring, wall sheathing, hoarding and other moisture-sensitive applications.</span><small>1220 × 2440 mm • 18 mm • BB/CC, B/BB options</small></div>
+<div class="product"><b>Plastic PP Composite Plywood</b><span>Waterproof, rot-resistant composite panel for shuttering, scaffold decks, truck floors and site hoarding.</span><small>1220 × 2440 mm • 18 mm • Approx. 28–32 kg/panel</small></div>
+</div>
+</div>
+</section>
+<section class="section alt">
+<div class="container">
+<div class="heading"><div class="eyebrow">Wire & Fasteners</div><h2>Essential site materials.</h2><p>Complementary products for reinforcement, tying, fencing, carpentry and general construction requirements.</p></div>
+<div class="grid">
+<div class="card"><div class="icon">05</div><h3>Galvanized Steel Wire</h3><p>Hot-dip galvanized mild steel wire with corrosion resistance for fencing, rebar tying, mesh, gabions and industrial binding.</p><p><strong>1–25 mm diameters</strong> • 5, 25, 50 and 100 kg coils.</p></div>
+<div class="card"><div class="icon">06</div><h3>Black Annealed Binding Wire</h3><p>Soft, flexible annealed wire for rebar and mesh tying, baling, bundling and wrapping.</p><p><strong>1.5 mm & 2.5 mm</strong> • coils or pre-cut lengths.</p></div>
+<div class="card"><div class="icon">07</div><h3>Common Round Wire Nails</h3><p>Construction nails for timber framing, formwork assembly, roofing, joinery and flooring.</p><p><strong>25–150 mm</strong> • bright or hot-dip galvanized finish.</p></div>
+</div>
+<div class="catalog-note">Catalog specifications are standard and subject to change without notice. Contact BOKAN for current pricing, availability, custom dimensions and project requirements.</div>
+</div>
+</section>
+</main>
+
+<!-- NETWORK -->
+<main id="network" class="page">
+<section class="breadcrumb">
+<div class="container">
+<div class="eyebrow">04 • Network</div>
+<h1>Connecting manufacturers to construction markets.</h1>
+<p>BOKAN's supply model combines international procurement relationships with an Addis Ababa commercial base, creating a platform for dependable material movement into Ethiopia and the wider East African region.</p>
+</div>
+</section>
+<section class="section">
+<div class="container split">
+<div class="network-map">
+<div class="eyebrow">Supply Network</div>
+<h2>International sourcing. Regional opportunity.</h2>
+<p>Our catalog describes procurement relationships with established mills and certified manufacturers across three major sourcing regions.</p>
+<div class="route">
+<div class="node">Asia</div><div class="node">Europe</div><div class="node">Middle East</div><div class="node primary-node">Ethiopia</div><div class="node">East Africa</div>
+</div>
+</div>
+<div>
+<div class="heading"><div class="eyebrow">Market Position</div><h2>A platform designed to grow with demand.</h2><p>The immediate commercial base is Meskel Flower, Addis Ababa, while the stated market opportunity extends to the wider East African region.</p></div>
+<div class="card"><div class="icon">01</div><h3>Source</h3><p>Engage established mills and certified manufacturers for defined material requirements.</p></div>
+<div class="card"><div class="icon">02</div><h3>Supply</h3><p>Provide standard stock or scheduled bulk deliveries according to customer requirements.</p></div>
+<div class="card"><div class="icon">03</div><h3>Expand</h3><p>Build longer-term relationships across Ethiopia and the wider regional construction market.</p></div>
+</div>
+</div>
+</section>
+</main>
+
+<!-- CLIENTS -->
+<main id="clients" class="page">
+<section class="breadcrumb">
+<div class="container">
+<div class="eyebrow">05 • Clients</div>
+<h1>Built around the people who build.</h1>
+<p>BOKAN serves professional construction buyers who value dependable materials, responsive commercial support and practical procurement.</p>
+</div>
+</section>
+<section class="section">
+<div class="container">
+<div class="heading"><div class="eyebrow">Customer Segments</div><h2>One supply partner across the construction chain.</h2><p>Rather than limiting the model to a single buyer type, BOKAN's catalog identifies several customer groups with recurring material needs.</p></div>
+<div class="client-grid">
+<div class="client"><div class="number">01</div><h3>Contractors</h3><p>Material supply for active building, civil and infrastructure projects.</p></div>
+<div class="client"><div class="number">02</div><h3>Project Developers</h3><p>Procurement support for planned developments and larger construction programs.</p></div>
+<div class="client"><div class="number">03</div><h3>Builders</h3><p>Core panels, wire and fastening products for day-to-day site requirements.</p></div>
+<div class="client"><div class="number">04</div><h3>Hardware Retailers</h3><p>Wholesale-oriented supply for retailers serving professional and general construction markets.</p></div>
+<div class="client"><div class="number">05</div><h3>Infrastructure Teams</h3><p>Materials suited to civil, bridge, high-rise and other demanding applications.</p></div>
+<div class="client"><div class="number">06</div><h3>Project Procurement Teams</h3><p>Custom sizes, alternative grades and procurement packages for defined project specifications.</p></div>
+</div>
+</div>
+</section>
+<section class="section alt">
+<div class="container dark-panel">
+<div class="eyebrow">Customer Promise</div>
+<h2>Quality. Availability. Commercial practicality.</h2>
+<p>Every customer relationship is intended to be supported by clear specifications, competitive commercial terms, quality assurance and dependable delivery planning.</p>
+<div class="stats">
+<div class="stat"><strong>QUALITY</strong><span>Assurance focus</span></div>
+<div class="stat"><strong>VALUE</strong><span>Competitive terms</span></div>
+<div class="stat"><strong>SUPPLY</strong><span>Availability focus</span></div>
+<div class="stat"><strong>TRUST</strong><span>Long-term relationships</span></div>
+</div>
+</div>
+</section>
+</main>
+
+<!-- LEADERSHIP -->
+<main id="leadership" class="page">
+<section class="breadcrumb">
+<div class="container">
+<div class="eyebrow">06 • Leadership</div>
+<h1>Leadership behind a disciplined supply business.</h1>
+<p>BlackRock Investment PLC provides the holding-company platform, while BOKAN operates as its construction trader and wholesaler brand.</p>
+</div>
+</section>
+<section class="section">
+<div class="container">
+<div class="split">
+<div class="heading">
+<div class="eyebrow">Corporate Structure</div>
+<h2>BlackRock Investment PLC</h2>
+<p>BlackRock Investment PLC is identified in the BOKAN catalog as the holding company behind the BOKAN Construction Trader / Wholesaler business.</p>
+<div class="principles">
+<div class="principle"><strong>Holding Company</strong><br><span>BlackRock Investment PLC</span></div>
+<div class="principle"><strong>Trading Brand</strong><br><span>BOKAN Construction Trader / Wholesaler</span></div>
+</div>
+</div>
+<div class="dark-panel">
+<div class="eyebrow">Leadership Philosophy</div>
+<h3>Operational discipline with commercial focus.</h3>
+<p>The website positions the business around dependable sourcing, quality assurance, customer responsiveness and long-term commercial relationships.</p>
+<p>Leadership priorities therefore center on keeping the supply operation commercially practical, customer-focused and ready to scale.</p>
+</div>
+</div>
+</div>
+</section>
+<section class="section alt">
+<div class="container">
+<div class="heading"><div class="eyebrow">Management Focus</div><h2>The principles that guide execution.</h2></div>
+<div class="grid">
+<div class="card"><div class="icon">01</div><h3>Quality First</h3><p>Maintain clear product specifications and work with established manufacturing sources.</p></div>
+<div class="card"><div class="icon">02</div><h3>Customer First</h3><p>Build responsive relationships around quotations, follow-up and practical procurement solutions.</p></div>
+<div class="card"><div class="icon">03</div><h3>Supply Reliability</h3><p>Develop sourcing and inventory practices that help customers keep projects moving.</p></div>
+</div>
+</div>
+</section>
+<section class="section">
+<div class="container contact-box">
+<div class="contact-card">
+<h3>Corporate Contact</h3>
+<p><strong>BlackRock Investment PLC</strong><br>Trading name: BOKAN Construction Trader / Wholesaler</p>
+<p>Meskel Flower, Addis Ababa, Ethiopia</p>
+<p><a class="contact-link" href="tel:+251978234820">+251 978 234 820</a><br><a class="contact-link" href="mailto:zen.blackrockplc.com">zen.blackrockplc.com</a></p>
+</div>
+<div class="contact-card">
+<h3>Start a conversation</h3>
+<p>For current pricing, product availability, custom dimensions, alternative grades or project-specific procurement, contact the commercial team.</p>
+<a class="btn primary" href="tel:+251978234820">Contact BOKAN</a>
+</div>
+</div>
+</section>
+</main>
+
+<footer>
+<div class="container">
+<div class="footer-grid">
+<div>
+<div class="brand"><span class="mark">BR</span><span><strong>BLACKROCK INVESTMENT</strong><small>PLC • Ethiopia</small></span></div>
+<p>Construction &amp; structural material supply through BOKAN Construction Trader / Wholesaler.</p>
+</div>
 <div><div class="footer-title">Location</div><p>Meskel Flower<br>Addis Ababa, Ethiopia</p></div>
-<div><div class="footer-title">Contact</div><p>+251 978 23 48 20<br>blackrholdings@gmail.com</p></div>
-</div><div class="bottom">© 2026 BlackRock Investment PLC. All rights reserved.</div></div></footer>
+<div><div class="footer-title">Contact</div><p>+251 978 234 820<br>zen.blackrockplc.com</p></div>
+</div>
+<div class="bottom">© 2026 BlackRock Investment PLC. All rights reserved. • BOKAN Construction Trader / Wholesaler</div>
+</div>
+</footer>
+
+<script>
+(function(){
+  const pages=[...document.querySelectorAll('.page')];
+  const links=[...document.querySelectorAll('[data-page]')];
+  const nav=document.getElementById('mainNav');
+  const toggle=document.getElementById('mobileToggle');
+
+  function showPage(id, push=true){
+    const target=document.getElementById(id)||document.getElementById('overview');
+    pages.forEach(p=>p.classList.toggle('active',p===target));
+    links.forEach(a=>a.classList.toggle('active',a.dataset.page===target.id));
+    window.scrollTo({top:0,behavior:'smooth'});
+    if(push) history.pushState({page:target.id},'', '#'+target.id);
+    nav.classList.remove('open');
+  }
+
+  links.forEach(link=>{
+    link.addEventListener('click',e=>{
+      e.preventDefault();
+      showPage(link.dataset.page);
+    });
+  });
+
+  toggle.addEventListener('click',()=>nav.classList.toggle('open'));
+
+  window.addEventListener('popstate',()=>{
+    showPage(location.hash.replace('#','')||'overview',false);
+  });
+
+  showPage(location.hash.replace('#','')||'overview',false);
+})();
+</script>
 </body>
 </html>
-BlackRock_Investment_Corporate_Website.html
-HTML
+B
